@@ -1,10 +1,9 @@
 import {
   PureTypeDescriptor,
-  EffectTypeDescriptor,
   SelectorDescriptor,
   ActionDescriptor,
   EntityDescriptor,
-} from "./descriptors";
+} from "types/descriptors";
 
 export const id: PureTypeDescriptor = {
   name: "Id",
@@ -13,6 +12,95 @@ export const id: PureTypeDescriptor = {
     name: {
       name: "Number",
       owner: "system",
+    },
+  },
+};
+
+export const entities: PureTypeDescriptor = {
+  name: "Entities",
+  body: {
+    type: "pure-name",
+    name: {
+      name: "List",
+      owner: "system",
+    },
+    params: [
+      {
+        type: "pure-name",
+        name: {
+          name: "Entity",
+          owner: "system",
+        },
+      },
+    ],
+  },
+};
+
+export const filtrator: PureTypeDescriptor = {
+  name: "Filtrator",
+  params: ["T"],
+  body: {
+    type: "selector",
+    params: {
+      item: {
+        type: "param",
+        param: "T",
+      },
+    },
+    returns: {
+      type: "pure-name",
+      name: {
+        name: "Boolean",
+        owner: "system",
+      },
+    },
+  },
+};
+
+export const info: PureTypeDescriptor = {
+  name: "Info",
+  params: ["T"],
+  body: {
+    type: "pure-map",
+    map: {
+      field1: {
+        type: "pure-name",
+        name: {
+          name: "Id",
+          owner: "system",
+        },
+      },
+      field2: {
+        type: "param",
+        param: "T",
+      },
+      filtrator: {
+        type: "pure-name",
+        name: {
+          name: "Filtrator",
+          owner: "system",
+        },
+        params: [{ type: "param", param: "T" }],
+      },
+      map: {
+        type: "pure-map",
+        map: {
+          sub1: {
+            type: "pure-name",
+            name: {
+              name: "String",
+              owner: "system",
+            },
+          },
+          sub2: {
+            type: "pure-name",
+            name: {
+              name: "String",
+              owner: "system",
+            },
+          },
+        },
+      },
     },
   },
 };

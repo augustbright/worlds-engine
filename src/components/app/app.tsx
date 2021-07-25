@@ -1,5 +1,7 @@
 import React from "react";
-import { id } from "types/demo";
 import TypesBlock from "components/blocks/types-block";
+import { id, entities, info, filtrator } from "../../mocks/descriptors";
 
-export default (): JSX.Element => <TypesBlock descriptors={[id]} />;
+const mockDescriptors = [id, entities, info, filtrator];
+
+export default (): JSX.Element => <TypesBlock descriptors={mockDescriptors} />;

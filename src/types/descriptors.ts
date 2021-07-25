@@ -1,50 +1,50 @@
-import { NameId } from './common';
+import { NameId } from "./common";
 
-type TypePureNameBody = {
-  type: 'pure-name';
+export type TypePureNameBody = {
+  type: "pure-name";
   name: NameId;
   params?: Array<TypePureBody>;
 };
 
-type TypeEffectNameBody = {
-  type: 'effect-name';
+export type TypeEffectNameBody = {
+  type: "effect-name";
   name: NameId;
   params?: Array<TypeEffectBody>;
 };
 
-type TypePureMapBody = {
-  type: 'pure-map';
+export type TypePureMapBody = {
+  type: "pure-map";
   map: Record<string, TypePureBody>;
 };
 
-type TypeEffectMapBody = {
-  type: 'effect-map';
+export type TypeEffectMapBody = {
+  type: "effect-map";
   map: Record<string, TypeEffectBody>;
 };
 
-type TypeParamBody = {
-  type: 'param';
+export type TypeParamBody = {
+  type: "param";
   param: string;
 };
 
-type TypeSelectorBody = {
-  type: 'selector';
-  params: TypePureMapBody;
+export type TypeSelectorBody = {
+  type: "selector";
+  params: Record<string, TypePureBody>;
   returns: TypePureBody;
 };
 
-type TypeActionBody = {
-  type: 'action';
+export type TypeActionBody = {
+  type: "action";
   params: TypeEffectMapBody;
   returns: TypeEffectBody;
 };
 
-type TypePureBody =
+export type TypePureBody =
   | TypePureNameBody
   | TypePureMapBody
   | TypeParamBody
   | TypeSelectorBody;
-type TypeEffectBody =
+export type TypeEffectBody =
   | TypePureBody
   | TypeEffectNameBody
   | TypeEffectMapBody
@@ -52,6 +52,7 @@ type TypeEffectBody =
 
 export type PureTypeDescriptor = {
   name: string;
+  params?: Array<string>;
   body: TypePureBody;
 };
 
@@ -60,38 +61,38 @@ export type EffectTypeDescriptor = {
   body: TypeEffectBody;
 };
 
-type ValueNumberType = {
-  type: 'number';
+export type ValueNumberType = {
+  type: "number";
   number: number;
 };
 
-type ValueStringType = {
-  type: 'string';
+export type ValueStringType = {
+  type: "string";
   string: string;
 };
 
-type ValueBooleanType = {
-  type: 'boolean';
+export type ValueBooleanType = {
+  type: "boolean";
   boolean: boolean;
 };
 
-type ValueMapType = {
-  type: 'map';
+export type ValueMapType = {
+  type: "map";
   map: Record<string, ValueType>;
 };
 
-type ValueListType = {
-  type: 'list';
+export type ValueListType = {
+  type: "list";
   entityType: NameId;
   list: Array<ValueType>;
 };
 
-type ValueSelectorType = {
-  type: 'selector';
+export type ValueSelectorType = {
+  type: "selector";
   selector: NameId;
 };
 
-type ValueType =
+export type ValueType =
   | ValueNumberType
   | ValueStringType
   | ValueBooleanType
@@ -99,23 +100,23 @@ type ValueType =
   | ValueListType
   | ValueSelectorType;
 
-type SelectorNameBody = {
-  type: 'name';
+export type SelectorNameBody = {
+  type: "name";
   name: NameId;
   params: Record<string, SelectorBody>;
 };
 
-type SelectorValueBody = {
-  type: 'value';
+export type SelectorValueBody = {
+  type: "value";
   value: ValueType;
 };
 
-type SelectorParamBody = {
-  type: 'param';
+export type SelectorParamBody = {
+  type: "param";
   param: string;
 };
 
-type SelectorBody = SelectorNameBody | SelectorValueBody | SelectorParamBody;
+export type SelectorBody = SelectorNameBody | SelectorValueBody | SelectorParamBody;
 
 export type SelectorDescriptor = {
   name: string;
@@ -125,20 +126,20 @@ export type SelectorDescriptor = {
   description?: string;
 };
 
-type EffectStep = {
-  type: 'effect';
+export type EffectStep = {
+  type: "effect";
   name: NameId;
   params: Record<string, SelectorBody>;
 };
 
-type DecisionStep = {
-  type: 'decision';
+export type DecisionStep = {
+  type: "decision";
   condition: SelectorBody;
   true: Array<ActionStep>;
   false: Array<ActionStep>;
 };
 
-type ActionStep = EffectStep | DecisionStep;
+export type ActionStep = EffectStep | DecisionStep;
 
 export type ActionDescriptor = {
   name: string;

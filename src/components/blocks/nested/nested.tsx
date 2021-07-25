@@ -1,13 +1,21 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext } from "react";
 
 const LevelContext = createContext(0);
 
 export const useLevel = () => useContext(LevelContext);
 
-const Nested: React.FC<{}> = ({ children }) => {
-  const level = useLevel();
+type OwnProps = {
+  level?: number;
+};
+
+const Nested: React.FC<OwnProps> = ({ children, level }) => {
+  const defaultLevel = useLevel() + 1;
+  const currentLevel = level === undefined ? defaultLevel : level;
+
   return (
-    <LevelContext.Provider value={level + 1}>{children}</LevelContext.Provider>
+    <LevelContext.Provider value={currentLevel}>
+      {children}
+    </LevelContext.Provider>
   );
 };
 

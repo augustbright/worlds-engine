@@ -7,12 +7,22 @@ type OwnProps<T> = {
   getKey: (item: T) => string;
 };
 
-const ListBlock = <T,>({ row, data, getKey }: OwnProps<T>): JSX.Element => (
-  <>
-    {data.map((item) => (
-      <Nested key={getKey(item)}>{row(item)}</Nested>
-    ))}
-  </>
+const SameLine: React.FC = ({ children }) => <>{children}</>;
+const NewLine: React.FC = ({ children }) => (
+  <div>
+    <Nested>{children}</Nested>
+  </div>
 );
+
+const ListBlock = <T,>({ row, data, getKey }: OwnProps<T>): JSX.Element => {
+  const Wrapper = data.length > 1 ? NewLine : SameLine;
+  return (
+    <>
+      {data.map((item) => (
+        <Wrapper key={getKey(item)}>{row(item)}</Wrapper>
+      ))}
+    </>
+  );
+};
 
 export default ListBlock;
