@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ['plugin:react/recommended', 'airbnb'],
+  extends: ['plugin:react/recommended', 'airbnb-typescript-prettier'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -16,7 +16,10 @@ module.exports = {
     'import/resolver': {
       webpack: {
         alias: {
-          map: [['components', './src/components']],
+          map: [
+            ['components', './src/components'],
+            ['types', './src/types'],
+          ],
         },
       },
       node: {
@@ -33,6 +36,8 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': ['error'],
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
+
+    'react/prop-types': 'off',
 
     'import/extensions': [
       'error',

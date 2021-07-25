@@ -4,43 +4,60 @@ import {
   SelectorDescriptor,
   ActionDescriptor,
   EntityDescriptor,
-} from './descriptors';
+} from "./descriptors";
 
-const Id: PureTypeDescriptor = {
-  name: 'Id',
+export const id: PureTypeDescriptor = {
+  name: "Id",
   body: {
-    type: 'pure-name',
+    type: "pure-name",
     name: {
-      name: 'Number',
-      owner: 'system',
+      name: "Number",
+      owner: "system",
     },
   },
 };
 
-const GetEnemies: SelectorDescriptor = {
-  name: 'GetEnemies',
-  body: {
-    type: 'name',
+export const getEnemies: SelectorDescriptor = {
+  name: "GetEnemies",
+  params: {},
+  returnType: {
+    type: "pure-name",
     name: {
-      name: 'Filter',
-      owner: 'system',
+      name: "List",
+      owner: "system",
+    },
+    params: [
+      {
+        type: "pure-name",
+        name: {
+          name: "Entity",
+          owner: "system",
+        },
+      },
+    ],
+  },
+  body: {
+    type: "name",
+    name: {
+      name: "Filter",
+      owner: "system",
     },
     params: {
       list: {
-        type: 'name',
+        type: "name",
         name: {
-          name: 'GetEntitiesAround',
-          owner: 'system',
+          name: "GetEntitiesAround",
+          owner: "system",
         },
         params: {},
       },
       condition: {
-        type: 'value',
+        type: "value",
         value: {
-          type: 'selector',
+          type: "selector",
           selector: {
-            name: 'IsEnemy',
-            owner: 'system',
+            name: "IsEnemy",
+            owner: "system",
           },
         },
       },
@@ -48,22 +65,22 @@ const GetEnemies: SelectorDescriptor = {
   },
 };
 
-const strategy: ActionDescriptor = {
-  name: 'Strategy',
+export const strategy: ActionDescriptor = {
+  name: "Strategy",
   steps: [
     {
-      type: 'decision',
+      type: "decision",
       condition: {
-        type: 'name',
+        type: "name",
         name: {
-          name: 'IsInDanger',
-          owner: 'system',
+          name: "IsInDanger",
+          owner: "system",
         },
         params: {
           area: {
-            type: 'value',
+            type: "value",
             value: {
-              type: 'number',
+              type: "number",
               number: 5,
             },
           },
@@ -71,31 +88,31 @@ const strategy: ActionDescriptor = {
       },
       true: [
         {
-          type: 'effect',
+          type: "effect",
           name: {
-            name: 'message',
-            owner: 'system',
+            name: "message",
+            owner: "system",
           },
           params: {
             message: {
-              type: 'value',
+              type: "value",
               value: {
-                type: 'string',
-                string: 'SOS',
+                type: "string",
+                string: "SOS",
               },
             },
             channels: {
-              type: 'value',
+              type: "value",
               value: {
-                type: 'list',
+                type: "list",
                 entityType: {
-                  name: 'String',
-                  owner: 'system',
+                  name: "String",
+                  owner: "system",
                 },
                 list: [
                   {
-                    type: 'string',
-                    string: 'neighbours',
+                    type: "string",
+                    string: "neighbours",
                   },
                 ],
               },
@@ -103,17 +120,17 @@ const strategy: ActionDescriptor = {
           },
         },
         {
-          type: 'effect',
+          type: "effect",
           name: {
-            name: 'move',
-            owner: 'system',
+            name: "move",
+            owner: "system",
           },
           params: {
             direction: {
-              type: 'name',
+              type: "name",
               name: {
-                name: 'GetSafeDirection',
-                owner: 'system',
+                name: "GetSafeDirection",
+                owner: "system",
               },
               params: {},
             },
@@ -122,10 +139,10 @@ const strategy: ActionDescriptor = {
       ],
       false: [
         {
-          type: 'effect',
+          type: "effect",
           name: {
-            name: 'earn',
-            owner: 'system',
+            name: "earn",
+            owner: "system",
           },
           params: {},
         },
@@ -134,10 +151,10 @@ const strategy: ActionDescriptor = {
   ],
 };
 
-const entity: EntityDescriptor = {
-  name: 'SimpleEntity',
+export const entity: EntityDescriptor = {
+  name: "SimpleEntity",
   strategy: {
-    name: 'Strategy',
-    owner: 'system',
+    name: "Strategy",
+    owner: "system",
   },
 };

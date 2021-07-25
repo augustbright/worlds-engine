@@ -120,8 +120,8 @@ type SelectorBody = SelectorNameBody | SelectorValueBody | SelectorParamBody;
 export type SelectorDescriptor = {
   name: string;
   body: SelectorBody;
-  params: Record<string, PureTypeDescriptor>;
-  returnType: PureTypeDescriptor;
+  params: Record<string, TypePureBody>;
+  returnType: TypePureBody;
   description?: string;
 };
 
