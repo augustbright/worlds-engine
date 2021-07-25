@@ -1,0 +1,19 @@
+{
+    "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+    "exclude": ["node_modules"],
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "CommonJS",
+        "strict": true,
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "./src",
+        "declaration": false,
+        "esModuleInterop": true,
+        "jsx": "react-jsx",
+        "moduleResolution": "Node",
+        "outDir": "./dist",
+        "paths": {},
+        "rootDir": "./src",
+        "sourceMap": true
+    }
+}
