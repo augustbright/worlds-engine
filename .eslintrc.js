@@ -14,6 +14,11 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
+      webpack: {
+        alias: {
+          map: [['components', './src/components']],
+        },
+      },
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },

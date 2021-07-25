@@ -1,3 +1,5 @@
 import React from 'react';
 
-export default () => <div>React application</div>;
+export default () => (
+  <div>Worlds engine editor</div>
+);
