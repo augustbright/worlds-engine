@@ -32,6 +32,7 @@ const TypeBody: React.FC<OwnProps> = ({ body }) => {
   return (
     <>
       <TypeSelect type={body.type} onChange={onChangeBodyType} />
+      <span> </span>
       {bodyElement}
     </>
   );
