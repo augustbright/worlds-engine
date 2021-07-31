@@ -15,7 +15,6 @@ const TypeRow: React.FC<OwnProps> = ({ descriptor }) => {
 
   return (
     <>
-      <span>type </span>
       <FieldInput value={descriptor.name} onChange={onChangeName} />
       {descriptor.params && <ParamsList params={descriptor.params} />}
       <span> = </span>

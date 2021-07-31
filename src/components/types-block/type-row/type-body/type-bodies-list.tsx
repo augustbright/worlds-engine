@@ -1,7 +1,7 @@
 import ListBlock from "components/blocks/list-block";
 import React from "react";
 import { TypePureBody } from "types/descriptors";
-import TypeBody from "../type-body";
+import TypeBody from "./type-body";
 
 type OwnProps = {
   params: TypePureBody[];

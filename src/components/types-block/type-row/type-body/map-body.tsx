@@ -1,7 +1,7 @@
 import MapBlock from "components/blocks/map-block";
 import React from "react";
 import { TypePureMapBody } from "types/descriptors";
-import TypeBody from "../type-body";
+import TypeBody from "./type-body";
 
 type OwnProps = {
   body: TypePureMapBody;
