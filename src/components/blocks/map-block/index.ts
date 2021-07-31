@@ -1,1 +1,1 @@
-export { default } from './map-block';
+export { default } from "./map-block";
