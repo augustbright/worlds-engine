@@ -3,6 +3,7 @@ import { TypePureBody } from "types/descriptors";
 import NameBody from "./name-body";
 import MapBody from "./map-body";
 import SelectorBody from "./selector-body";
+import ParamBody from "./param-body";
 
 type OwnProps = {
   body: TypePureBody;
@@ -18,7 +19,11 @@ const TypeBody: React.FC<OwnProps> = ({ body }) => {
   if (body.type === "selector") {
     return <SelectorBody body={body} />;
   }
-  return <span>{body.type}</span>;
+  if (body.type === "param") {
+    return <ParamBody body={body} />;
+  }
+
+  return null;
 };
 
 export default TypeBody;
