@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useCallback } from "react";
+import FieldInput from "components/blocks/field-input";
 
 type OwnProps<T> = {
   name: string;
@@ -11,9 +12,13 @@ const MapRow = <T,>({
   renderValue,
   value,
 }: OwnProps<T>): React.ReactElement => {
+  const onChangeName = useCallback((newName: string) => {
+    console.log(newName);
+  }, []);
+
   return (
     <>
-      <span>{name}</span>
+      <FieldInput value={name} onChange={onChangeName}/>
       <span> : </span>
       {renderValue(value)}
     </>
