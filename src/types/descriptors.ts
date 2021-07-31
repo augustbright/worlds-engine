@@ -50,9 +50,11 @@ export type TypeEffectBody =
   | TypeEffectMapBody
   | TypeActionBody;
 
+export type TypeParam = string;
+
 export type PureTypeDescriptor = {
   name: string;
-  params?: Array<string>;
+  params?: Array<TypeParam>;
   body: TypePureBody;
 };
 
@@ -116,7 +118,10 @@ export type SelectorParamBody = {
   param: string;
 };
 
-export type SelectorBody = SelectorNameBody | SelectorValueBody | SelectorParamBody;
+export type SelectorBody =
+  | SelectorNameBody
+  | SelectorValueBody
+  | SelectorParamBody;
 
 export type SelectorDescriptor = {
   name: string;

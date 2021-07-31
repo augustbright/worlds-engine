@@ -1,1 +1,1 @@
-export { default, useLevel } from "./nested";
+export { default, useLevel, Tabs } from "./nested";

@@ -32,6 +32,13 @@ export const entities: PureTypeDescriptor = {
           owner: "system",
         },
       },
+      {
+        type: "pure-name",
+        name: {
+          name: "Filtrator",
+          owner: "system",
+        },
+      },
     ],
   },
 };
@@ -59,7 +66,7 @@ export const filtrator: PureTypeDescriptor = {
 
 export const info: PureTypeDescriptor = {
   name: "Info",
-  params: ["T"],
+  params: ["T1", "T2"],
   body: {
     type: "pure-map",
     map: {

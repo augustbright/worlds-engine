@@ -1,6 +1,6 @@
 import React from "react";
 import { TypePureBody } from "types/descriptors";
-import NameBody from "../name-body";
+import NameBody from "./name-body";
 
 type OwnProps = {
   body: TypePureBody;

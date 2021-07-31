@@ -1,11 +1,12 @@
 import React from "react";
 import Nested from "components/blocks/nested";
+import WithBrackets, { WithBracketsProps } from "../with-brackets";
 
 type OwnProps<T> = {
   data: Array<T>;
-  row: (item: T) => JSX.Element;
+  row: (item: T) => React.ReactNode;
   getKey: (item: T) => string;
-};
+} & WithBracketsProps;
 
 const SameLine: React.FC = ({ children }) => <>{children}</>;
 const NewLine: React.FC = ({ children }) => (
@@ -14,15 +15,23 @@ const NewLine: React.FC = ({ children }) => (
   </div>
 );
 
-const ListBlock = <T,>({ row, data, getKey }: OwnProps<T>): JSX.Element => {
+const ListBlock = <T,>({
+  row,
+  data,
+  getKey,
+  start,
+  end,
+}: OwnProps<T>): React.ReactElement => {
   const Wrapper = data.length > 1 ? NewLine : SameLine;
   return (
     <>
+      {start}
       {data.map((item) => (
         <Wrapper key={getKey(item)}>{row(item)}</Wrapper>
       ))}
+      {end}
     </>
   );
 };
 
-export default ListBlock;
+export default WithBrackets()(ListBlock);

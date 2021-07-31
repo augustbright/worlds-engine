@@ -20,7 +20,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: ['awesome-typescript-loader'],
+        use: ['ts-loader'],
       },
     ],
   },
@@ -32,4 +32,5 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
   },
+  devtool: 'inline-source-map'
 };

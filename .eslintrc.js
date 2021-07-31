@@ -37,6 +37,9 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
 
+    'react/require-default-props': 'off',
+    'react/jsx-props-no-spreading': 'off',
+
     'react/prop-types': 'off',
 
     'import/extensions': [

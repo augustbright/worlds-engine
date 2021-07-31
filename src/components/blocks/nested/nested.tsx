@@ -19,4 +19,15 @@ const Nested: React.FC<OwnProps> = ({ children, level }) => {
   );
 };
 
+export const Tabs: React.FC = () => {
+  const currentLevel = useLevel();
+  return (
+    <>
+      {new Array(currentLevel).map(() => (
+        <span> </span>
+      ))}
+    </>
+  );
+};
+
 export default Nested;
