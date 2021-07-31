@@ -1,1 +1,1 @@
-export { default, WithBracketsProps } from "./with-brackets";
+export { default, WithBracketsProps, BracketsType } from "./with-brackets";

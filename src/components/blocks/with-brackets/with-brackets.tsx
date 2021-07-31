@@ -1,6 +1,6 @@
 import React from "react";
 
-type BracketsType = "CURLY" | "SQUARE" | "ANGLED" | "ROUND";
+export type BracketsType = "CURLY" | "SQUARE" | "ANGLED" | "ROUND";
 
 export type WithBracketsProps = {
   start: React.ReactElement;
