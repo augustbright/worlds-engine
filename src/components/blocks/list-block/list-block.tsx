@@ -1,5 +1,5 @@
 import React from "react";
-import Nested from "components/blocks/nested";
+import Nested, { Tabs } from "components/blocks/nested";
 import WithBrackets, { WithBracketsProps } from "../with-brackets";
 
 type OwnProps<T> = {
@@ -8,11 +8,20 @@ type OwnProps<T> = {
   getKey: (item: T) => string;
 } & WithBracketsProps;
 
-const SameLine: React.FC = ({ children }) => <>{children}</>;
+const Identity: React.FC = ({ children }) => <>{children}</>;
 const NewLine: React.FC = ({ children }) => (
   <div>
-    <Nested>{children}</Nested>
+    <Nested>
+      <Tabs />
+      {children}
+    </Nested>
   </div>
+);
+const Tabbed: React.FC = ({ children }) => (
+  <>
+    <Tabs />
+    {children}
+  </>
 );
 
 const ListBlock = <T,>({
@@ -22,14 +31,15 @@ const ListBlock = <T,>({
   start,
   end,
 }: OwnProps<T>): React.ReactElement => {
-  const Wrapper = data.length > 1 ? NewLine : SameLine;
+  const ItemWrapper = data.length > 1 ? NewLine : Identity;
+  const EndWrapper = data.length > 1 ? Tabbed : Identity;
   return (
     <>
       {start}
       {data.map((item) => (
-        <Wrapper key={getKey(item)}>{row(item)}</Wrapper>
+        <ItemWrapper key={getKey(item)}>{row(item)}</ItemWrapper>
       ))}
-      {end}
+      <EndWrapper>{end}</EndWrapper>
     </>
   );
 };
