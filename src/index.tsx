@@ -1,5 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from 'components/app';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "components/app";
+import { initSW } from "./service-workers";
 
-ReactDOM.render(<App />, document.getElementById('react-root'));
+initSW();
+ReactDOM.render(<App />, document.getElementById("react-root"));
