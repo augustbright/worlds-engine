@@ -1,9 +1,15 @@
+import { focusable } from "components/theming/mixins";
 import React, { KeyboardEvent, useCallback } from "react";
+import styled from "styled-components";
 
 type OwnProps = {
   value: string;
   onClick: () => void;
 };
+
+const Span = styled.span`
+  ${focusable}
+`;
 
 const InputCollapsed: React.FC<OwnProps> = ({ value, onClick }) => {
   const onKeyDown = useCallback(
@@ -15,9 +21,9 @@ const InputCollapsed: React.FC<OwnProps> = ({ value, onClick }) => {
     [onClick]
   );
   return (
-    <span role="button" tabIndex={0} onKeyDown={onKeyDown} onClick={onClick}>
+    <Span role="button" tabIndex={0} onKeyDown={onKeyDown} onClick={onClick}>
       {value}
-    </span>
+    </Span>
   );
 };
 

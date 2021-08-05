@@ -122,12 +122,15 @@ const SearchExpanded = <T,>({
       {loading && !items.length ? (
         <LoadingIndicator />
       ) : (
-        <ListBlock
-          bracketsType="SQUARE"
-          data={items}
-          getKey={valueGetter}
-          row={row}
-        />
+        <>
+          {" "}
+          <ListBlock
+            bracketsType="SQUARE"
+            data={items}
+            getKey={valueGetter}
+            row={row}
+          />
+        </>
       )}
     </>
   );

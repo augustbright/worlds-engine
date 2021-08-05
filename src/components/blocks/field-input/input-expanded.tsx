@@ -1,3 +1,4 @@
+import { Input } from "components/styled";
 import React, {
   ChangeEvent,
   FocusEvent,
@@ -43,7 +44,7 @@ const InputExpanded: React.FC<OwnProps> = ({ value, onChange }) => {
   }, [inputRef]);
 
   return (
-    <input
+    <Input
       ref={inputRef}
       type="text"
       value={text}
