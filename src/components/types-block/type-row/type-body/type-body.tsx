@@ -1,32 +1,49 @@
 import React, { useCallback } from "react";
 import { TypePureBody } from "types/descriptors";
-import NameBody from "./name-body";
-import MapBody from "./map-body";
-import SelectorBody from "./selector-body";
-import ParamBody from "./param-body";
+import NameBody, { create as createNameBody } from "./name-body";
+import MapBody, { create as createMapBody } from "./map-body";
+import SelectorBody, { create as createSelectorBody } from "./selector-body";
+import ParamBody, { create as createParamBody } from "./param-body";
 import TypeSelect from "./type-select";
 
 type OwnProps = {
   body: TypePureBody;
+  onChange: (newBody: TypePureBody) => void;
 };
 
-const TypeBody: React.FC<OwnProps> = ({ body }) => {
-  const onChangeBodyType = useCallback((value) => {
-    console.log(value);
-  }, []);
+const TypeBody: React.FC<OwnProps> = ({ body, onChange }) => {
+  const onChangeBodyType = useCallback(
+    (value) => {
+      if (value === body.type) return;
+      let newBody: TypePureBody;
+
+      if (value === "pure-name") {
+        newBody = createNameBody();
+      } else if (value === "pure-map") {
+        newBody = createMapBody();
+      } else if (value === "selector") {
+        newBody = createSelectorBody();
+      } else {
+        newBody = createParamBody();
+      }
+
+      onChange(newBody);
+    },
+    [body, onChange]
+  );
 
   let bodyElement = null;
   if (body.type === "pure-name") {
-    bodyElement = <NameBody body={body} />;
+    bodyElement = <NameBody body={body} onChange={onChange} />;
   }
   if (body.type === "pure-map") {
-    bodyElement = <MapBody body={body} />;
+    bodyElement = <MapBody body={body} onChange={onChange} />;
   }
   if (body.type === "selector") {
-    bodyElement = <SelectorBody body={body} />;
+    bodyElement = <SelectorBody body={body} onChange={onChange} />;
   }
   if (body.type === "param") {
-    bodyElement = <ParamBody body={body} />;
+    bodyElement = <ParamBody body={body} onChange={onChange} />;
   }
 
   return (

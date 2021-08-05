@@ -8,6 +8,7 @@ import { PureTypeDescriptor } from "types/descriptors";
 
 type OwnProps = {
   types: Array<PureTypeDescriptor>;
+  onChangeTypes: (newTypes: Array<PureTypeDescriptor>) => void;
 };
 
 const Div = styled.div`
@@ -16,10 +17,10 @@ const Div = styled.div`
   padding: ${fromThemeProp((theme) => theme.space[Space.MEDIUM])};
 `;
 
-export default ({ types }: OwnProps): React.ReactElement => {
+export default ({ types, onChangeTypes }: OwnProps): React.ReactElement => {
   return (
     <Div>
-      <TypesBlock descriptors={types} />
+      <TypesBlock descriptors={types} onChange={onChangeTypes} />
     </Div>
   );
 };

@@ -1,34 +1,21 @@
 import SearchSelect from "components/blocks/search-select/search-select";
 import React, { KeyboardEvent, useCallback } from "react";
 import { TypePureNameBody } from "types/descriptors";
+import { get } from "../../server/types";
 
 type OwnProps = {
   item: TypePureNameBody;
-};
-const fetch = async (): Promise<Array<TypePureNameBody>> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve([
-        {
-          name: {
-            name: "Foo",
-            owner: "System",
-          },
-          type: "pure-name",
-        },
-        {
-          name: {
-            name: "Bar",
-            owner: "System",
-          },
-          type: "pure-name",
-        },
-      ]);
-    }, 2000);
-  });
+  onChange: (newBody: TypePureNameBody) => void;
 };
 
-const TypesSelect: React.FC<OwnProps> = ({ item }): React.ReactElement => {
+const fetch = async () => {
+  return get();
+};
+
+const TypesSelect: React.FC<OwnProps> = ({
+  item,
+  onChange,
+}): React.ReactElement => {
   const valueGetter = useCallback((from: TypePureNameBody) => {
     return [from.name.owner, from.name.name].join("-");
   }, []);
@@ -66,9 +53,13 @@ const TypesSelect: React.FC<OwnProps> = ({ item }): React.ReactElement => {
     },
     []
   );
-  const onChange = useCallback((newItem: TypePureNameBody) => {
-    console.log(newItem);
-  }, []);
+  const handleChange = useCallback(
+    (newItem: TypePureNameBody) => {
+      onChange(newItem);
+    },
+    [onChange]
+  );
+
   return (
     <SearchSelect
       currentItem={item}
@@ -77,7 +68,7 @@ const TypesSelect: React.FC<OwnProps> = ({ item }): React.ReactElement => {
       nameGetter={nameGetter}
       renderRow={renderRow}
       renderTitle={renderTitle}
-      onChange={onChange}
+      onChange={handleChange}
     />
   );
 };

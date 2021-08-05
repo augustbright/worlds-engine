@@ -19,6 +19,7 @@ module.exports = {
           map: [
             ['components', './src/components'],
             ['types', './src/types'],
+            ['server', './src/server'],
           ],
         },
       },

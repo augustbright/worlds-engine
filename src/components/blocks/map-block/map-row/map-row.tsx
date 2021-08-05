@@ -4,7 +4,7 @@ import FieldInput from "components/blocks/field-input";
 type OwnProps<T> = {
   name: string;
   value: T;
-  renderValue: (value: T) => React.ReactElement;
+  renderValue: (value: T, key: string) => React.ReactElement;
 };
 
 const MapRow = <T,>({
@@ -18,9 +18,9 @@ const MapRow = <T,>({
 
   return (
     <>
-      <FieldInput value={name} onChange={onChangeName}/>
+      <FieldInput value={name} onChange={onChangeName} />
       <span> : </span>
-      {renderValue(value)}
+      {renderValue(value, name)}
     </>
   );
 };

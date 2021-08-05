@@ -6,7 +6,7 @@ import MapRow from "./map-row";
 type OwnProps<T> = {
   data: Record<string, T>;
   bracketsType?: BracketsType;
-  renderValue: (value: T) => React.ReactElement;
+  renderValue: (value: T, key: string) => React.ReactElement;
 };
 
 const MapBlock = <T,>({
