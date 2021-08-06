@@ -33,8 +33,23 @@ const MapBody: React.FC<OwnProps> = ({
     ),
     [handleOnChange]
   );
+  const handleMapChange = useCallback(
+    (newMap: Record<string, TypePureBody>) => {
+      onChange({
+        ...body,
+        map: newMap,
+      });
+    },
+    [onChange, body]
+  );
 
-  return <MapBlock data={body.map} renderValue={renderValue} />;
+  return (
+    <MapBlock
+      data={body.map}
+      renderValue={renderValue}
+      onChange={handleMapChange}
+    />
+  );
 };
 
 export const create = (): TypePureMapBody => ({

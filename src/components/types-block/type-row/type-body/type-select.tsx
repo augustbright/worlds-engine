@@ -18,7 +18,7 @@ export const types: Array<Item> = [
   },
   {
     value: "selector",
-    title: "selectir",
+    title: "selector",
   },
   {
     value: "param",

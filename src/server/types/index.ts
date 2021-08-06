@@ -6,6 +6,7 @@ export const get = async (): Promise<Array<TypePureNameBody>> => {
       resolve([
         {
           name: {
+            id: "1",
             name: "Foo",
             owner: "System",
           },
@@ -13,6 +14,7 @@ export const get = async (): Promise<Array<TypePureNameBody>> => {
         },
         {
           name: {
+            id: "2",
             name: "Bar",
             owner: "System",
           },

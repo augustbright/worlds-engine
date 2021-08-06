@@ -1,6 +1,9 @@
 export type OwnerId = string;
 
+export type Id = string;
+
 export type NameId = {
-    name: string,
-    owner: OwnerId
+  id: Id;
+  name: string;
+  owner: OwnerId;
 };

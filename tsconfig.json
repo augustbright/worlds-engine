@@ -13,6 +13,7 @@
         "outDir": "./dist",
         "rootDir": "./src",
         "sourceMap": true,
-        "baseUrl": "src"
+        "baseUrl": "src",
+        "lib": ["ES2019", "DOM"]
     }
 }

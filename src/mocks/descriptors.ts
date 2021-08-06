@@ -3,49 +3,93 @@ import {
   SelectorDescriptor,
   ActionDescriptor,
   EntityDescriptor,
+  TypePureBody,
 } from "types/descriptors";
 
-export const id: PureTypeDescriptor = {
+export const numberNameId = {
+  id: "2",
+  name: "Number",
+  owner: "system",
+};
+
+export const idNameId = {
+  id: "1",
   name: "Id",
-  body: {
-    type: "pure-name",
-    name: {
-      name: "Number",
-      owner: "system",
-    },
-  },
+  owner: "User",
+};
+
+export const entitiesNameId = {
+  id: "3",
+  name: "Entities",
+  owner: "User",
+};
+
+export const listNameId = {
+  id: "4",
+  name: "List",
+  owner: "system",
+};
+
+export const entityNameId = {
+  id: "5",
+  name: "Entity",
+  owner: "system",
+};
+
+export const filtratorNameId = {
+  id: "6",
+  name: "Filtrator",
+  owner: "system",
+};
+
+export const booleanNameId = {
+  id: "7",
+  name: "Boolean",
+  owner: "system",
+};
+
+export const infoNameId = {
+  id: "8",
+  name: "Info",
+  owner: "User",
+};
+
+export const stringNameId = {
+  id: "9",
+  name: "String",
+  owner: "system",
+};
+
+export const numberBody: TypePureBody = {
+  type: "pure-name",
+  name: numberNameId,
+};
+
+export const id: PureTypeDescriptor = {
+  name: idNameId,
+  body: numberBody,
 };
 
 export const entities: PureTypeDescriptor = {
-  name: "Entities",
+  name: entitiesNameId,
   body: {
     type: "pure-name",
-    name: {
-      name: "List",
-      owner: "system",
-    },
+    name: listNameId,
     params: [
       {
         type: "pure-name",
-        name: {
-          name: "Entity",
-          owner: "system",
-        },
+        name: entityNameId,
       },
       {
         type: "pure-name",
-        name: {
-          name: "Filtrator",
-          owner: "system",
-        },
+        name: filtratorNameId,
       },
     ],
   },
 };
 
 export const filtrator: PureTypeDescriptor = {
-  name: "Filtrator",
-  params: ["T"],
+  name: filtratorNameId,
   body: {
     type: "selector",
     params: {
@@ -56,26 +100,20 @@ export const filtrator: PureTypeDescriptor = {
     },
     returns: {
       type: "pure-name",
-      name: {
-        name: "Boolean",
-        owner: "system",
-      },
+      name: booleanNameId,
     },
   },
 };
 
 export const info: PureTypeDescriptor = {
-  name: "Info",
+  name: infoNameId,
   params: ["T1", "T2"],
   body: {
     type: "pure-map",
     map: {
       field1: {
         type: "pure-name",
-        name: {
-          name: "Id",
-          owner: "system",
-        },
+        name: idNameId,
       },
       field2: {
         type: "param",
@@ -83,10 +121,7 @@ export const info: PureTypeDescriptor = {
       },
       filtrator: {
         type: "pure-name",
-        name: {
-          name: "Filtrator",
-          owner: "system",
-        },
+        name: filtratorNameId,
         params: [{ type: "param", param: "T" }],
       },
       map: {
@@ -94,17 +129,11 @@ export const info: PureTypeDescriptor = {
         map: {
           sub1: {
             type: "pure-name",
-            name: {
-              name: "String",
-              owner: "system",
-            },
+            name: stringNameId,
           },
           sub2: {
             type: "pure-name",
-            name: {
-              name: "String",
-              owner: "system",
-            },
+            name: stringNameId,
           },
         },
       },
@@ -117,23 +146,18 @@ export const getEnemies: SelectorDescriptor = {
   params: {},
   returnType: {
     type: "pure-name",
-    name: {
-      name: "List",
-      owner: "system",
-    },
+    name: listNameId,
     params: [
       {
         type: "pure-name",
-        name: {
-          name: "Entity",
-          owner: "system",
-        },
+        name: entityNameId,
       },
     ],
   },
   body: {
     type: "name",
     name: {
+      id: "14",
       name: "Filter",
       owner: "system",
     },
@@ -141,6 +165,7 @@ export const getEnemies: SelectorDescriptor = {
       list: {
         type: "name",
         name: {
+          id: "15",
           name: "GetEntitiesAround",
           owner: "system",
         },
@@ -151,6 +176,7 @@ export const getEnemies: SelectorDescriptor = {
         value: {
           type: "selector",
           selector: {
+            id: "16",
             name: "IsEnemy",
             owner: "system",
           },
@@ -168,6 +194,7 @@ export const strategy: ActionDescriptor = {
       condition: {
         type: "name",
         name: {
+          id: "10",
           name: "IsInDanger",
           owner: "system",
         },
@@ -185,6 +212,7 @@ export const strategy: ActionDescriptor = {
         {
           type: "effect",
           name: {
+            id: "11",
             name: "message",
             owner: "system",
           },
@@ -200,10 +228,7 @@ export const strategy: ActionDescriptor = {
               type: "value",
               value: {
                 type: "list",
-                entityType: {
-                  name: "String",
-                  owner: "system",
-                },
+                entityType: listNameId,
                 list: [
                   {
                     type: "string",
@@ -217,6 +242,7 @@ export const strategy: ActionDescriptor = {
         {
           type: "effect",
           name: {
+            id: "11",
             name: "move",
             owner: "system",
           },
@@ -224,6 +250,7 @@ export const strategy: ActionDescriptor = {
             direction: {
               type: "name",
               name: {
+                id: "12",
                 name: "GetSafeDirection",
                 owner: "system",
               },
@@ -236,6 +263,7 @@ export const strategy: ActionDescriptor = {
         {
           type: "effect",
           name: {
+            id: "13",
             name: "earn",
             owner: "system",
           },
@@ -249,6 +277,7 @@ export const strategy: ActionDescriptor = {
 export const entity: EntityDescriptor = {
   name: "SimpleEntity",
   strategy: {
+    id: "14",
     name: "Strategy",
     owner: "system",
   },

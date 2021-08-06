@@ -53,7 +53,7 @@ export type TypeEffectBody =
 export type TypeParam = string;
 
 export type PureTypeDescriptor = {
-  name: string;
+  name: NameId;
   params?: Array<TypeParam>;
   body: TypePureBody;
 };

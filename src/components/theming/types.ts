@@ -11,6 +11,7 @@ export enum Color {
   TEXT_SECONDARY = "cTS",
 
   FOCUS = "cF",
+  DANGER = "cD",
 }
 
 export enum Space {

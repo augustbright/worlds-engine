@@ -1,21 +1,19 @@
-import React, { useCallback } from "react";
+import React from "react";
 import FieldInput from "components/blocks/field-input";
 
 type OwnProps<T> = {
   name: string;
   value: T;
   renderValue: (value: T, key: string) => React.ReactElement;
+  onChangeName: (newName: string) => void;
 };
 
 const MapRow = <T,>({
   name,
   renderValue,
   value,
+  onChangeName,
 }: OwnProps<T>): React.ReactElement => {
-  const onChangeName = useCallback((newName: string) => {
-    console.log(newName);
-  }, []);
-
   return (
     <>
       <FieldInput value={name} onChange={onChangeName} />

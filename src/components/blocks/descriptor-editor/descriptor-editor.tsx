@@ -4,11 +4,13 @@ import { fromThemeProp } from "components/theming/utils";
 import TypesBlock from "components/types-block";
 import React from "react";
 import styled from "styled-components";
+import { Id } from "types/common";
 import { PureTypeDescriptor } from "types/descriptors";
 
 type OwnProps = {
   types: Array<PureTypeDescriptor>;
   onChangeTypes: (newTypes: Array<PureTypeDescriptor>) => void;
+  onDeleteType: (typeId: Id) => void;
 };
 
 const Div = styled.div`
@@ -17,10 +19,18 @@ const Div = styled.div`
   padding: ${fromThemeProp((theme) => theme.space[Space.MEDIUM])};
 `;
 
-export default ({ types, onChangeTypes }: OwnProps): React.ReactElement => {
+export default ({
+  types,
+  onChangeTypes,
+  onDeleteType,
+}: OwnProps): React.ReactElement => {
   return (
     <Div>
-      <TypesBlock descriptors={types} onChange={onChangeTypes} />
+      <TypesBlock
+        descriptors={types}
+        onChange={onChangeTypes}
+        onDelete={onDeleteType}
+      />
     </Div>
   );
 };

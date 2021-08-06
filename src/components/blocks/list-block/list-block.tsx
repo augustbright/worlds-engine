@@ -1,7 +1,8 @@
-import React, { KeyboardEventHandler } from "react";
-import Nested, { Tabs } from "components/blocks/nested";
+import React, { KeyboardEventHandler, useCallback, useMemo } from "react";
+import Nested, { Tabs, Tab } from "components/blocks/nested";
 import styled from "styled-components";
 import WithBrackets, { WithBracketsProps } from "../with-brackets";
+import DeleteButton from "../delete-button";
 
 type OwnProps<T> = {
   data: Array<T>;
@@ -10,14 +11,32 @@ type OwnProps<T> = {
   tabIndex?: number;
   onKeyDown?: KeyboardEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
+  onDelete?: (idx: number) => void;
   mRef?: React.Ref<HTMLDivElement> | null;
 } & WithBracketsProps;
 
-const Identity: React.FC = ({ children }) => <>{children}</>;
-const NewLine: React.FC = ({ children }) => (
+type WrapperProps = {
+  onDelete?: () => void;
+};
+
+const Identity: React.FC<WrapperProps> = ({ children, onDelete }) => (
+  <>
+    {onDelete && <DeleteButton onClick={onDelete} />}
+    {children}
+  </>
+);
+const SingleTab: React.FC<WrapperProps> = ({ children, onDelete }) => (
+  <>
+    <Tab />
+    {onDelete && <DeleteButton onClick={onDelete} />}
+    {children}
+  </>
+);
+const NewLine: React.FC<WrapperProps> = ({ children, onDelete }) => (
   <div>
     <Nested>
       <Tabs />
+      {onDelete && <DeleteButton onClick={onDelete} />}
       {children}
     </Nested>
   </div>
@@ -41,17 +60,32 @@ const ListBlock = <T,>({
   tabIndex,
   onKeyDown,
   onBlur,
+  onDelete,
   mRef,
 }: OwnProps<T>): React.ReactElement => {
-  const ItemWrapper = data.length > 1 ? NewLine : Identity;
+  const ItemWrapper = data.length > 1 ? NewLine : SingleTab;
   const EndWrapper = data.length > 1 ? Tabbed : Identity;
+
+  const handleDelete = useMemo(
+    () => (idx: number) => onDelete && onDelete(idx),
+    [onDelete]
+  );
+  const mapper = useCallback(
+    (item: T, index: number) => (
+      <ItemWrapper
+        onDelete={onDelete && (() => handleDelete(index))}
+        key={getKey(item)}
+      >
+        {row(item, index)}
+      </ItemWrapper>
+    ),
+    [onDelete, handleDelete, ItemWrapper, getKey, row]
+  );
 
   return (
     <Block ref={mRef} onBlur={onBlur} tabIndex={tabIndex} onKeyDown={onKeyDown}>
       {start}
-      {data.map((item, index) => (
-        <ItemWrapper key={getKey(item)}>{row(item, index)}</ItemWrapper>
-      ))}
+      {data.map(mapper)}
       <EndWrapper>{end}</EndWrapper>
     </Block>
   );

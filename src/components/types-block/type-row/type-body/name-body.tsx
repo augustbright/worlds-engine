@@ -34,6 +34,7 @@ const NameBody: React.FC<OwnProps> = ({
 export const create = (): TypePureNameBody => ({
   type: "pure-name",
   name: {
+    id: "-1",
     name: "",
     owner: "",
   },

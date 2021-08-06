@@ -11,6 +11,7 @@ export const theme: Theme = {
     [Color.SECONDARY_LIGHT]: "#b3bc6d",
     [Color.TEXT_PRIMARY]: "#ffffff",
     [Color.TEXT_SECONDARY]: "#000000",
+    [Color.DANGER]: "#d65d5d",
   },
   space: {
     [Space.TINY]: "2px",

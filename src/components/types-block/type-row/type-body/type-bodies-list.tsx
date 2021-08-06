@@ -27,6 +27,12 @@ const TypeBodiesList: React.FC<OwnProps> = ({
     ),
     [handleChange]
   );
+  const handleDelete = useCallback(
+    (idx: number) => {
+      onChange([...params.slice(0, idx), ...params.slice(idx + 1)]);
+    },
+    [onChange, params]
+  );
 
   return (
     <ListBlock
@@ -34,6 +40,7 @@ const TypeBodiesList: React.FC<OwnProps> = ({
       bracketsType="ANGLED"
       getKey={(item) => item.type}
       row={row}
+      onDelete={handleDelete}
     />
   );
 };

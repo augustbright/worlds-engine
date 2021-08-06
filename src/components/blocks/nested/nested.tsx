@@ -21,9 +21,11 @@ const Nested: React.FC<OwnProps> = ({ children, level }) => {
   );
 };
 
-const Tab = styled.span`
+const Span = styled.span`
   white-space: pre-wrap;
 `;
+
+export const Tab: React.FC = () => <Span>{"      "}</Span>;
 
 export const Tabs: React.FC = () => {
   const currentLevel = useLevel();
@@ -31,7 +33,7 @@ export const Tabs: React.FC = () => {
   return (
     <>
       {times(currentLevel).map((i) => (
-        <Tab key={i}>{"    "}</Tab>
+        <Tab key={i} />
       ))}
     </>
   );

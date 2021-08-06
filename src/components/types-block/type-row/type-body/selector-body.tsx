@@ -44,12 +44,23 @@ const SelectorBody: React.FC<OwnProps> = ({
     [onChange, body]
   );
 
+  const handleParamsChange = useCallback(
+    (newParams: Record<string, TypePureBody>) => {
+      onChange({
+        ...body,
+        params: newParams,
+      });
+    },
+    [onChange, body]
+  );
+
   return (
     <>
       <MapBlock
         bracketsType="ROUND"
         data={body.params}
         renderValue={renderValue}
+        onChange={handleParamsChange}
       />
       <span>{"=>"}</span>
       <TypeBody body={body.returns} onChange={handleChangeReturns} />
@@ -63,6 +74,7 @@ export const create = (): TypeSelectorBody => ({
   returns: {
     type: "pure-name",
     name: {
+      id: "-1",
       name: "",
       owner: "",
     },

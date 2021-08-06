@@ -1,5 +1,4 @@
 import FieldInput from "components/blocks/field-input";
-import ParamsList from "components/params-list";
 import React, { useCallback } from "react";
 import { PureTypeDescriptor, TypePureBody } from "types/descriptors";
 import TypeBody from "./type-body";
@@ -14,7 +13,10 @@ const TypeRow: React.FC<OwnProps> = ({ descriptor, onChange }) => {
     (newName: string) => {
       onChange({
         ...descriptor,
-        name: newName,
+        name: {
+          ...descriptor.name,
+          name: newName,
+        },
       });
     },
     [onChange, descriptor]
@@ -31,8 +33,7 @@ const TypeRow: React.FC<OwnProps> = ({ descriptor, onChange }) => {
 
   return (
     <>
-      <FieldInput value={descriptor.name} onChange={handleChangeName} />
-      {descriptor.params && <ParamsList params={descriptor.params} />}
+      <FieldInput value={descriptor.name.name} onChange={handleChangeName} />
       <span> = </span>
       <TypeBody body={descriptor.body} onChange={handleChangeBody} />
     </>
