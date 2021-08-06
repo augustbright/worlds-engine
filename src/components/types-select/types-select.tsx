@@ -1,4 +1,5 @@
 import SearchSelect from "components/blocks/search-select/search-select";
+import { FocusableSpan } from "components/styled";
 import React, { KeyboardEvent, useCallback } from "react";
 import { TypePureNameBody } from "types/descriptors";
 import { get } from "../../server/types";
@@ -41,14 +42,14 @@ const TypesSelect: React.FC<OwnProps> = ({
         }
       };
       return (
-        <span
+        <FocusableSpan
           onKeyDown={onKeyDown}
           role="button"
           tabIndex={0}
           onClick={() => onExpand()}
         >
           {data.name.name}
-        </span>
+        </FocusableSpan>
       );
     },
     []

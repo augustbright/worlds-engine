@@ -49,6 +49,9 @@ const Tabbed: React.FC = ({ children }) => (
 );
 const Block = styled.div`
   display: inline;
+  &:focus {
+    outline: none;
+  }
 `;
 
 const ListBlock = <T,>({

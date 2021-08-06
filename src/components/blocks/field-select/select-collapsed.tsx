@@ -1,3 +1,4 @@
+import { FocusableSpan } from "components/styled";
 import React, { KeyboardEvent, useCallback } from "react";
 import { Item, getTitle } from "./common";
 
@@ -17,9 +18,14 @@ const TypeCollapsed: React.FC<OwnProps> = ({ value, onExpand, items }) => {
     [onExpand]
   );
   return (
-    <span role="button" tabIndex={0} onKeyDown={onKeyDown} onClick={onExpand}>
+    <FocusableSpan
+      role="button"
+      tabIndex={0}
+      onKeyDown={onKeyDown}
+      onClick={onExpand}
+    >
       {getTitle(items, value)}
-    </span>
+    </FocusableSpan>
   );
 };
 

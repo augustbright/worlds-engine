@@ -5,6 +5,7 @@ import { faTimesCircle } from "@fortawesome/free-regular-svg-icons";
 import { faTimesCircle as faTimesCircleSolid } from "@fortawesome/free-solid-svg-icons";
 import { fromThemeProp } from "components/theming/utils";
 import { Color } from "components/theming";
+import { focusable } from "components/theming/mixins";
 
 type OwnProps = {
   onClick: () => void;
@@ -25,6 +26,7 @@ const Button = styled.button`
   position: absolute;
   left: -20px;
   top: 2px;
+  ${focusable}
 `;
 
 export default ({ onClick }: OwnProps): React.ReactElement => {

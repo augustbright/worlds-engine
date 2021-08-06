@@ -2,7 +2,7 @@ import { Theme, Color, Space } from "../types";
 
 export const theme: Theme = {
   colors: {
-    [Color.FOCUS]: "#00d200",
+    [Color.FOCUS]: "#e6ee9c",
     [Color.PRIMARY]: "#263238",
     [Color.PRIMARY_DARK]: "#000a12",
     [Color.PRIMARY_LIGHT]: "#4f5b62",
