@@ -48,7 +48,7 @@ const TypesSelect: React.FC<OwnProps> = ({
           tabIndex={0}
           onClick={() => onExpand()}
         >
-          {data.name.name}
+          {data.name.name || "<EMPTY>"}
         </FocusableSpan>
       );
     },

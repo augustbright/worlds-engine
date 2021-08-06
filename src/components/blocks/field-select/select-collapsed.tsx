@@ -24,7 +24,7 @@ const TypeCollapsed: React.FC<OwnProps> = ({ value, onExpand, items }) => {
       onKeyDown={onKeyDown}
       onClick={onExpand}
     >
-      {getTitle(items, value)}
+      {getTitle(items, value) || "<EMPTY>"}
     </FocusableSpan>
   );
 };

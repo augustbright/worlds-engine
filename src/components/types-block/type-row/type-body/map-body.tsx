@@ -8,6 +8,11 @@ type OwnProps = {
   onChange: (newBody: TypePureMapBody) => void;
 };
 
+export const create = (): TypePureMapBody => ({
+  type: "pure-map",
+  map: {},
+});
+
 const MapBody: React.FC<OwnProps> = ({
   body,
   onChange,
@@ -43,18 +48,29 @@ const MapBody: React.FC<OwnProps> = ({
     [onChange, body]
   );
 
+  const handleMapAdd = useMemo(() => {
+    if ("" in body.map) {
+      return undefined;
+    }
+    return () => {
+      onChange({
+        ...body,
+        map: {
+          ...body.map,
+          "": {} as TypePureBody,
+        },
+      });
+    };
+  }, [body, onChange]);
+
   return (
     <MapBlock
       data={body.map}
       renderValue={renderValue}
       onChange={handleMapChange}
+      onAdd={handleMapAdd}
     />
   );
 };
-
-export const create = (): TypePureMapBody => ({
-  type: "pure-map",
-  map: {},
-});
 
 export default MapBody;

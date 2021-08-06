@@ -54,6 +54,21 @@ const SelectorBody: React.FC<OwnProps> = ({
     [onChange, body]
   );
 
+  const handleParamsAdd = useMemo(() => {
+    if ("" in body.params) {
+      return undefined;
+    }
+    return () => {
+      onChange({
+        ...body,
+        params: {
+          ...body.params,
+          "": {} as TypePureBody,
+        },
+      });
+    };
+  }, [body, onChange]);
+
   return (
     <>
       <MapBlock
@@ -61,6 +76,7 @@ const SelectorBody: React.FC<OwnProps> = ({
         data={body.params}
         renderValue={renderValue}
         onChange={handleParamsChange}
+        onAdd={handleParamsAdd}
       />
       <span>{"=>"}</span>
       <TypeBody body={body.returns} onChange={handleChangeReturns} />

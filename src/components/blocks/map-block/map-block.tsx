@@ -8,6 +8,7 @@ type OwnProps<T> = {
   bracketsType?: BracketsType;
   renderValue: (value: T, key: string) => React.ReactElement;
   onChange: (newData: Record<string, T>) => void;
+  onAdd?: () => void;
 };
 
 const MapBlock = <T,>({
@@ -15,6 +16,7 @@ const MapBlock = <T,>({
   bracketsType = "CURLY",
   renderValue,
   onChange,
+  onAdd,
 }: OwnProps<T>): React.ReactElement => {
   const dataList = useMemo(() => Object.entries(data), [data]);
   const handleDelete = useCallback(
@@ -62,6 +64,7 @@ const MapBlock = <T,>({
       bracketsType={bracketsType}
       data={dataList}
       onDelete={handleDelete}
+      onAdd={onAdd}
       row={row}
     />
   );

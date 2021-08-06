@@ -18,7 +18,7 @@ const InputExpanded: React.FC<OwnProps> = ({ value, onChange }) => {
   const [text, setText] = useState(value);
   const onChangeInput = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      setText(event.target.value);
+      setText(event.target.value.trim());
     },
     [setText]
   );

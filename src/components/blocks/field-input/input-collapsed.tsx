@@ -22,7 +22,7 @@ const InputCollapsed: React.FC<OwnProps> = ({ value, onClick }) => {
       onKeyDown={onKeyDown}
       onClick={onClick}
     >
-      {value}
+      {value || "<EMPTY>"}
     </FocusableSpan>
   );
 };

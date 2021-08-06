@@ -1,6 +1,7 @@
 import React, { KeyboardEventHandler, useCallback, useMemo } from "react";
 import Nested, { Tabs, Tab } from "components/blocks/nested";
 import styled from "styled-components";
+import AddButton from "components/blocks/add-button";
 import WithBrackets, { WithBracketsProps } from "../with-brackets";
 import DeleteButton from "../delete-button";
 
@@ -12,6 +13,7 @@ type OwnProps<T> = {
   onKeyDown?: KeyboardEventHandler<HTMLDivElement>;
   onBlur?: React.FocusEventHandler<HTMLDivElement>;
   onDelete?: (idx: number) => void;
+  onAdd?: () => void;
   mRef?: React.Ref<HTMLDivElement> | null;
 } & WithBracketsProps;
 
@@ -29,7 +31,7 @@ const SingleTab: React.FC<WrapperProps> = ({ children, onDelete }) => (
   <>
     <Tab />
     {onDelete && <DeleteButton onClick={onDelete} />}
-    {children}
+    {children}{" "}
   </>
 );
 const NewLine: React.FC<WrapperProps> = ({ children, onDelete }) => (
@@ -64,10 +66,12 @@ const ListBlock = <T,>({
   onKeyDown,
   onBlur,
   onDelete,
+  onAdd,
   mRef,
 }: OwnProps<T>): React.ReactElement => {
-  const ItemWrapper = data.length > 1 ? NewLine : SingleTab;
-  const EndWrapper = data.length > 1 ? Tabbed : Identity;
+  const minDataForMultiLines = onAdd ? 0 : 1;
+  const ItemWrapper = data.length > minDataForMultiLines ? NewLine : SingleTab;
+  const EndWrapper = data.length > minDataForMultiLines ? Tabbed : Identity;
 
   const handleDelete = useMemo(
     () => (idx: number) => onDelete && onDelete(idx),
@@ -89,6 +93,11 @@ const ListBlock = <T,>({
     <Block ref={mRef} onBlur={onBlur} tabIndex={tabIndex} onKeyDown={onKeyDown}>
       {start}
       {data.map(mapper)}
+      {onAdd ? (
+        <ItemWrapper>
+          <AddButton onClick={onAdd} />
+        </ItemWrapper>
+      ) : null}
       <EndWrapper>{end}</EndWrapper>
     </Block>
   );
