@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { code } from "components/theming";
 import DescriptorEditor from "components/blocks/descriptor-editor";
-import { PureTypeDescriptor } from "types/descriptors";
+import { PureTypeDescriptor, TypePureBody } from "types/descriptors";
 import { Id } from "types/common";
 import { id, entities, info, filtrator } from "../../mocks/descriptors";
 
@@ -10,11 +10,18 @@ const mockTypeDescriptors = [id, entities, info, filtrator];
 
 export default (): JSX.Element => {
   const [typeDescriptors, setTypeDescriptors] = useState(mockTypeDescriptors);
-  const onChangeTypeDescriptors = useCallback(
-    (newTypes: Array<PureTypeDescriptor>) => {
-      setTypeDescriptors(newTypes);
+  const onChangeTypeDescriptor = useCallback(
+    (changedId: Id, newDescriptor: PureTypeDescriptor) => {
+      setTypeDescriptors(
+        typeDescriptors.map((oldDescriptor) => {
+          if (oldDescriptor.name.id === changedId) {
+            return newDescriptor;
+          }
+          return oldDescriptor;
+        })
+      );
     },
-    [setTypeDescriptors]
+    [setTypeDescriptors, typeDescriptors]
   );
 
   const onDeleteTypeDescriptor = useCallback(
@@ -26,13 +33,28 @@ export default (): JSX.Element => {
     [setTypeDescriptors, typeDescriptors]
   );
 
+  const onAddTypeDescriptor = useCallback(() => {
+    setTypeDescriptors([
+      ...typeDescriptors,
+      {
+        name: {
+          id: "-1",
+          name: "",
+          owner: "User",
+        },
+        body: {} as TypePureBody,
+      },
+    ]);
+  }, [setTypeDescriptors, typeDescriptors]);
+
   return (
     <div>
       <ThemeProvider theme={code}>
         <DescriptorEditor
           types={typeDescriptors}
-          onChangeTypes={onChangeTypeDescriptors}
+          onChangeType={onChangeTypeDescriptor}
           onDeleteType={onDeleteTypeDescriptor}
+          onAddType={onAddTypeDescriptor}
         />
       </ThemeProvider>
     </div>

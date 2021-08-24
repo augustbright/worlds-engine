@@ -1,5 +1,6 @@
 import FieldInput from "components/blocks/field-input";
 import React, { useCallback } from "react";
+import styled from "styled-components";
 import { PureTypeDescriptor, TypePureBody } from "types/descriptors";
 import TypeBody from "./type-body";
 

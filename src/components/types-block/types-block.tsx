@@ -6,31 +6,28 @@ import { Id } from "types/common";
 
 type OwnProps = {
   descriptors: Array<PureTypeDescriptor>;
-  onChange: (newDescriptors: Array<PureTypeDescriptor>) => void;
+  onChange: (id: Id, newDescriptor: PureTypeDescriptor) => void;
   onDelete: (id: Id) => void;
+  onAdd: () => void;
 };
 
 const TypesBlock: React.FC<OwnProps> = ({
   descriptors,
   onChange,
   onDelete,
+  onAdd,
 }) => {
   const handleChangeDescriptor = useMemo(
-    () =>
-      (idx = 0, newDescriptor: PureTypeDescriptor) => {
-        onChange([
-          ...descriptors.slice(0, idx),
-          newDescriptor,
-          ...descriptors.slice(idx + 1),
-        ]);
-      },
-    [onChange, descriptors]
+    () => (newDescriptor: PureTypeDescriptor) => {
+      onChange(newDescriptor.name.id, newDescriptor);
+    },
+    [onChange]
   );
   const row = useCallback(
-    (item: PureTypeDescriptor, idx?: number) => (
+    (item: PureTypeDescriptor) => (
       <TypeRow
         descriptor={item}
-        onChange={(newDescriptor) => handleChangeDescriptor(idx, newDescriptor)}
+        onChange={(newDescriptor) => handleChangeDescriptor(newDescriptor)}
       />
     ),
     [handleChangeDescriptor]
@@ -48,6 +45,7 @@ const TypesBlock: React.FC<OwnProps> = ({
       data={descriptors}
       row={row}
       onDelete={handleDelete}
+      onAdd={onAdd}
       getKey={(descriptor) => descriptor.name.id}
     />
   );

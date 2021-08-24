@@ -9,8 +9,9 @@ import { PureTypeDescriptor } from "types/descriptors";
 
 type OwnProps = {
   types: Array<PureTypeDescriptor>;
-  onChangeTypes: (newTypes: Array<PureTypeDescriptor>) => void;
+  onChangeType: (id: Id, newDescriptor: PureTypeDescriptor) => void;
   onDeleteType: (typeId: Id) => void;
+  onAddType: () => void;
 };
 
 const Div = styled.div`
@@ -21,15 +22,17 @@ const Div = styled.div`
 
 export default ({
   types,
-  onChangeTypes,
+  onChangeType,
   onDeleteType,
+  onAddType,
 }: OwnProps): React.ReactElement => {
   return (
     <Div>
       <TypesBlock
         descriptors={types}
-        onChange={onChangeTypes}
+        onChange={onChangeType}
         onDelete={onDeleteType}
+        onAdd={onAddType}
       />
     </Div>
   );
