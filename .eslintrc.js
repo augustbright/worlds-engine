@@ -20,6 +20,10 @@ module.exports = {
             ['components', './src/components'],
             ['types', './src/types'],
             ['server', './src/server'],
+            ['state', './src/state'],
+            ['hoc', './src/hoc'],
+            ['pages', './src/pages'],
+            ['api', './src/api'],
           ],
         },
       },
@@ -34,6 +38,7 @@ module.exports = {
 
     // note you must disable the base rule as it can report incorrect errors
     'no-use-before-define': 'off',
+    'no-await-in-loop': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
@@ -42,6 +47,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'import/no-cycle': 'off',
     'import/prefer-default-export': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
 
     'react/prop-types': 'off',
 

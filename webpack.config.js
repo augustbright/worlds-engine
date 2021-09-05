@@ -1,6 +1,9 @@
+require('dotenv').config('./.env');
+
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
+const { DefinePlugin } = require('webpack');
 
 module.exports = {
   entry: './src',
@@ -15,6 +18,10 @@ module.exports = {
       components: path.resolve(__dirname, 'src', 'components'),
       types: path.resolve(__dirname, 'src', 'types'),
       server: path.resolve(__dirname, 'src', 'server'),
+      state: path.resolve(__dirname, 'src', 'state'),
+      hoc: path.resolve(__dirname, 'src', 'hoc'),
+      pages: path.resolve(__dirname, 'src', 'pages'),
+      api: path.resolve(__dirname, 'src', 'api'),
     },
   },
   module: {
@@ -39,9 +46,16 @@ module.exports = {
       template: path.join(__dirname, 'src', 'templates', 'index.html'),
     }),
     new GenerateSW(),
+    new DefinePlugin({
+      APPLICATION_HOST: JSON.stringify(process.env['APPLICATION_HOST'])
+    })
   ],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
+    historyApiFallback: true,
+    proxy: {
+      '/api': 'http://localhost:3000/'
+    }
   },
   devtool: 'inline-source-map',
 };
