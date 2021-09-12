@@ -2,8 +2,8 @@ import DescriptorEditor from "components/blocks/descriptor-editor";
 import React, { useCallback, useState } from "react";
 import { PureTypeDescriptor, TypePureBody } from "types/descriptors";
 import { Id } from "types/common";
-import { LayoutBase } from "./layout/base";
 import { id, entities, info, filtrator } from "../mocks/descriptors";
+import { PageLayout } from "./layout/page";
 
 const mockTypeDescriptors = [id, entities, info, filtrator];
 
@@ -47,13 +47,13 @@ export const MainPage: React.FC = () => {
   }, [setTypeDescriptors, typeDescriptors]);
 
   return (
-    <LayoutBase>
+    <PageLayout>
       <DescriptorEditor
         types={typeDescriptors}
         onChangeType={onChangeTypeDescriptor}
         onDeleteType={onDeleteTypeDescriptor}
         onAddType={onAddTypeDescriptor}
       />
-    </LayoutBase>
+    </PageLayout>
   );
 };

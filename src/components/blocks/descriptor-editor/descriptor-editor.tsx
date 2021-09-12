@@ -1,4 +1,3 @@
-import { Color } from "components/theming";
 import { Space } from "components/theming/types";
 import { fromThemeProp } from "components/theming/utils";
 import TypesBlock from "components/types-block";
@@ -15,8 +14,6 @@ type OwnProps = {
 };
 
 const Div = styled.div`
-  background: ${fromThemeProp((theme) => theme.colors[Color.PRIMARY])};
-  color: ${fromThemeProp((theme) => theme.colors[Color.TEXT_PRIMARY])};
   padding: ${fromThemeProp((theme) => theme.space[Space.MEDIUM])};
 `;
 

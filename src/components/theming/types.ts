@@ -1,25 +1,33 @@
 export enum Color {
-  PRIMARY = "cP",
-  PRIMARY_LIGHT = "cPL",
-  PRIMARY_DARK = "cPD",
+  PRIMARY,
+  PRIMARY_LIGHT,
+  PRIMARY_DARK,
 
-  SECONDARY = "cS",
-  SECONDARY_LIGHT = "cSL",
-  SECONDARY_DARK = "cSD",
+  SECONDARY,
+  SECONDARY_LIGHT,
+  SECONDARY_DARK,
 
-  TEXT_PRIMARY = "cTP",
-  TEXT_SECONDARY = "cTS",
+  TEXT_PRIMARY,
+  TEXT_SECONDARY,
 
-  FOCUS = "cF",
-  DANGER = "cD",
+  FOCUS,
+  DANGER,
+
+  PAGE_BACKGROUND,
+
+  HEADER_BACKGROUND,
+  NAVIGATION_COLOR,
+  NAVIGATION_BORDER,
+  NAVIGATION_HOVER,
+  NAVIGATION_ACTIVE_BORDER,
 }
 
 export enum Space {
-  TINY = "t",
-  SMALL = "s",
-  MEDIUM = "m",
-  LARGE = "l",
-  HUGE = "h",
+  TINY,
+  SMALL,
+  MEDIUM,
+  LARGE,
+  HUGE,
 }
 
 export type Theme = {
