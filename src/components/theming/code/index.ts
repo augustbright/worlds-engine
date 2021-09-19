@@ -18,6 +18,9 @@ export const theme: Theme = {
     [Color.NAVIGATION_BORDER]: "#252526",
     [Color.NAVIGATION_HOVER]: "#110D12",
     [Color.NAVIGATION_ACTIVE_BORDER]: "#9D89E2",
+    [Color.LIST_PATH_BACKGROUND]: "#080609",
+    [Color.LIST_PATH_FOREGROUND]: "rgba(224, 206, 237, 0.8)",
+    [Color.LIST_PATH_HOVER_FOREGROUND]: "#f5eff9",
   },
   space: {
     [Space.TINY]: "2px",
