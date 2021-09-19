@@ -25,7 +25,8 @@ const items2: Array<ListItem> = [
   },
   {
     id: "line1",
-    content: () => <Pinnable>line 1</Pinnable>,
+    content: (navigate: string | null) =>
+      navigate ? "line 1" : <Pinnable>line 1</Pinnable>,
   },
   {
     id: "}",
@@ -40,11 +41,13 @@ const items3: Array<ListItem> = [
   },
   {
     id: "line1",
-    content: () => <Pinnable>line 1</Pinnable>,
+    content: (navigate: string | null) =>
+      navigate ? "line 1" : <Pinnable>line 1</Pinnable>,
   },
   {
     id: "line2",
-    content: () => <Pinnable>line 2</Pinnable>,
+    content: (navigate: string | null) =>
+      navigate ? "line 2" : <Pinnable>line 2</Pinnable>,
   },
   {
     id: "}",
@@ -59,7 +62,8 @@ const items4: Array<ListItem> = [
   },
   {
     id: "line1",
-    content: () => <Pinnable>line 1</Pinnable>,
+    content: (navigate: string | null) =>
+      navigate ? "line 1" : <Pinnable>line 1</Pinnable>,
   },
   {
     id: "sublist1",
@@ -96,7 +100,8 @@ const items4: Array<ListItem> = [
   },
   {
     id: "line3",
-    content: () => <Pinnable>line 3</Pinnable>,
+    content: (navigate: string | null) =>
+      navigate ? "line 3" : <Pinnable>line 3</Pinnable>,
   },
   {
     id: "}",
