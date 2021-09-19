@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { ListPath } from "./path";
-import { PathProvider } from "./path-context";
+import { ListPath } from "../path/path";
+import { PinProvider } from "../pin-context";
 
 export const ListViewer: React.FC = ({ children }) => {
   const [statePinnedPath, setStatePinnedPath] = useState<Array<string>>([]);
@@ -11,9 +11,8 @@ export const ListViewer: React.FC = ({ children }) => {
     [setStatePinnedPath]
   );
 
-  const nextPathContext = useMemo(
+  const pinContextValue = useMemo(
     () => ({
-      path: [],
       onPinPath: (newPath: Array<string>) => setStatePinnedPath(newPath),
       pinnedPath: statePinnedPath,
     }),
@@ -23,7 +22,7 @@ export const ListViewer: React.FC = ({ children }) => {
   return (
     <>
       <ListPath path={statePinnedPath} onChangePath={handleChangePath} />
-      <PathProvider value={nextPathContext}>{children}</PathProvider>
+      <PinProvider value={pinContextValue}>{children}</PinProvider>
     </>
   );
 };

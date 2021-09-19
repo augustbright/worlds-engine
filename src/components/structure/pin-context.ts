@@ -11,5 +11,5 @@ const PinContext = React.createContext<PinContextData>({
   onPinPath: noop,
 });
 
-export const PathProvider = PinContext.Provider;
-export const usePathContext = () => useContext(PinContext);
+export const PinProvider = PinContext.Provider;
+export const usePinContext = () => useContext(PinContext);

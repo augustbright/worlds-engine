@@ -21,6 +21,7 @@ export const theme: Theme = {
     [Color.LIST_PATH_BACKGROUND]: "#080609",
     [Color.LIST_PATH_FOREGROUND]: "rgba(224, 206, 237, 0.8)",
     [Color.LIST_PATH_HOVER_FOREGROUND]: "#f5eff9",
+    [Color.INDENT_FOREGROUND]: "rgb(97, 78, 110)",
   },
   space: {
     [Space.TINY]: "2px",

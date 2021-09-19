@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
-import { ListItem } from "./list-item";
-import { TabProvider, useTabContext } from "./tab-context";
+import { TabProvider, useTabContext } from "../tab-context";
+import { ListItem } from "../item/list-item";
 
 export type ListItem = {
   id: string;

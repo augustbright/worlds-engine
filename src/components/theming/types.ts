@@ -24,6 +24,8 @@ export enum Color {
   LIST_PATH_BACKGROUND,
   LIST_PATH_FOREGROUND,
   LIST_PATH_HOVER_FOREGROUND,
+
+  INDENT_FOREGROUND,
 }
 
 export enum Space {
