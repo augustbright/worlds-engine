@@ -19,7 +19,7 @@ export const Pinnable: React.FC = ({ children }) => {
 
   return (
     <>
-      <StyledButton onClick={handleClick} size="sm" icon={faThumbtack} />
+      <StyledButton onClick={handleClick} size="xs" icon={faThumbtack} />
       {children}
     </>
   );

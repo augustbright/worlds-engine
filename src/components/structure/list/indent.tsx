@@ -4,10 +4,6 @@ import React from "react";
 import styled from "styled-components";
 import { useTabContext } from "../tab-context";
 
-type Props = {
-  offset?: number;
-};
-
 const Tab = styled.div`
   display: inline-flex;
   justify-content: center;
@@ -16,11 +12,16 @@ const Tab = styled.div`
   width: 16px;
 `;
 
-export const Indent: React.FC<Props> = ({ offset = 0 }) => {
+export const Indent: React.FC = () => {
   const { level } = useTabContext();
   const spaces = [];
-  for (let i = 0; i < level + offset; i += 1) {
-    spaces.push(<Tab>·</Tab>);
+  for (let i = 0; i < level; i += 1) {
+    spaces.push(
+      <>
+        <Tab>·</Tab>
+        <Tab>·</Tab>
+      </>
+    );
   }
 
   return <>{spaces}</>;

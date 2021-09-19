@@ -1,12 +1,13 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
-import { useTabContext } from "../tab-context";
 import { Indent } from "../list/indent";
 import { PathProvider, usePathContext } from "../path/path-context";
+import { useNavigate } from "../pin-context";
 
 type Props = {
   id: string;
   inline: boolean;
+  children: (navigate: string | null) => React.ReactNode;
 };
 
 const Container = styled.div<{ inline: boolean }>`
@@ -14,8 +15,7 @@ const Container = styled.div<{ inline: boolean }>`
   font-size: 14px;
 `;
 
-export const ListItem: React.FC<Props> = ({ children, inline, id }) => {
-  const { level } = useTabContext();
+export const ListItem = ({ children, inline, id }: Props) => {
   const { path } = usePathContext();
   const nextPathContext = useMemo(
     () => ({
@@ -23,11 +23,12 @@ export const ListItem: React.FC<Props> = ({ children, inline, id }) => {
     }),
     [path, id]
   );
+  const navigate = useNavigate();
 
   return (
     <Container inline={inline}>
-      {inline ? null : <Indent offset={level} />}
-      <PathProvider value={nextPathContext}>{children}</PathProvider>
+      {inline ? null : <Indent />}
+      <PathProvider value={nextPathContext}>{children(navigate)}</PathProvider>
     </Container>
   );
 };
