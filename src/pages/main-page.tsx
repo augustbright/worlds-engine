@@ -1,4 +1,4 @@
-import { DescriptorEditor } from "components/descriptor-editor";
+import { DescriptorEditor } from "components/editor/descriptor-editor";
 import React from "react";
 import { PageLayout } from "./layout/page";
 

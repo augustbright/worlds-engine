@@ -41,3 +41,9 @@ export type TypeDescriptor = {
   name: NameId;
   body: TypeBody;
 };
+
+export type ExternalTypeDescriptor = {
+  _id: TypeRefId;
+  name: NameId;
+  params?: Array<string>;
+};

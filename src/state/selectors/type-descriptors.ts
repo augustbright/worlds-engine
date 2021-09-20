@@ -7,3 +7,8 @@ export const selectTypeDescriptors = createSelector(
   selectSelf,
   ({ typeDescriptors }) => typeDescriptors.descriptors
 );
+
+export const selectExternalDescriptors = createSelector(
+  selectSelf,
+  ({ typeDescriptors }) => typeDescriptors.external
+);
