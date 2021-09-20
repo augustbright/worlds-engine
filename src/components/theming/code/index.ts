@@ -22,6 +22,11 @@ export const theme: Theme = {
     [Color.LIST_PATH_FOREGROUND]: "rgba(224, 206, 237, 0.8)",
     [Color.LIST_PATH_HOVER_FOREGROUND]: "#f5eff9",
     [Color.INDENT_FOREGROUND]: "rgb(97, 78, 110)",
+    [Color.BRACKET_FOREGROUND]: "#cbcb41",
+    [Color.BUTTON_BACKGROUND]: "#080609",
+    [Color.BUTTON_FOREGROUND]: "rgba(224,206,237,0.8)",
+    [Color.BUTTON_HOVER_FOREGROUND]: "#f5eff9",
+    [Color.BUTTON_BORDER]: "#211d26",
   },
   space: {
     [Space.TINY]: "2px",
