@@ -6,7 +6,6 @@ import { useNavigate } from "../pin-context";
 export type ListItem = {
   id: string;
   content: (navigate: string | null) => React.ReactNode;
-  path?: boolean;
 };
 
 type Props = {

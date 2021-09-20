@@ -1,9 +1,9 @@
 import { AddItem } from "components/structure/item/add-item";
+import { MapItem } from "components/structure/item/map-item";
 import { Pinnable } from "components/structure/item/pinnable";
 import { List, ListItem } from "components/structure/list/list";
 import { ListViewer } from "components/structure/list/list-viewer";
 import { Bracket, withBrackets } from "components/structure/list/withBrackets";
-import { ListPath } from "components/structure/path/path";
 import { noop } from "lodash";
 import React from "react";
 import { PageLayout } from "./layout/page";
@@ -15,7 +15,14 @@ const items2: Array<ListItem> = withBrackets(
     {
       id: "line1",
       content: (navigate: string | null) =>
-        navigate ? "line 1" : <Pinnable>line 1</Pinnable>,
+        navigate ? (
+          "line 1"
+        ) : (
+          <MapItem
+            keyContent="key"
+            valueContent={<Pinnable>line 1</Pinnable>}
+          />
+        ),
     },
   ],
   Bracket.CURLY
@@ -90,13 +97,9 @@ const items4: Array<ListItem> = withBrackets(
   Bracket.CURLY
 );
 
-const path = ["one", "two", "three"];
-
 export const TestPage: React.FC = () => {
   return (
     <PageLayout>
-      <ListPath path={path} onChangePath={noop} />
-      <br />
       <ListViewer>
         <List items={items4} />
       </ListViewer>

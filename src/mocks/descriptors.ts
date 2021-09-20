@@ -1,284 +1,115 @@
-import {
-  PureTypeDescriptor,
-  SelectorDescriptor,
-  ActionDescriptor,
-  EntityDescriptor,
-  TypePureBody,
-} from "types/descriptors";
+import { Body, TypeDescriptor } from "types/descriptors";
+import { SystemRef } from "types/ref";
 
-export const numberNameId = {
-  id: "2",
-  name: "Number",
-  owner: "system",
-};
+/*
+{
+    "name": "Map 2",
+    "body": {
+			"type": "map",
+			"map": {
+				"key1": {
+					"type": "ref",
+					"ref": "__type_number"
+				},
+				"key2": {
+					"type": "map",
+					"map": {
+						"subkey1": {
+							"type": "ref",
+							"ref": "__type_boolean"
+						},
+						"subkey2": {
+							"type": "ref",
+							"ref": "__type_list",
+							"params": {
+								"type": {
+									"type": "param",
+									"param": "entity"
+								}
+							}
+						}
+					}
+				},
+				"key3": {
+					"type": "selector",
+					"params": {
+						"arg1": {
+							"type": "ref",
+							"ref": "__type_number"
+						},
+						"arg2": {
+							"type": "ref",
+							"ref": "__type_boolean"
+						}
+					},
+					"returns": {
+						"type": "ref",
+						"ref": "__type_list",
+						"params": {
+							"type": {
+								"type": "ref",
+								"ref": "__type_string"
+							}
+						}
+					}
+				}
+			}
+    }
+}
+*/
 
-export const idNameId = {
-  id: "1",
-  name: "Id",
-  owner: "User",
-};
-
-export const entitiesNameId = {
-  id: "3",
-  name: "Entities",
-  owner: "User",
-};
-
-export const listNameId = {
-  id: "4",
-  name: "List",
-  owner: "system",
-};
-
-export const entityNameId = {
-  id: "5",
-  name: "Entity",
-  owner: "system",
-};
-
-export const filtratorNameId = {
-  id: "6",
-  name: "Filtrator",
-  owner: "system",
-};
-
-export const booleanNameId = {
-  id: "7",
-  name: "Boolean",
-  owner: "system",
-};
-
-export const infoNameId = {
-  id: "8",
-  name: "Info",
-  owner: "User",
-};
-
-export const stringNameId = {
-  id: "9",
-  name: "String",
-  owner: "system",
-};
-
-export const numberBody: TypePureBody = {
-  type: "pure-name",
-  name: numberNameId,
-};
-
-export const id: PureTypeDescriptor = {
-  name: idNameId,
-  body: numberBody,
-};
-
-export const entities: PureTypeDescriptor = {
-  name: entitiesNameId,
+export const body1: TypeDescriptor = {
+  _id: "mockId",
+  name: "Map 1",
   body: {
-    type: "pure-name",
-    name: listNameId,
-    params: [
-      {
-        type: "pure-name",
-        name: entityNameId,
-      },
-      {
-        type: "pure-name",
-        name: filtratorNameId,
-      },
-    ],
-  },
-};
-
-export const filtrator: PureTypeDescriptor = {
-  name: filtratorNameId,
-  body: {
-    type: "selector",
-    params: {
-      item: {
-        type: "param",
-        param: "T",
-      },
-    },
-    returns: {
-      type: "pure-name",
-      name: booleanNameId,
-    },
-  },
-};
-
-export const info: PureTypeDescriptor = {
-  name: infoNameId,
-  params: ["T1", "T2"],
-  body: {
-    type: "pure-map",
+    type: Body.MAP,
     map: {
-      field1: {
-        type: "pure-name",
-        name: idNameId,
+      key1: {
+        type: Body.REF,
+        ref: SystemRef.NUMBER,
       },
-      field2: {
-        type: "param",
-        param: "T",
-      },
-      filtrator: {
-        type: "pure-name",
-        name: filtratorNameId,
-        params: [{ type: "param", param: "T" }],
-      },
-      map: {
-        type: "pure-map",
+      key2: {
+        type: Body.MAP,
         map: {
-          sub1: {
-            type: "pure-name",
-            name: stringNameId,
+          subkey1: {
+            type: Body.REF,
+            ref: SystemRef.BOOLEAN,
           },
-          sub2: {
-            type: "pure-name",
-            name: stringNameId,
-          },
-        },
-      },
-    },
-  },
-};
-
-export const getEnemies: SelectorDescriptor = {
-  name: "GetEnemies",
-  params: {},
-  returnType: {
-    type: "pure-name",
-    name: listNameId,
-    params: [
-      {
-        type: "pure-name",
-        name: entityNameId,
-      },
-    ],
-  },
-  body: {
-    type: "name",
-    name: {
-      id: "14",
-      name: "Filter",
-      owner: "system",
-    },
-    params: {
-      list: {
-        type: "name",
-        name: {
-          id: "15",
-          name: "GetEntitiesAround",
-          owner: "system",
-        },
-        params: {},
-      },
-      condition: {
-        type: "value",
-        value: {
-          type: "selector",
-          selector: {
-            id: "16",
-            name: "IsEnemy",
-            owner: "system",
+          subkey2: {
+            type: Body.REF,
+            ref: SystemRef.LIST,
+            params: {
+              type: {
+                type: Body.PARAM,
+                param: "entity",
+              },
+            },
           },
         },
       },
-    },
-  },
-};
-
-export const strategy: ActionDescriptor = {
-  name: "Strategy",
-  steps: [
-    {
-      type: "decision",
-      condition: {
-        type: "name",
-        name: {
-          id: "10",
-          name: "IsInDanger",
-          owner: "system",
-        },
+      key3: {
+        type: Body.SELECTOR,
         params: {
-          area: {
-            type: "value",
-            value: {
-              type: "number",
-              number: 5,
+          arg1: {
+            type: Body.REF,
+            ref: SystemRef.NUMBER,
+          },
+          arg2: {
+            type: Body.REF,
+            ref: SystemRef.BOOLEAN,
+          },
+        },
+        returns: {
+          type: Body.REF,
+          ref: SystemRef.LIST,
+          params: {
+            type: {
+              type: Body.REF,
+              ref: SystemRef.STRING,
             },
           },
         },
       },
-      true: [
-        {
-          type: "effect",
-          name: {
-            id: "11",
-            name: "message",
-            owner: "system",
-          },
-          params: {
-            message: {
-              type: "value",
-              value: {
-                type: "string",
-                string: "SOS",
-              },
-            },
-            channels: {
-              type: "value",
-              value: {
-                type: "list",
-                entityType: listNameId,
-                list: [
-                  {
-                    type: "string",
-                    string: "neighbours",
-                  },
-                ],
-              },
-            },
-          },
-        },
-        {
-          type: "effect",
-          name: {
-            id: "11",
-            name: "move",
-            owner: "system",
-          },
-          params: {
-            direction: {
-              type: "name",
-              name: {
-                id: "12",
-                name: "GetSafeDirection",
-                owner: "system",
-              },
-              params: {},
-            },
-          },
-        },
-      ],
-      false: [
-        {
-          type: "effect",
-          name: {
-            id: "13",
-            name: "earn",
-            owner: "system",
-          },
-          params: {},
-        },
-      ],
     },
-  ],
-};
-
-export const entity: EntityDescriptor = {
-  name: "SimpleEntity",
-  strategy: {
-    id: "14",
-    name: "Strategy",
-    owner: "system",
   },
 };

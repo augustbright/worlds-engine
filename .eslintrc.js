@@ -21,7 +21,7 @@ module.exports = {
             ['types', './src/types'],
             ['server', './src/server'],
             ['state', './src/state'],
-            ['hoc', './src/hoc'],
+            ['hook', './src/hook'],
             ['pages', './src/pages'],
             ['api', './src/api'],
           ],
@@ -48,6 +48,7 @@ module.exports = {
     'import/no-cycle': 'off',
     'import/prefer-default-export': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'no-underscore-dangle': 'off',
 
     'react/prop-types': 'off',
 

@@ -1,12 +1,10 @@
 import axios from "axios";
 import { GoogleOAuthCallbackDTO } from "./types";
-import { getApi, getToken } from "./utils";
+import { getApi, withToken } from "./utils";
 
 export const getUser = () =>
-  axios.get(`${getApi()}/auth/user`, {
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-    },
+  axios.get(`${getApi()}/auth/user`, withToken()).then((data) => {
+    return data.data;
   });
 
 export const googleOAuthCallback = (query: string) =>

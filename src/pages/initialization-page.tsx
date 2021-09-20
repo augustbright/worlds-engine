@@ -1,4 +1,4 @@
-import { useIsAppReady } from "hoc/application";
+import { useIsAppReady } from "hook/application";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { initApplication } from "state/actions/common";

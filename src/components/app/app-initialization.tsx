@@ -1,4 +1,4 @@
-import { useIsAppReady } from "hoc/application";
+import { useIsAppReady } from "hook/application";
 import { InitializationPage } from "pages/initialization-page";
 import React from "react";
 

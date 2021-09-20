@@ -4,6 +4,16 @@ export const setToken = (token: string) => {
 
 export const getToken = () => localStorage.getItem("JWT");
 
+export const withToken = <T extends { headers: Record<string, unknown> }>(
+  params: T | Record<string, never> = {}
+) => ({
+  ...params,
+  headers: {
+    ...(params.headers || {}),
+    Authorization: `Bearer ${getToken()}`,
+  },
+});
+
 // build variable
 const getHost = () => APPLICATION_HOST;
 

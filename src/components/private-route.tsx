@@ -1,4 +1,4 @@
-import { useAuth } from "hoc/auth";
+import { useAuth } from "hook/auth";
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 

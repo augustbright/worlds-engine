@@ -19,7 +19,7 @@ module.exports = {
       types: path.resolve(__dirname, 'src', 'types'),
       server: path.resolve(__dirname, 'src', 'server'),
       state: path.resolve(__dirname, 'src', 'state'),
-      hoc: path.resolve(__dirname, 'src', 'hoc'),
+      hook: path.resolve(__dirname, 'src', 'hook'),
       pages: path.resolve(__dirname, 'src', 'pages'),
       api: path.resolve(__dirname, 'src', 'api'),
     },
