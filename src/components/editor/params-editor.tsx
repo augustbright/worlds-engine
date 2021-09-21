@@ -1,5 +1,5 @@
+import { Pin } from "components/structure/anchor/pin";
 import { MapItem } from "components/structure/item/map-item";
-import { Pinnable } from "components/structure/item/pinnable";
 import { List, ListItem } from "components/structure/list/list";
 import { Bracket, withBrackets } from "components/structure/list/withBrackets";
 import React, { useMemo } from "react";
@@ -17,18 +17,16 @@ const useListItems = (
     const mapItems = Object.entries(params).map(([key, param]) => {
       return {
         id: key,
-        content: (navigate: string | null) => {
-          const editor = <TypeBodyEditor body={param || undefined} />;
-          if (navigate) {
-            return editor;
-          }
-          return (
-            <MapItem
-              keyContent={<>{key}</>}
-              valueContent={<Pinnable>{editor}</Pinnable>}
-            />
-          );
-        },
+        content: (
+          <MapItem
+            keyContent={<>{key}</>}
+            valueContent={
+              <Pin path={key}>
+                <TypeBodyEditor body={param || undefined} />
+              </Pin>
+            }
+          />
+        ),
       };
     });
     return withBrackets(mapItems, Bracket.ANGLE);

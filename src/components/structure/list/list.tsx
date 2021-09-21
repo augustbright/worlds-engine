@@ -1,11 +1,10 @@
 import React, { useCallback } from "react";
 import { TabProvider, useTabContext } from "../tab-context";
 import { ListItem } from "../item/list-item";
-import { useNavigate } from "../pin-context";
 
 export type ListItem = {
   id: string;
-  content: (navigate: string | null) => React.ReactNode;
+  content: React.ReactNode;
 };
 
 type Props = {
@@ -14,7 +13,6 @@ type Props = {
 
 export const List: React.FC<Props> = ({ items }) => {
   const { level } = useTabContext();
-  const navigate = useNavigate();
 
   const itemsMapFn = useCallback(
     (item: ListItem, index) => {
@@ -38,15 +36,5 @@ export const List: React.FC<Props> = ({ items }) => {
     [items, level]
   );
 
-  if (!navigate) {
-    return <>{items.map(itemsMapFn)}</>;
-  }
-
-  const navigatedItem = items.find((item) => item.id === navigate);
-  if (!navigatedItem) return null;
-  return (
-    <ListItem inline id={navigatedItem.id}>
-      {navigatedItem.content}
-    </ListItem>
-  );
+  return <>{items.map(itemsMapFn)}</>;
 };

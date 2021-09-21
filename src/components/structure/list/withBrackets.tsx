@@ -46,13 +46,11 @@ export const withBrackets = (
 ): Array<ListItem> => [
   {
     id: "start",
-    content: () => (
-      <BracketContainer>{brackets[bracket].start}</BracketContainer>
-    ),
+    content: <BracketContainer>{brackets[bracket].start}</BracketContainer>,
   },
   ...list,
   {
     id: "end",
-    content: () => <BracketContainer>{brackets[bracket].end}</BracketContainer>,
+    content: <BracketContainer>{brackets[bracket].end}</BracketContainer>,
   },
 ];

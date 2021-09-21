@@ -1,8 +1,8 @@
+import { Pin } from "components/structure/anchor/pin";
+import { AnchorViewer } from "components/structure/anchor/viewer";
 import { AddItem } from "components/structure/item/add-item";
 import { MapItem } from "components/structure/item/map-item";
-import { Pinnable } from "components/structure/item/pinnable";
 import { List, ListItem } from "components/structure/list/list";
-import { ListViewer } from "components/structure/list/list-viewer";
 import { Bracket, withBrackets } from "components/structure/list/withBrackets";
 import { noop } from "lodash";
 import React from "react";
@@ -14,15 +14,12 @@ const items2: Array<ListItem> = withBrackets(
   [
     {
       id: "line1",
-      content: (navigate: string | null) =>
-        navigate ? (
-          "line 1"
-        ) : (
-          <MapItem
-            keyContent="key"
-            valueContent={<Pinnable>line 1</Pinnable>}
-          />
-        ),
+      content: (
+        <MapItem
+          keyContent="key"
+          valueContent={<Pin path="line1">line 1</Pin>}
+        />
+      ),
     },
   ],
   Bracket.CURLY
@@ -32,17 +29,15 @@ const items3: Array<ListItem> = withBrackets(
   [
     {
       id: "line1",
-      content: (navigate: string | null) =>
-        navigate ? "line 1" : <Pinnable>line 1</Pinnable>,
+      content: <Pin path="line 1">line 1</Pin>,
     },
     {
       id: "line2",
-      content: (navigate: string | null) =>
-        navigate ? "line 2" : <Pinnable>line 2</Pinnable>,
+      content: <Pin path="line 2">line 2</Pin>,
     },
     {
       id: "new",
-      content: () => <AddItem onClick={noop} />,
+      content: <AddItem onClick={noop} />,
     },
   ],
   Bracket.CURLY
@@ -52,46 +47,35 @@ const items4: Array<ListItem> = withBrackets(
   [
     {
       id: "line1",
-      content: (navigate: string | null) =>
-        navigate ? "line 1" : <Pinnable>line 1</Pinnable>,
+      content: <Pin path="line 1">line 1</Pin>,
     },
     {
       id: "sublist1",
-      content: (navigate: string | null) =>
-        navigate ? (
+      content: (
+        <Pin path="sublist 1">
           <List items={items1} />
-        ) : (
-          <Pinnable>
-            <List items={items1} />
-          </Pinnable>
-        ),
+        </Pin>
+      ),
     },
     {
       id: "sublist2",
-      content: (navigate: string | null) =>
-        navigate ? (
+      content: (
+        <Pin path="sublist2">
           <List items={items2} />
-        ) : (
-          <Pinnable>
-            <List items={items2} />
-          </Pinnable>
-        ),
+        </Pin>
+      ),
     },
     {
       id: "sublist3",
-      content: (navigate: string | null) =>
-        navigate ? (
+      content: (
+        <Pin path="sublist3">
           <List items={items3} />
-        ) : (
-          <Pinnable>
-            <List items={items3} />
-          </Pinnable>
-        ),
+        </Pin>
+      ),
     },
     {
       id: "line3",
-      content: (navigate: string | null) =>
-        navigate ? "line 3" : <Pinnable>line 3</Pinnable>,
+      content: <Pin path="line3">line 2</Pin>,
     },
   ],
   Bracket.CURLY
@@ -100,9 +84,20 @@ const items4: Array<ListItem> = withBrackets(
 export const TestPage: React.FC = () => {
   return (
     <PageLayout>
-      <ListViewer>
+      <AnchorViewer>
+        <Pin path="first">
+          <div>foo</div>
+        </Pin>
+        <Pin path="second">
+          <div>
+            bar of: <Pin path="bar content">eggz</Pin>
+          </div>
+        </Pin>
+      </AnchorViewer>
+      <br />
+      <AnchorViewer>
         <List items={items4} />
-      </ListViewer>
+      </AnchorViewer>
     </PageLayout>
   );
 };
