@@ -1,5 +1,6 @@
 import React from "react";
 import { Body, TypeBody } from "types/descriptors";
+import { TypeBodySelector } from "./type-body-selector";
 import { RefTypeBodyEditor } from "./type-body/ref";
 
 type Props = {
@@ -7,12 +8,14 @@ type Props = {
 };
 
 export const TypeBodyEditor: React.FC<Props> = ({ body }) => {
+  let editor: React.ReactNode;
   if (!body) {
-    return null;
+    editor = <TypeBodySelector>any</TypeBodySelector>;
+  } else if (body.type === Body.REF) {
+    editor = <RefTypeBodyEditor body={body} />;
+  } else {
+    editor = <>{String(body.type)}</>;
   }
 
-  if (body.type === Body.REF) {
-    return <RefTypeBodyEditor body={body} />;
-  }
-  return <>{String(body.type)}</>;
+  return <>{editor}</>;
 };
