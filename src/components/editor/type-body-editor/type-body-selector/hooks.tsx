@@ -23,27 +23,84 @@ type HocProps = {
 
 export const useTypesSelect = ({ onSelect }: HocProps) => {
   const systemTypes = useSelector(selectSystemDescriptors);
+
   const fetch = async (query: string): Promise<Array<Item>> => {
-    const systemItems: Array<Item> = Object.values(systemTypes)
+    const systemSearchable: Array<{ name: string; item: Item }> = [
+      {
+        name: "any",
+        item: {
+          id: "any",
+          name: "any",
+          author: "system",
+          params: [],
+          body: null,
+        },
+      },
+      {
+        name: "param",
+        item: {
+          id: "param",
+          name: "param",
+          author: "system",
+          params: [],
+          body: {
+            type: Body.PARAM,
+            param: "",
+          },
+        },
+      },
+      ...Object.values(systemTypes).map((item) => ({
+        name: item.name,
+        item: {
+          id: item._id,
+          name: item.name,
+          author: "system",
+          params: item.params || [],
+          body: {
+            type: Body.REF as const,
+            ref: item._id,
+            name: item.name,
+            params:
+              item.params && item.params.length
+                ? Object.fromEntries(item.params?.map((param) => [param, null]))
+                : undefined,
+          },
+        },
+      })),
+      {
+        name: "map",
+        item: {
+          id: "map",
+          name: "map",
+          author: "system",
+          params: [],
+          body: {
+            type: Body.MAP,
+            map: {},
+          },
+        },
+      },
+      {
+        name: "selector",
+        item: {
+          id: "selector",
+          name: "selector",
+          author: "system",
+          params: [],
+          body: {
+            type: Body.SELECTOR,
+            params: {},
+            returns: null,
+          },
+        },
+      },
+    ];
+    const systemItems = systemSearchable
       .filter(
         (systemType) =>
           systemType.name.toLowerCase().search(query.toLowerCase()) >= 0
       )
-      .map((item) => ({
-        id: item._id,
-        name: item.name,
-        author: "system",
-        params: item.params || [],
-        body: {
-          type: Body.REF,
-          ref: item._id,
-          name: item.name,
-          params:
-            item.params && item.params.length
-              ? Object.fromEntries(item.params?.map((param) => [param, null]))
-              : undefined,
-        },
-      }));
+      .map(({ item }) => item);
 
     const externalTypes = await getExternalTypes(query);
     const externalItems: Array<Item> = externalTypes

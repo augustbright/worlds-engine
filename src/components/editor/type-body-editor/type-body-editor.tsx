@@ -38,8 +38,12 @@ export const TypeBodyEditor: React.FC<Props> = ({ body, onChange }) => {
     editor = params ? (
       <ParamsEditor params={params} onChange={handleChangeParam} />
     ) : null;
-  } else {
-    editor = <>{String(body.type)}</>;
+  } else if (body.type === Body.PARAM) {
+    editor = <>***PARAM EDIT***</>;
+  } else if (body.type === Body.MAP) {
+    editor = <>***MAP EDIT***</>;
+  } else if (body.type === Body.SELECTOR) {
+    editor = <>***SELECTOR EDIT***</>;
   }
 
   return (
