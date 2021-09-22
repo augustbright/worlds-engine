@@ -1,7 +1,7 @@
 import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Id } from "types/common";
 import { ExternalTypeDescriptor, TypeDescriptor } from "types/descriptors";
-import { TypeRefId } from "types/ref";
+import { SystemRef } from "types/ref";
 import { systemTypeDescriptors } from "./systemTypes";
 
 export enum LoadingState {
@@ -12,13 +12,13 @@ export enum LoadingState {
 
 export type TypeDescriptorsState = {
   descriptors: Record<Id, TypeDescriptor>;
-  external: Record<TypeRefId, ExternalTypeDescriptor>;
+  system: Record<SystemRef, ExternalTypeDescriptor>;
   state: LoadingState;
 };
 
 const initialState = {
   descriptors: {},
-  external: systemTypeDescriptors,
+  system: systemTypeDescriptors,
   state: LoadingState.READY,
 } as TypeDescriptorsState;
 

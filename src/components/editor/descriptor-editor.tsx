@@ -6,9 +6,9 @@ import { noop } from "lodash";
 import React, { useMemo } from "react";
 import { Id } from "types/common";
 import { TypeDescriptor } from "types/descriptors";
-import { AddItem } from "../../structure/item/add-item";
-import { MapItem } from "../../structure/item/map-item";
-import { TypeBodyEditor } from "../type-body-editor";
+import { AddItem } from "../structure/item/add-item";
+import { MapItem } from "../structure/item/map-item";
+import { TypeBodyEditor } from "./type-body-editor/type-body-editor";
 
 const useListItems = (
   descriptors: Record<Id, TypeDescriptor>

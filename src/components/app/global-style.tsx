@@ -13,6 +13,22 @@ export const GlobalStyle = createGlobalStyle`
     outline: 1px dotted black;
 }
 
+*&::-webkit-scrollbar {
+  width: 10px;
+}
+
+*&::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*&::-webkit-scrollbar-thumb {
+  background-color: ${fromThemeProp((t) => t.colors[Color.SLIDER])};
+  cursor: pointer;
+  &:hover {
+    background-color: ${fromThemeProp((t) => t.colors[Color.SLIDER_HOVER])};
+  }
+}
+
 html {
 }
 

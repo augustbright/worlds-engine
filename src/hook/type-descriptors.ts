@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectExternalDescriptors,
+  selectSystemDescriptors,
   selectTypeDescriptors,
 } from "state/selectors/type-descriptors";
 import { typeDescriptorsSlice } from "state/slices/type-descriptors";
 import { ExternalTypeDescriptor } from "types/descriptors";
-import { TypeRefId } from "types/ref";
+import { SystemRef, TypeRefId } from "types/ref";
 
 export const useTypeDescriptors = () => {
   const dispatch = useDispatch();
@@ -22,7 +22,13 @@ export const useTypeDescriptors = () => {
 export const useRefDescriptor = (
   ref: TypeRefId
 ): ExternalTypeDescriptor | null => {
-  const externalDescriptors = useSelector(selectExternalDescriptors);
-  const descriptor = externalDescriptors[ref] || null;
-  return descriptor;
+  const isSystemRef = (testRef: TypeRefId): testRef is SystemRef => {
+    return Object.values(SystemRef).includes(testRef as SystemRef);
+  };
+  const systemDescriptors = useSelector(selectSystemDescriptors);
+  if (isSystemRef(ref)) {
+    const descriptor = systemDescriptors[ref] || null;
+    return descriptor;
+  }
+  return null;
 };
