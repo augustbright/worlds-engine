@@ -2,10 +2,9 @@
 import { Selector } from "components/common/selector";
 import { Color } from "components/theming";
 import { fromThemeProp } from "components/theming/utils";
-import { noop } from "lodash";
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
-import { useTypesSelect } from "./hooks";
+import { useTypesSelect, Item } from "./hooks";
 import { Reserved } from "./reserved";
 
 type Props = {
@@ -24,16 +23,29 @@ export const TypeBodySelector: React.FC<Props> = ({ text }) => {
   const handleClickSelector = useCallback(() => {
     setActive(true);
   }, [setActive]);
-  const { fetch, render } = useTypesSelect();
-  return active ? (
+  const handleSelect = useCallback(
+    (item: Item) => {
+      alert(JSON.stringify(item, null, 3));
+      setActive(false);
+    },
+    [setActive]
+  );
+  const { fetch, render } = useTypesSelect({
+    onSelect: handleSelect,
+  });
+  const handleDeactivate = useCallback(() => {
+    setActive(false);
+  }, []);
+
+  return (
     <Selector
-      defaultText={text}
+      active={active}
       fetch={fetch}
-      render={render}
-      onChange={noop}
-    />
-  ) : (
-    // <Selector defaultText={text} onChange={noop} fetch={} />
-    <View onClick={handleClickSelector}>{text}</View>
+      renderItem={render}
+      defaultText={text}
+      onDeactivate={handleDeactivate}
+    >
+      <View onClick={handleClickSelector}>{text}</View>
+    </Selector>
   );
 };

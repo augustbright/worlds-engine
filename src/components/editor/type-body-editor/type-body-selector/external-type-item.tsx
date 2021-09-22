@@ -1,12 +1,13 @@
 import { Color, Space } from "components/theming/types";
 import { fromThemeProp } from "components/theming/utils";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import styled from "styled-components";
 
 type Props = {
   name: string;
   author: string;
   params: Array<string>;
+  onClick: () => void;
 };
 
 const ItemContainer = styled.div`
@@ -36,12 +37,20 @@ const AuthorContainer = styled.div`
   color: ${fromThemeProp((t) => t.colors[Color.DROPDOWN_AUTHOR])};
 `;
 
-export const ExternalTypeItem: React.FC<Props> = ({ name, author, params }) => {
+export const ExternalTypeItem: React.FC<Props> = ({
+  name,
+  author,
+  params,
+  onClick,
+}) => {
   const paramsText = useMemo(() => {
     return params.length ? `<${params.join(", ")}>` : "";
   }, [params]);
+  const handleClick = useCallback(() => {
+    onClick();
+  }, [onClick]);
   return (
-    <ItemContainer>
+    <ItemContainer onClick={handleClick}>
       <NameContainer>
         {name}
         <ParamsContainer> {paramsText}</ParamsContainer>{" "}

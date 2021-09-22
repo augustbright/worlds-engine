@@ -1,6 +1,6 @@
 import { Color } from "components/theming";
 import { fromThemeProp } from "components/theming/utils";
-import React from "react";
+import React, { forwardRef } from "react";
 import styled from "styled-components";
 
 type Props = {
@@ -23,16 +23,14 @@ const ContentContainer = styled.div`
   overflow-y: auto;
 `;
 
-export const Dropdown: React.FC<Props> = ({
-  content,
-  children,
-  visible,
-  className,
-}) => {
+export const Dropdown = forwardRef<
+  HTMLDivElement,
+  React.PropsWithChildren<Props>
+>(({ content, children, visible, className }, ref) => {
   return (
-    <Wrapper className={className}>
+    <Wrapper ref={ref} className={className}>
       {children}
       {visible ? <ContentContainer>{content}</ContentContainer> : null}
     </Wrapper>
   );
-};
+});

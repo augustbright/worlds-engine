@@ -1,14 +1,23 @@
 import { Color } from "components/theming";
 import { fromThemeProp } from "components/theming/utils";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useClickOutside } from "hook/common";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import styled from "styled-components";
 import { Dropdown } from "./dropdown";
 
-type Props<T extends unknown> = {
+type Props<T> = {
+  active: boolean;
+  onDeactivate: () => void;
+
   defaultText: string;
   fetch: (query: string) => Promise<Array<T>>;
-  onChange: (newValue: T | null) => void;
-  render: (item: T) => React.ReactNode;
+  renderItem: (item: T) => React.ReactNode;
 };
 
 const StyledInput = styled.input`
@@ -19,12 +28,14 @@ const StyledInput = styled.input`
   border: solid 1px ${fromThemeProp((t) => t.colors[Color.INPUT_BORDER])};
 `;
 
-export const Selector = <T extends unknown>({
+export const Selector = <T,>({
+  children,
+  active,
   defaultText,
-  onChange,
-  render,
+  renderItem,
   fetch,
-}: Props<T>) => {
+  onDeactivate,
+}: React.PropsWithChildren<Props<T>>) => {
   const [text, setText] = useState(defaultText);
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,14 +50,40 @@ export const Selector = <T extends unknown>({
     });
   }, [text, fetch, setItems]);
   const dropdownContent = useMemo(
-    () => <>{items.map((item) => render(item))}</>,
-    [items, render]
+    () => <>{items.map((item) => renderItem(item))}</>,
+    [items, renderItem]
   );
-  return (
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setText(defaultText);
+    inputRef.current?.focus();
+  }, [active, defaultText]);
+
+  const handleFocus = useCallback(() => {
+    inputRef.current?.select();
+  }, []);
+
+  const handleClickOutside = useCallback(() => {
+    onDeactivate();
+  }, [onDeactivate]);
+
+  useClickOutside(dropdownRef, handleClickOutside);
+
+  const activeContent = (
     <>
-      <Dropdown visible content={dropdownContent}>
-        <StyledInput value={text} onChange={handleChange} />
+      <Dropdown ref={dropdownRef} visible content={dropdownContent}>
+        <StyledInput
+          onFocus={handleFocus}
+          ref={inputRef}
+          value={text}
+          onChange={handleChange}
+        />
       </Dropdown>
     </>
   );
+
+  return active ? activeContent : <>{children}</>;
 };

@@ -7,7 +7,7 @@ import { ExternalTypeItem } from "./external-type-item";
 import { ItemContainer } from "./item-container";
 import { SeparatorItem } from "./separator-item";
 
-type Item = {
+export type Item = {
   id: string;
   name: string;
   author: string;
@@ -15,7 +15,11 @@ type Item = {
   params: Array<string>;
 };
 
-export const useTypesSelect = () => {
+type HocProps = {
+  onSelect: (item: Item) => void;
+};
+
+export const useTypesSelect = ({ onSelect }: HocProps) => {
   const systemTypes = useSelector(selectSystemDescriptors);
   const fetch = async (query: string): Promise<Array<Item>> => {
     const systemItems = Object.values(systemTypes)
@@ -53,21 +57,25 @@ export const useTypesSelect = () => {
     return [...result, ...externalItems];
   };
 
-  const render = useCallback((item: Item) => {
-    return item.separator ? (
-      <ItemContainer>
-        <SeparatorItem />
-      </ItemContainer>
-    ) : (
-      <ItemContainer>
-        <ExternalTypeItem
-          name={item.name}
-          author={item.author}
-          params={item.params}
-        />
-      </ItemContainer>
-    );
-  }, []);
+  const render = useCallback(
+    (item: Item) => {
+      return item.separator ? (
+        <ItemContainer>
+          <SeparatorItem />
+        </ItemContainer>
+      ) : (
+        <ItemContainer>
+          <ExternalTypeItem
+            onClick={() => onSelect(item)}
+            name={item.name}
+            author={item.author}
+            params={item.params}
+          />
+        </ItemContainer>
+      );
+    },
+    [onSelect]
+  );
 
   return { fetch, render };
 };

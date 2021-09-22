@@ -1,5 +1,4 @@
 import { Dropdown } from "components/common/dropdown";
-import { Selector } from "components/common/selector";
 import { Pin } from "components/structure/anchor/pin";
 import { AnchorViewer } from "components/structure/anchor/viewer";
 import { AddItem } from "components/structure/item/add-item";
@@ -83,52 +82,9 @@ const items4: Array<ListItem> = withBrackets(
   Bracket.CURLY
 );
 
-type Item = {
-  id: string;
-  name: string;
-  author: string;
-};
-
-const fetch = () =>
-  Promise.resolve([
-    {
-      id: "first",
-      name: "Boolean",
-      author: "system",
-    },
-    {
-      id: "second",
-      name: "Number",
-      author: "system",
-    },
-    {
-      id: "third",
-      name: "Entities",
-      author: "User 1",
-    },
-  ] as Item[]);
-
-const onChange = (item: Item | null) => {
-  alert(JSON.stringify(item, null, 3));
-};
-
-const render = (item: Item) => (
-  <div>
-    <div>{item.name}</div>
-    <div>{item.author}</div>
-  </div>
-);
-
 export const TestPage: React.FC = () => {
   return (
     <PageLayout>
-      <Selector
-        defaultText="test"
-        fetch={fetch}
-        onChange={onChange}
-        render={render}
-      />
-      <br />
       <AnchorViewer>
         <List items={items4} />
       </AnchorViewer>
