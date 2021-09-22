@@ -66,6 +66,7 @@ export const body1: TypeDescriptor = {
     map: {
       key1: {
         type: Body.REF,
+        name: "Number",
         ref: SystemRef.NUMBER,
       },
       key2: {
@@ -73,10 +74,12 @@ export const body1: TypeDescriptor = {
         map: {
           subkey1: {
             type: Body.REF,
+            name: "Boolean",
             ref: SystemRef.BOOLEAN,
           },
           subkey2: {
             type: Body.REF,
+            name: "List",
             ref: SystemRef.LIST,
             params: {
               type: {
@@ -92,19 +95,23 @@ export const body1: TypeDescriptor = {
         params: {
           arg1: {
             type: Body.REF,
+            name: "Number",
             ref: SystemRef.NUMBER,
           },
           arg2: {
             type: Body.REF,
+            name: "Boolean",
             ref: SystemRef.BOOLEAN,
           },
         },
         returns: {
           type: Body.REF,
+          name: "List",
           ref: SystemRef.LIST,
           params: {
             type: {
               type: Body.REF,
+              name: "String",
               ref: SystemRef.STRING,
             },
           },

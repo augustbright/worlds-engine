@@ -19,6 +19,8 @@ export const getBodyParams = (body: TypeBody): Array<string> => {
     );
   };
 
+  if (!body) return [];
+
   if (body.type === Body.PARAM) {
     return [body.param];
   }

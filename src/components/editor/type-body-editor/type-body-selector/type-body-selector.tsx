@@ -2,13 +2,15 @@
 import { Selector } from "components/common/selector";
 import { Color } from "components/theming";
 import { fromThemeProp } from "components/theming/utils";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
+import { Body, TypeBody } from "types/descriptors";
 import { useTypesSelect, Item } from "./hooks";
 import { Reserved } from "./reserved";
 
 type Props = {
-  text: string;
+  body: TypeBody;
+  onSelect: (newBody: TypeBody) => void;
 };
 
 const View = styled(Reserved)`
@@ -18,17 +20,17 @@ const View = styled(Reserved)`
   }
 `;
 
-export const TypeBodySelector: React.FC<Props> = ({ text }) => {
+export const TypeBodySelector: React.FC<Props> = ({ body, onSelect }) => {
   const [active, setActive] = useState(false);
   const handleClickSelector = useCallback(() => {
     setActive(true);
   }, [setActive]);
   const handleSelect = useCallback(
     (item: Item) => {
-      alert(JSON.stringify(item, null, 3));
       setActive(false);
+      onSelect(item.body);
     },
-    [setActive]
+    [setActive, onSelect]
   );
   const { fetch, render } = useTypesSelect({
     onSelect: handleSelect,
@@ -36,6 +38,15 @@ export const TypeBodySelector: React.FC<Props> = ({ text }) => {
   const handleDeactivate = useCallback(() => {
     setActive(false);
   }, []);
+
+  const text = useMemo(() => {
+    if (!body) return "any";
+    if (body.type === Body.MAP) return "map";
+    if (body.type === Body.PARAM) return "param";
+    if (body.type === Body.SELECTOR) return "selector";
+    if (body.type === Body.REF) return body.name;
+    return "[usupported]";
+  }, [body]);
 
   return (
     <Selector

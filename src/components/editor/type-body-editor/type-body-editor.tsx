@@ -1,21 +1,51 @@
-import React from "react";
-import { Body, TypeBody } from "types/descriptors";
+import React, { useCallback } from "react";
+import { Body, RefTypeBody, TypeBody } from "types/descriptors";
 import { TypeBodySelector } from "./type-body-selector/type-body-selector";
-import { RefTypeBodyEditor } from "./ref";
+import { ParamsEditor } from "../params-editor";
 
 type Props = {
-  body?: TypeBody;
+  body: TypeBody;
+  onChange: (newBody: TypeBody) => void;
 };
 
-export const TypeBodyEditor: React.FC<Props> = ({ body }) => {
+export const TypeBodyEditor: React.FC<Props> = ({ body, onChange }) => {
+  const handleSelect = useCallback(
+    (newBody: TypeBody) => {
+      onChange(newBody);
+    },
+    [onChange]
+  );
+
+  const handleChangeParam = useCallback(
+    (param: string, newBody: TypeBody) => {
+      const refBody = body as RefTypeBody;
+      onChange({
+        ...refBody,
+        params: {
+          ...refBody.params,
+          [param]: newBody,
+        },
+      });
+    },
+    [body, onChange]
+  );
+
   let editor: React.ReactNode;
   if (!body) {
-    editor = <TypeBodySelector text="any" />;
+    editor = null;
   } else if (body.type === Body.REF) {
-    editor = <RefTypeBodyEditor body={body} />;
+    const { params } = body;
+    editor = params ? (
+      <ParamsEditor params={params} onChange={handleChangeParam} />
+    ) : null;
   } else {
     editor = <>{String(body.type)}</>;
   }
 
-  return <>{editor}</>;
+  return (
+    <>
+      <TypeBodySelector body={body} onSelect={handleSelect} />
+      {editor}
+    </>
+  );
 };

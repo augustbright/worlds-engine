@@ -11,7 +11,8 @@ type Props = {
 };
 
 const ItemContainer = styled.div`
-  padding: ${fromThemeProp((t) => t.space[Space.SMALL])};
+  padding: ${fromThemeProp((t) => t.space[Space.SMALL])}
+    ${fromThemeProp((t) => t.space[Space.LARGE])};
   color: ${fromThemeProp((t) => t.colors[Color.DROPDOWN_FOREGROUND])};
   cursor: pointer;
 

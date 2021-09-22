@@ -5,7 +5,7 @@ import {
   selectTypeDescriptors,
 } from "state/selectors/type-descriptors";
 import { typeDescriptorsSlice } from "state/slices/type-descriptors";
-import { ExternalTypeDescriptor } from "types/descriptors";
+import { Body, ExternalTypeDescriptor, TypeBody } from "types/descriptors";
 import { SystemRef, TypeRefId } from "types/ref";
 
 export const useTypeDescriptors = () => {
@@ -31,4 +31,12 @@ export const useRefDescriptor = (
     return descriptor;
   }
   return null;
+};
+
+
+export const useBodyName = (body: TypeBody) => {
+  if (body === null) return "any";
+  if (body.type === Body.REF) {
+    
+  }
 };

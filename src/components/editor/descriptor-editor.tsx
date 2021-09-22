@@ -4,6 +4,8 @@ import { Bracket, withBrackets } from "components/structure/list/withBrackets";
 import { useTypeDescriptors } from "hook/type-descriptors";
 import { noop } from "lodash";
 import React, { useMemo } from "react";
+import { useDispatch } from "react-redux";
+import { typeDescriptorsSlice } from "state/slices/type-descriptors";
 import { Id } from "types/common";
 import { TypeDescriptor } from "types/descriptors";
 import { AddItem } from "../structure/item/add-item";
@@ -13,6 +15,7 @@ import { TypeBodyEditor } from "./type-body-editor/type-body-editor";
 const useListItems = (
   descriptors: Record<Id, TypeDescriptor>
 ): Array<ListItem> => {
+  const dispatch = useDispatch();
   return useMemo(() => {
     const mapItems = Object.values(descriptors).map((descriptor) => {
       return {
@@ -23,7 +26,20 @@ const useListItems = (
             valueContent={
               <Pin path={descriptor.name}>
                 {" "}
-                <TypeBodyEditor body={descriptor.body} />
+                <TypeBodyEditor
+                  body={descriptor.body}
+                  onChange={(newBody) => {
+                    dispatch(
+                      typeDescriptorsSlice.actions.updateDescriptor({
+                        id: descriptor._id,
+                        descriptor: {
+                          ...descriptor,
+                          body: newBody,
+                        },
+                      })
+                    );
+                  }}
+                />
               </Pin>
             }
           />
@@ -40,7 +56,7 @@ const useListItems = (
       ],
       Bracket.CURLY
     );
-  }, [descriptors]);
+  }, [descriptors, dispatch]);
 };
 
 export const DescriptorEditor: React.FC = () => {

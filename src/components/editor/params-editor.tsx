@@ -7,11 +7,13 @@ import { TypeBody } from "types/descriptors";
 import { TypeBodyEditor } from "./type-body-editor/type-body-editor";
 
 type Props = {
-  params: Record<string, TypeBody | undefined>;
+  params: Record<string, TypeBody>;
+  onChange: (param: string, newBody: TypeBody) => void;
 };
 
 const useListItems = (
-  params: Record<string, TypeBody | undefined>
+  params: Record<string, TypeBody>,
+  onChange: (param: string, newBody: TypeBody) => void
 ): Array<ListItem> => {
   return useMemo(() => {
     const mapItems = Object.entries(params).map(([key, param]) => {
@@ -22,7 +24,12 @@ const useListItems = (
             keyContent={<>{key}</>}
             valueContent={
               <Pin path={key}>
-                <TypeBodyEditor body={param || undefined} />
+                <TypeBodyEditor
+                  body={param}
+                  onChange={(newBody) => {
+                    onChange(key, newBody);
+                  }}
+                />
               </Pin>
             }
           />
@@ -30,10 +37,10 @@ const useListItems = (
       };
     });
     return withBrackets(mapItems, Bracket.ANGLE);
-  }, [params]);
+  }, [params, onChange]);
 };
 
-export const ParamsEditor: React.FC<Props> = ({ params }) => {
-  const items = useListItems(params);
+export const ParamsEditor: React.FC<Props> = ({ params, onChange }) => {
+  const items = useListItems(params, onChange);
   return <List items={items} />;
 };

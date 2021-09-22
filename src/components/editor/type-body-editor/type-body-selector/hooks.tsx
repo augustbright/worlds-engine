@@ -3,6 +3,7 @@ import { descriptorToExternal } from "func/types";
 import React, { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { selectSystemDescriptors } from "state/selectors/type-descriptors";
+import { Body, TypeBody } from "types/descriptors";
 import { ExternalTypeItem } from "./external-type-item";
 import { ItemContainer } from "./item-container";
 import { SeparatorItem } from "./separator-item";
@@ -13,6 +14,7 @@ export type Item = {
   author: string;
   separator?: boolean;
   params: Array<string>;
+  body: TypeBody;
 };
 
 type HocProps = {
@@ -22,7 +24,7 @@ type HocProps = {
 export const useTypesSelect = ({ onSelect }: HocProps) => {
   const systemTypes = useSelector(selectSystemDescriptors);
   const fetch = async (query: string): Promise<Array<Item>> => {
-    const systemItems = Object.values(systemTypes)
+    const systemItems: Array<Item> = Object.values(systemTypes)
       .filter(
         (systemType) =>
           systemType.name.toLowerCase().search(query.toLowerCase()) >= 0
@@ -32,16 +34,34 @@ export const useTypesSelect = ({ onSelect }: HocProps) => {
         name: item.name,
         author: "system",
         params: item.params || [],
+        body: {
+          type: Body.REF,
+          ref: item._id,
+          name: item.name,
+          params:
+            item.params && item.params.length
+              ? Object.fromEntries(item.params?.map((param) => [param, null]))
+              : undefined,
+        },
       }));
 
     const externalTypes = await getExternalTypes(query);
-    const externalItems = externalTypes
+    const externalItems: Array<Item> = externalTypes
       .map((externalType) => descriptorToExternal(externalType))
       .map((item) => ({
         id: item._id,
         name: item.name,
         author: "user",
         params: item.params || [],
+        body: {
+          type: Body.REF,
+          ref: item._id,
+          name: item.name,
+          params:
+            item.params && item.params.length
+              ? Object.fromEntries(item.params?.map((param) => [param, null]))
+              : undefined,
+        },
       }));
 
     const result: Array<Item> = [...systemItems];
@@ -52,6 +72,7 @@ export const useTypesSelect = ({ onSelect }: HocProps) => {
         author: "system",
         separator: true,
         params: [],
+        body: null,
       });
     }
     return [...result, ...externalItems];
