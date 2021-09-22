@@ -24,6 +24,7 @@ module.exports = {
             ['hook', './src/hook'],
             ['pages', './src/pages'],
             ['api', './src/api'],
+            ['func', './src/func'],
           ],
         },
       },

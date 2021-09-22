@@ -38,6 +38,7 @@ export const theme: Theme = {
     [Color.DROPDOWN_HOVER_FOREGROUND]: "#000000",
     [Color.DROPDOWN_AUTHOR]: "#e0ceed",
     [Color.DROPDOWN_HOVER_AUTHOR]: "#e0ceed",
+    [Color.DROPDOWN_PARAMS]: "#e0ceed",
     [Color.SLIDER]: "rgba(59, 52, 66, 0.67)",
     [Color.SLIDER_HOVER]: "rgba(162, 157, 250, 0.33)",
   },

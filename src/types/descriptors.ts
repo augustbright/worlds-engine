@@ -39,7 +39,7 @@ export type TypeBody =
 export type TypeDescriptor = {
   _id: Id;
   name: NameId;
-  body: TypeBody;
+  body?: TypeBody;
 };
 
 export type ExternalTypeDescriptor = {

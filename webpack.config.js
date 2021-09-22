@@ -22,6 +22,7 @@ module.exports = {
       hook: path.resolve(__dirname, 'src', 'hook'),
       pages: path.resolve(__dirname, 'src', 'pages'),
       api: path.resolve(__dirname, 'src', 'api'),
+      func: path.resolve(__dirname, 'src', 'func'),
     },
   },
   module: {
