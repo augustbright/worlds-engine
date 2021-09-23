@@ -4,12 +4,13 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { fromThemeProp } from "components/theming/utils";
 import { Color } from "components/theming";
+import { StringEditor } from "./string-editor";
 
 type Props = {
-  onClick: () => void;
+  onNewItem: (name: string) => void;
 };
 
-const Button = styled.button`
+const Button = styled.div`
   display: inline-flex;
   height: 22px;
   align-items: center;
@@ -35,16 +36,22 @@ const IconContainer = styled.div`
   height: 22px;
 `;
 
-export const AddItem: React.FC<Props> = ({ children = "item", onClick }) => {
-  const handleClick = useCallback(() => {
-    onClick();
-  }, [onClick]);
+export const AddItem: React.FC<Props> = ({ children = "item", onNewItem }) => {
+  const handleChange = useCallback(
+    (value: string) => {
+      onNewItem(value.trim());
+    },
+    [onNewItem]
+  );
+
   return (
-    <Button onClick={handleClick}>
-      <IconContainer>
-        <FontAwesomeIcon size="sm" icon={faPlus} />
-      </IconContainer>
-      {children}
-    </Button>
+    <StringEditor value="" onChange={handleChange}>
+      <Button>
+        <IconContainer>
+          <FontAwesomeIcon size="sm" icon={faPlus} />
+        </IconContainer>
+        {children}
+      </Button>
+    </StringEditor>
   );
 };

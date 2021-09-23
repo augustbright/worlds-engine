@@ -18,7 +18,7 @@ export const List: React.FC<Props> = ({ items }) => {
     (item: ListItem, index) => {
       const isFirst = index === 0;
       const isLast = index === items.length - 1;
-      const inline = items.length < 4 || isFirst;
+      const inline = items.length < 4 || isFirst || isLast;
       const indent = inline || isLast ? 0 : 1;
 
       const tabContextValue = {

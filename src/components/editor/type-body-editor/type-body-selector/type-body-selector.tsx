@@ -53,7 +53,7 @@ export const TypeBodySelector: React.FC<Props> = ({ body, onSelect }) => {
       active={active}
       fetch={fetch}
       renderItem={render}
-      defaultText={text}
+      defaultText=""
       onDeactivate={handleDeactivate}
     >
       <View onClick={handleClickSelector}>{text}</View>

@@ -21,6 +21,7 @@ const ContentContainer = styled.div`
   box-shadow: 0px 0px 5px black;
   max-height: 180px;
   overflow-y: auto;
+  border: solid 1px ${fromThemeProp((t) => t.colors[Color.DROPDOWN_BORDER])};
 `;
 
 export const Dropdown = forwardRef<

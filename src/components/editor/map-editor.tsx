@@ -1,9 +1,8 @@
 import { Pin } from "components/structure/anchor/pin";
-import { AddItem } from "components/structure/item/add-item";
+import { AddItem } from "components/editor/add-item";
 import { MapItem } from "components/structure/item/map-item";
 import { List, ListItem } from "components/structure/list/list";
 import { Bracket, withBrackets } from "components/structure/list/withBrackets";
-import { noop } from "lodash";
 import React, { useMemo } from "react";
 import { TypeBody } from "types/descriptors";
 import { StringEditor } from "./string-editor";
@@ -45,6 +44,14 @@ const useListItems = (
       );
     };
 
+    const handleNewItem = (name: string) => {
+      if (!name) return;
+      onChange({
+        ...map,
+        [name]: null,
+      });
+    };
+
     const mapItems = Object.entries(map).map(([key, value], index) => {
       return {
         id: `${index}:${key}`,
@@ -73,7 +80,7 @@ const useListItems = (
         ...mapItems,
         {
           id: "new",
-          content: <AddItem onClick={noop}>Field</AddItem>,
+          content: <AddItem onNewItem={handleNewItem}>Field</AddItem>,
         },
       ],
       Bracket.CURLY

@@ -9,7 +9,7 @@ const Tab = styled.div`
   justify-content: center;
   align-items: center;
   color: ${fromThemeProp((t) => t.colors[Color.INDENT_FOREGROUND])};
-  width: 16px;
+  width: 22px;
   height: 22px;
 `;
 

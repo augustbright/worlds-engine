@@ -1,7 +1,7 @@
 import { IconButton } from "components/common/icon-button";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { StyledInput } from "components/common/input";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 type Props = {
@@ -43,6 +43,22 @@ export const StringEditor: React.FC<Props> = ({
     onChange(text);
   }, [setActive, onChange, text]);
 
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        handleClickCheck();
+      }
+    },
+    [handleClickCheck]
+  );
+
+  useEffect(() => {
+    if (active) {
+      inputRef.current?.focus();
+    }
+  }, [active]);
+
   const activeContent = (
     <>
       <StyledInput
@@ -50,6 +66,7 @@ export const StringEditor: React.FC<Props> = ({
         ref={inputRef}
         value={text}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
       />
       <IconButton icon={faCheck} size="sm" onClick={handleClickCheck} />
     </>

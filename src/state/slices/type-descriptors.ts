@@ -43,6 +43,20 @@ const updateDescriptor: CaseReducer<
   },
 });
 
+const createDescriptor: CaseReducer<
+  TypeDescriptorsState,
+  PayloadAction<{ descriptor: Omit<TypeDescriptor, "_id"> }>
+> = (state, action) => ({
+  ...state,
+  descriptors: {
+    ...state.descriptors,
+    "": {
+      ...action.payload.descriptor,
+      _id: "",
+    },
+  },
+});
+
 const setState: CaseReducer<
   TypeDescriptorsState,
   PayloadAction<{
@@ -61,5 +75,6 @@ export const typeDescriptorsSlice = createSlice({
     setState,
     setDescriptors,
     updateDescriptor,
+    createDescriptor,
   },
 });

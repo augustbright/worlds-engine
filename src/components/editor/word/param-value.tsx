@@ -33,5 +33,9 @@ export const ParamValue: React.FC = ({ children }) => {
   if (children) {
     return <ValueSet>{children}</ValueSet>;
   }
-  return <ValueUnset>unset</ValueUnset>;
+  return (
+    <ValueUnset>
+      {"<"}unset{">"}
+    </ValueUnset>
+  );
 };
