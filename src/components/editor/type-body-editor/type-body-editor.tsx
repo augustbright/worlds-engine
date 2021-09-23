@@ -1,14 +1,23 @@
 import React, { useCallback } from "react";
-import { Body, ParamTypeBody, RefTypeBody, TypeBody } from "types/descriptors";
+import {
+  Body,
+  MapTypeBody,
+  ParamTypeBody,
+  RefTypeBody,
+  TypeBody,
+} from "types/descriptors";
 import { TypeBodySelector } from "./type-body-selector/type-body-selector";
 import { ParamsEditor } from "../params-editor";
 import { StringEditor } from "../string-editor";
 import { ParamValue } from "../word/param-value";
+import { MapEditor } from "../map-editor";
 
 type Props = {
   body: TypeBody;
   onChange: (newBody: TypeBody) => void;
 };
+
+const emptyMap = {};
 
 export const TypeBodyEditor: React.FC<Props> = ({ body, onChange }) => {
   const handleSelect = useCallback(
@@ -43,6 +52,17 @@ export const TypeBodyEditor: React.FC<Props> = ({ body, onChange }) => {
     [body, onChange]
   );
 
+  const handleChangeMap = useCallback(
+    (newMap: Record<string, TypeBody>) => {
+      const mapBody = body as MapTypeBody;
+      onChange({
+        ...mapBody,
+        map: newMap,
+      });
+    },
+    [body, onChange]
+  );
+
   let editor: React.ReactNode;
   if (!body) {
     editor = null;
@@ -58,7 +78,9 @@ export const TypeBodyEditor: React.FC<Props> = ({ body, onChange }) => {
       </StringEditor>
     );
   } else if (body.type === Body.MAP) {
-    editor = <>***MAP EDIT***</>;
+    editor = (
+      <MapEditor map={body.map || emptyMap} onChange={handleChangeMap} />
+    );
   } else if (body.type === Body.SELECTOR) {
     editor = <>***SELECTOR EDIT***</>;
   }
