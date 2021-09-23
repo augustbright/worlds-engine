@@ -1,5 +1,3 @@
-import { Color } from "components/theming";
-import { fromThemeProp } from "components/theming/utils";
 import { useClickOutside } from "hook/common";
 import React, {
   useCallback,
@@ -8,8 +6,8 @@ import React, {
   useRef,
   useState,
 } from "react";
-import styled from "styled-components";
 import { Dropdown } from "./dropdown";
+import { StyledInput } from "./input";
 
 type Props<T> = {
   active: boolean;
@@ -19,14 +17,6 @@ type Props<T> = {
   fetch: (query: string) => Promise<Array<T>>;
   renderItem: (item: T) => React.ReactNode;
 };
-
-const StyledInput = styled.input`
-  padding: 0 4px;
-  height: 22px;
-  color: ${fromThemeProp((t) => t.colors[Color.INPUT_FOREGROUND])};
-  background: ${fromThemeProp((t) => t.colors[Color.INPUT_BACKGROUND])};
-  border: solid 1px ${fromThemeProp((t) => t.colors[Color.INPUT_BORDER])};
-`;
 
 export const Selector = <T,>({
   children,

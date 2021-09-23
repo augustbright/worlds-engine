@@ -7,6 +7,6 @@ export const Reserved = styled.div`
   align-items: center;
   justify-content: center;
   min-width: 16px;
+  height: 22px;
   color: ${fromThemeProp((t) => t.colors[Color.TEXT_RESERVED])};
-  font-weight: bold;
 `;

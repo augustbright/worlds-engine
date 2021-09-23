@@ -6,7 +6,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
 import { Body, TypeBody } from "types/descriptors";
 import { useTypesSelect, Item } from "./hooks";
-import { Reserved } from "./reserved";
+import { Reserved } from "../../word/reserved";
 
 type Props = {
   body: TypeBody;

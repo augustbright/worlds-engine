@@ -10,6 +10,7 @@ const Tab = styled.div`
   align-items: center;
   color: ${fromThemeProp((t) => t.colors[Color.INDENT_FOREGROUND])};
   width: 16px;
+  height: 22px;
 `;
 
 export const Indent: React.FC = () => {

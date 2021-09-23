@@ -7,6 +7,7 @@ import { Space } from "components/theming/types";
 
 const ButtonContainer = styled.a`
   display: inline-flex;
+  vertical-align: middle;
   align-items: center;
   justify-content: center;
   cursor: pointer;

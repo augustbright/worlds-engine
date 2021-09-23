@@ -11,6 +11,8 @@ const Container = styled.div<{ inline: boolean }>`
   display: ${(props) => (props.inline ? "inline-block" : "block")};
   height: 22px;
   font-size: 14px;
+  font-family: "FiraCode";
+  font-weight: normal;
 `;
 
 export const ListItem: React.FC<Props> = ({ inline, children }) => {

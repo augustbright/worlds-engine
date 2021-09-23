@@ -20,7 +20,7 @@ const Button = styled.button`
   padding: 0 8px 0 0;
   cursor: pointer;
   font-size: 13px;
-  font-family: "Roboto";
+  font-family: "FiraCode";
 
   &:hover {
     color: ${fromThemeProp((t) => t.colors[Color.BUTTON_HOVER_FOREGROUND])};

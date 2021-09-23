@@ -11,3 +11,10 @@
   font-weight: bold;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'FiraCode';
+  src: url('assets/fonts/FiraCode-Regular.ttf') format('TrueType');
+  font-weight: normal;
+  font-style: normal;
+}

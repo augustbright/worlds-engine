@@ -12,9 +12,12 @@ const Center = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(black, transparent);
 `;
 
 const Header = styled.h1`
+  font-size: 40px;
+  letter-spacing: 6px;
   text-transform: uppercase;
   border-bottom: solid 1px rgb(28, 25, 32);
   width: 300px;
@@ -22,12 +25,13 @@ const Header = styled.h1`
   justify-content: center;
   margin-bottom: ${fromThemeProp((t) => t.space[Space.HUGE])};
   padding-bottom: ${fromThemeProp((t) => t.space[Space.LARGE])};
-  text-shadow: 0 0 10px rgb(224 206 237 / 28%);
+  text-shadow: 0 0 40px rgb(224 206 237 / 28%);
   color: #ece1f4;
   padding-bottom: 8px;
 `;
 
 const AuthContainer = styled.div`
+  margin-top: -60px;
   display: flex;
   flex-direction: column;
   justify-content: center;

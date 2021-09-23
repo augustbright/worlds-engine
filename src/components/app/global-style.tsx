@@ -34,7 +34,7 @@ html {
 
 body {
     font-family: 'Roboto';
-    font-weight: 400;
+    font-weight: normal;
     background: ${fromThemeProp((t) => t.colors[Color.PAGE_BACKGROUND])}
 }
 `;
