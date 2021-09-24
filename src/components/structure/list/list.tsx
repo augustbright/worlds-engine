@@ -19,7 +19,8 @@ export const List: React.FC<Props> = ({ items }) => {
       const isFirst = index === 0;
       const isLast = index === items.length - 1;
       const inline = items.length < 4 || isFirst || isLast;
-      const indent = inline || isLast ? 0 : 1;
+      const indent = items.length > 3 && !isFirst && !isLast ? 1 : 0;
+      const intended = items.length > 3 && !isFirst;
 
       const tabContextValue = {
         level: level + indent,
@@ -27,7 +28,12 @@ export const List: React.FC<Props> = ({ items }) => {
 
       return (
         <TabProvider value={tabContextValue}>
-          <ListItem inline={inline} id={item.id} key={item.id}>
+          <ListItem
+            indented={intended}
+            inline={inline}
+            id={item.id}
+            key={item.id}
+          >
             {item.content}
           </ListItem>
         </TabProvider>

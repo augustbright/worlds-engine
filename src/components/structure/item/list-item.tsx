@@ -5,6 +5,7 @@ import { Indent } from "../list/indent";
 type Props = {
   id: string;
   inline: boolean;
+  indented: boolean;
 };
 
 const Container = styled.div<{ inline: boolean }>`
@@ -14,10 +15,10 @@ const Container = styled.div<{ inline: boolean }>`
   font-weight: normal;
 `;
 
-export const ListItem: React.FC<Props> = ({ inline, children }) => {
+export const ListItem: React.FC<Props> = ({ indented, inline, children }) => {
   return (
     <Container inline={inline}>
-      {inline ? null : <Indent />}
+      {indented ? <Indent /> : null}
       {children}
     </Container>
   );

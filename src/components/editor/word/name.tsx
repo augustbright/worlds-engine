@@ -32,7 +32,7 @@ export const Name: React.FC = ({ children }) => {
   }
   return (
     <ValueUnset>
-      {"<"}unset{">"}
+      {"<"}deleting{">"}
     </ValueUnset>
   );
 };

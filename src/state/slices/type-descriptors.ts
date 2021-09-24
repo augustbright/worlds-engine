@@ -12,15 +12,33 @@ export enum LoadingState {
 
 export type TypeDescriptorsState = {
   descriptors: Record<Id, TypeDescriptor>;
+  loading: Array<Id>;
   system: Record<SystemRef, ExternalTypeDescriptor>;
   state: LoadingState;
 };
 
 const initialState = {
   descriptors: {},
+  loading: [],
   system: systemTypeDescriptors,
   state: LoadingState.READY,
 } as TypeDescriptorsState;
+
+const setLoading: CaseReducer<TypeDescriptorsState, PayloadAction<Id>> = (
+  state,
+  action
+) => ({
+  ...state,
+  loading: Array.from(new Set([...state.loading, action.payload])),
+});
+
+const unsetLoading: CaseReducer<TypeDescriptorsState, PayloadAction<Id>> = (
+  state,
+  action
+) => ({
+  ...state,
+  loading: state.loading.filter((item) => item !== action.payload),
+});
 
 const setDescriptors: CaseReducer<
   TypeDescriptorsState,
@@ -34,27 +52,44 @@ const setDescriptors: CaseReducer<
 
 const updateDescriptor: CaseReducer<
   TypeDescriptorsState,
-  PayloadAction<{ id: Id; descriptor: TypeDescriptor }>
+  PayloadAction<{ descriptor: TypeDescriptor }>
+> = (state) => state;
+
+const update: CaseReducer<
+  TypeDescriptorsState,
+  PayloadAction<{ descriptor: TypeDescriptor }>
 > = (state, action) => ({
   ...state,
   descriptors: {
     ...state.descriptors,
-    [action.payload.id]: action.payload.descriptor,
+    [action.payload.descriptor._id]: action.payload.descriptor,
   },
 });
 
-const createDescriptor: CaseReducer<
+const addDescriptor: CaseReducer<
   TypeDescriptorsState,
-  PayloadAction<{ descriptor: Omit<TypeDescriptor, "_id"> }>
+  PayloadAction<{ descriptor: TypeDescriptor }>
 > = (state, action) => ({
   ...state,
   descriptors: {
     ...state.descriptors,
-    "": {
-      ...action.payload.descriptor,
-      _id: "",
-    },
+    [action.payload.descriptor._id]: action.payload.descriptor,
   },
+});
+
+const deleteDescriptor: CaseReducer<
+  TypeDescriptorsState,
+  PayloadAction<{ id: Id }>
+> = (state) => state;
+
+const remove: CaseReducer<TypeDescriptorsState, PayloadAction<{ id: Id }>> = (
+  state,
+  action
+) => ({
+  ...state,
+  descriptors: Object.fromEntries(
+    Object.entries(state.descriptors).filter(([id]) => id !== action.payload.id)
+  ),
 });
 
 const setState: CaseReducer<
@@ -72,9 +107,14 @@ export const typeDescriptorsSlice = createSlice({
   name: "typeDescriptors",
   reducers: {
     load: (state) => state,
+    setLoading,
+    unsetLoading,
     setState,
     setDescriptors,
     updateDescriptor,
-    createDescriptor,
+    update,
+    addDescriptor,
+    deleteDescriptor,
+    remove,
   },
 });

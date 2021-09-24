@@ -20,6 +20,17 @@ const useListItems = (
 ): Array<ListItem> => {
   return useMemo(() => {
     const handleChangeKey = (index: number) => (newKey: string) => {
+      if (!newKey) {
+        onChange(
+          Object.fromEntries(
+            Object.entries(map).filter(
+              (_entry, entryIndex) => entryIndex !== index
+            )
+          )
+        );
+        return;
+      }
+
       onChange(
         Object.fromEntries(
           Object.entries(map).map(([key, value], entryIndex) => {

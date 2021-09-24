@@ -6,9 +6,7 @@ export const setToken = (token: string) => {
 
 export const getToken = () => localStorage.getItem("JWT");
 
-export const withToken = <T extends AxiosRequestConfig>(
-  params: T | Record<string, never> = {}
-) => ({
+export const withToken = (params: AxiosRequestConfig = {}) => ({
   ...params,
   headers: {
     ...(params.headers || {}),
