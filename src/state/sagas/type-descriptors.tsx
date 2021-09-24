@@ -1,6 +1,7 @@
 import React from "react";
 import {
   deleteTypeDescriptor,
+  getExternalType,
   getTypeDescriptors,
   updateTypeDescriptor,
 } from "api/editor";
@@ -12,10 +13,14 @@ import {
   typeDescriptorsSlice,
   LoadingState,
 } from "state/slices/type-descriptors";
-import { TypeDescriptor } from "types/descriptors";
+import { NotFoundDescriptor, TypeDescriptor } from "types/descriptors";
 import { Id } from "types/common";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { selectTypeDescriptors } from "state/selectors/type-descriptors";
+import {
+  selectExternalDescriptors,
+  selectLoading,
+  selectTypeDescriptors,
+} from "state/selectors/type-descriptors";
 
 const isAxiosError = (error: AxiosError): error is AxiosError =>
   error.isAxiosError;
@@ -112,8 +117,54 @@ export function* watchRemove() {
   }
 }
 
+export function* watchRequire() {
+  while (true) {
+    const { payload: id }: PayloadAction<Id> = yield take(
+      typeDescriptorsSlice.actions.requireId
+    );
+    const externalDescriptors: Record<Id, TypeDescriptor | NotFoundDescriptor> =
+      yield select(selectExternalDescriptors);
+    const loading: Array<Id> = yield select(selectLoading);
+    if (id in externalDescriptors || loading.includes(id)) {
+      // noop
+    } else {
+      yield put(typeDescriptorsSlice.actions.setLoading(id));
+      try {
+        const externalType: TypeDescriptor | null = yield call(
+          getExternalType,
+          id
+        );
+        yield put(
+          typeDescriptorsSlice.actions.addExternal({
+            id,
+            descriptor: externalType || {
+              error: new Error("Descriptor doesn't exist"),
+            },
+          })
+        );
+      } catch (error) {
+        yield put(
+          typeDescriptorsSlice.actions.addExternal({
+            id,
+            descriptor: {
+              error,
+            },
+          })
+        );
+        createErrorCallback({
+          message: "Failed to get type",
+          name: id,
+        })(error);
+      } finally {
+        yield put(typeDescriptorsSlice.actions.unsetLoading(id));
+      }
+    }
+  }
+}
+
 export function* typeDescriptorsSaga() {
   yield fork(watchLoad);
   yield fork(watchUpdate);
   yield fork(watchRemove);
+  yield fork(watchRequire);
 }

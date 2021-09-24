@@ -25,6 +25,11 @@ export const deleteTypeDescriptor = (id: Id): Promise<void> =>
     .delete(`${getApi()}/types/${id}`, withToken())
     .then((data) => data.data);
 
+export const getExternalType = (id: Id): Promise<TypeDescriptor | null> =>
+  axios
+    .get(`${getApi()}/types/external/${id}`, withToken())
+    .then((data) => data.data || null);
+
 export const getExternalTypes = (
   query: string
 ): Promise<Array<TypeDescriptor>> =>

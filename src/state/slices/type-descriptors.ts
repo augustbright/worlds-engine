@@ -1,6 +1,10 @@
 import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Id } from "types/common";
-import { ExternalTypeDescriptor, TypeDescriptor } from "types/descriptors";
+import {
+  NotFoundDescriptor,
+  SystemTypeDescriptor,
+  TypeDescriptor,
+} from "types/descriptors";
 import { SystemRef } from "types/ref";
 import { systemTypeDescriptors } from "./systemTypes";
 
@@ -12,13 +16,15 @@ export enum LoadingState {
 
 export type TypeDescriptorsState = {
   descriptors: Record<Id, TypeDescriptor>;
+  external: Record<Id, TypeDescriptor | NotFoundDescriptor>;
   loading: Array<Id>;
-  system: Record<SystemRef, ExternalTypeDescriptor>;
+  system: Record<SystemRef, SystemTypeDescriptor>;
   state: LoadingState;
 };
 
 const initialState = {
   descriptors: {},
+  external: {},
   loading: [],
   system: systemTypeDescriptors,
   state: LoadingState.READY,
@@ -39,6 +45,10 @@ const unsetLoading: CaseReducer<TypeDescriptorsState, PayloadAction<Id>> = (
   ...state,
   loading: state.loading.filter((item) => item !== action.payload),
 });
+
+const requireId: CaseReducer<TypeDescriptorsState, PayloadAction<Id>> = (
+  state
+) => state;
 
 const setDescriptors: CaseReducer<
   TypeDescriptorsState,
@@ -77,6 +87,17 @@ const addDescriptor: CaseReducer<
   },
 });
 
+const addExternal: CaseReducer<
+  TypeDescriptorsState,
+  PayloadAction<{ id: Id; descriptor: TypeDescriptor | NotFoundDescriptor }>
+> = (state, action) => ({
+  ...state,
+  external: {
+    ...state.external,
+    [action.payload.id]: action.payload.descriptor,
+  },
+});
+
 const deleteDescriptor: CaseReducer<
   TypeDescriptorsState,
   PayloadAction<{ id: Id }>
@@ -109,11 +130,13 @@ export const typeDescriptorsSlice = createSlice({
     load: (state) => state,
     setLoading,
     unsetLoading,
+    requireId,
     setState,
     setDescriptors,
     updateDescriptor,
     update,
     addDescriptor,
+    addExternal,
     deleteDescriptor,
     remove,
   },

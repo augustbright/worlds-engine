@@ -11,7 +11,6 @@ export enum Body {
 export type RefTypeBody = {
   type: Body.REF;
   ref: TypeRefId;
-  name: string;
   params?: Record<string, TypeBody>;
 };
 
@@ -44,8 +43,12 @@ export type TypeDescriptor = {
   body: TypeBody;
 };
 
-export type ExternalTypeDescriptor = {
+export type SystemTypeDescriptor = {
   _id: TypeRefId;
   name: NameId;
   params?: Array<string>;
+};
+
+export type NotFoundDescriptor = {
+  error: Error;
 };

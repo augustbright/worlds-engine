@@ -5,6 +5,7 @@ import { fromThemeProp } from "components/theming/utils";
 import React, { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
 import { Body, TypeBody } from "types/descriptors";
+import { RefName } from "components/editor/ref-name";
 import { useTypesSelect, Item } from "./hooks";
 import { Reserved } from "../../word/reserved";
 
@@ -44,7 +45,7 @@ export const TypeBodySelector: React.FC<Props> = ({ body, onSelect }) => {
     if (body.type === Body.MAP) return "map";
     if (body.type === Body.PARAM) return "param";
     if (body.type === Body.SELECTOR) return "selector";
-    if (body.type === Body.REF) return body.name;
+    if (body.type === Body.REF) return <RefName refId={body.ref} />;
     return "[usupported]";
   }, [body]);
 
