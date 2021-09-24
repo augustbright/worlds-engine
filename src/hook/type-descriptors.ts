@@ -1,3 +1,4 @@
+import { isSystemRef } from "func/types";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,7 +12,7 @@ import {
   SystemTypeDescriptor,
   TypeDescriptor,
 } from "types/descriptors";
-import { SystemRef, TypeRefId } from "types/ref";
+import { TypeRefId } from "types/ref";
 
 export const useTypeDescriptors = () => {
   const dispatch = useDispatch();
@@ -27,9 +28,6 @@ export const useTypeDescriptors = () => {
 export const useRefDescriptor = (
   ref: TypeRefId
 ): TypeDescriptor | SystemTypeDescriptor | NotFoundDescriptor | null => {
-  const isSystemRef = (testRef: TypeRefId): testRef is SystemRef => {
-    return Object.values(SystemRef).includes(testRef as SystemRef);
-  };
   const systemDescriptors = useSelector(selectSystemDescriptors);
   const descriptors = useSelector(selectTypeDescriptors);
   const external = useSelector(selectExternalDescriptors);

@@ -92,7 +92,11 @@ export const TypeBodyEditor: React.FC<Props> = ({ body, onChange }) => {
   } else if (body.type === Body.REF) {
     const { params } = body;
     editor = params ? (
-      <ParamsEditor params={params} onChange={handleChangeRefParam} />
+      <ParamsEditor
+        refId={body.ref}
+        params={params}
+        onChange={handleChangeRefParam}
+      />
     ) : null;
   } else if (body.type === Body.PARAM) {
     editor = (

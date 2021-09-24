@@ -1,7 +1,7 @@
 import { Loader } from "components/common/loader";
+import { isNotFound } from "func/types";
 import { useRefDescriptor } from "hook/type-descriptors";
 import React from "react";
-import { NotFoundDescriptor } from "types/descriptors";
 import { TypeRefId } from "types/ref";
 
 type Props = {
@@ -9,8 +9,6 @@ type Props = {
 };
 
 export const RefName: React.FC<Props> = ({ refId }) => {
-  const isNotFound = (descriptor: any): descriptor is NotFoundDescriptor =>
-    !!descriptor.error;
   const descriptor = useRefDescriptor(refId);
   if (!descriptor) return <Loader />;
 

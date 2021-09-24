@@ -2,21 +2,30 @@ import { Pin } from "components/structure/anchor/pin";
 import { MapItem } from "components/structure/item/map-item";
 import { List, ListItem } from "components/structure/list/list";
 import { Bracket, withBrackets } from "components/structure/list/withBrackets";
+import {
+  getDescriptorParams,
+  isNotFound,
+  isSystemDescriptor,
+} from "func/types";
+import { useRefDescriptor } from "hook/type-descriptors";
 import React, { useMemo } from "react";
 import { TypeBody } from "types/descriptors";
+import { TypeRefId } from "types/ref";
 import { TypeBodyEditor } from "./type-body-editor/type-body-editor";
 
 type Props = {
+  refId: TypeRefId;
   params: Record<string, TypeBody>;
   onChange: (param: string, newBody: TypeBody) => void;
 };
 
 const useListItems = (
   params: Record<string, TypeBody>,
-  onChange: (param: string, newBody: TypeBody) => void
+  onChange: (param: string, newBody: TypeBody) => void,
+  requiredParams: Array<string>
 ): Array<ListItem> => {
   return useMemo(() => {
-    const mapItems = Object.entries(params).map(([key, param]) => {
+    const mapItems = requiredParams.map((key) => {
       return {
         id: key,
         content: (
@@ -25,7 +34,7 @@ const useListItems = (
             valueContent={
               <Pin path={key}>
                 <TypeBodyEditor
-                  body={param}
+                  body={params[key] || null}
                   onChange={(newBody) => {
                     onChange(key, newBody);
                   }}
@@ -37,10 +46,24 @@ const useListItems = (
       };
     });
     return withBrackets(mapItems, Bracket.ANGLE);
-  }, [params, onChange]);
+  }, [params, onChange, requiredParams]);
 };
 
-export const ParamsEditor: React.FC<Props> = ({ params, onChange }) => {
-  const items = useListItems(params, onChange);
+export const ParamsEditor: React.FC<Props> = ({ params, onChange, refId }) => {
+  const descriptor = useRefDescriptor(refId);
+  const requiredParams = useMemo(() => {
+    if (!descriptor) return [];
+    if (isNotFound(descriptor)) {
+      return [];
+    }
+    if (isSystemDescriptor(descriptor)) {
+      return descriptor.params || [];
+    }
+    return getDescriptorParams(descriptor);
+  }, [descriptor]);
+
+  const items = useListItems(params, onChange, requiredParams);
+
+  if (!descriptor || isNotFound(descriptor)) return null;
   return <List items={items} />;
 };
