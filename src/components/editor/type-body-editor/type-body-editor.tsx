@@ -4,6 +4,7 @@ import {
   MapTypeBody,
   ParamTypeBody,
   RefTypeBody,
+  SelectorTypeBody,
   TypeBody,
 } from "types/descriptors";
 import { TypeBodySelector } from "./type-body-selector/type-body-selector";
@@ -11,6 +12,7 @@ import { ParamsEditor } from "../params-editor";
 import { StringEditor } from "../string-editor";
 import { ParamValue } from "../word/param-value";
 import { MapEditor } from "../map-editor";
+import { SelectorEditor } from "../selector-editor";
 
 type Props = {
   body: TypeBody;
@@ -63,6 +65,27 @@ export const TypeBodyEditor: React.FC<Props> = ({ body, onChange }) => {
     [body, onChange]
   );
 
+  const handleChangeSelectorParams = useCallback(
+    (newParams: Record<string, TypeBody>) => {
+      const selectorBody = body as SelectorTypeBody;
+      onChange({
+        ...selectorBody,
+        params: newParams,
+      });
+    },
+    [body, onChange]
+  );
+  const handleChangeSelectorReturns = useCallback(
+    (newReturns: TypeBody) => {
+      const selectorBody = body as SelectorTypeBody;
+      onChange({
+        ...selectorBody,
+        returns: newReturns,
+      });
+    },
+    [body, onChange]
+  );
+
   let editor: React.ReactNode;
   if (!body) {
     editor = null;
@@ -82,7 +105,14 @@ export const TypeBodyEditor: React.FC<Props> = ({ body, onChange }) => {
       <MapEditor map={body.map || emptyMap} onChange={handleChangeMap} />
     );
   } else if (body.type === Body.SELECTOR) {
-    editor = <>***SELECTOR EDIT***</>;
+    editor = (
+      <SelectorEditor
+        params={body.params}
+        returns={body.returns}
+        onChangeParams={handleChangeSelectorParams}
+        onChangeReturns={handleChangeSelectorReturns}
+      />
+    );
   }
 
   return (
