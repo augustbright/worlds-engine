@@ -18,9 +18,18 @@ const ButtonContainer = styled.a`
 
   &:hover {
     color: ${fromThemeProp((t) => t.colors[Color.BUTTON_HOVER_FOREGROUND])};
+    background: ${fromThemeProp(
+      (t) => t.colors[Color.BUTTON_HOVER_BACKGROUND]
+    )};
   }
   &:active {
     color: ${fromThemeProp((t) => t.colors[Color.BUTTON_ACTIVE_FOREGROUND])};
+  }
+  &:focus {
+    outline: none;
+    background: ${fromThemeProp(
+      (t) => t.colors[Color.BUTTON_HOVER_BACKGROUND]
+    )};
   }
 `;
 
@@ -50,6 +59,8 @@ export const IconButton = forwardRef<
   return (
     <>
       <ButtonContainer
+        role="button"
+        tabIndex={0}
         href={href}
         ref={ref}
         className={className}

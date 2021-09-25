@@ -1,13 +1,14 @@
+// TODO get author name
+
 import { Color, Space } from "components/theming/types";
 import { fromThemeProp } from "components/theming/utils";
-import React, { useCallback, useMemo } from "react";
+import { getBodyParams } from "func/types";
+import React, { useMemo } from "react";
 import styled from "styled-components";
+import { TypeBody } from "types/descriptors";
 
 type Props = {
-  name: string;
-  author: string;
-  params: Array<string>;
-  onClick: () => void;
+  item: Item;
   hover?: boolean;
 };
 
@@ -43,23 +44,25 @@ const AuthorContainer = styled.div`
   color: ${fromThemeProp((t) => t.colors[Color.DROPDOWN_AUTHOR])};
 `;
 
-export const ExternalTypeItem: React.FC<Props> = ({
-  name,
-  author,
-  params,
-  onClick,
-  hover = false,
-}) => {
-  const paramsText = useMemo(() => {
-    return params.length ? `<${params.join(", ")}>` : "";
-  }, [params]);
-  const handleClick = useCallback(() => {
-    onClick();
-  }, [onClick]);
+export type Item = {
+  id: string;
+  text: string;
+  body: TypeBody;
+};
+
+export const TypeItem: React.FC<Props> = ({ item, hover = false }) => {
+  const { paramsText, author } = useMemo(() => {
+    const params = getBodyParams(item.body);
+    return {
+      paramsText: params.length ? `<${params.join(", ")}>` : "",
+      author: "author",
+    };
+  }, [item]);
+
   return (
-    <ItemContainer onClick={handleClick} hover={hover}>
+    <ItemContainer hover={hover}>
       <NameContainer>
-        {name}
+        {item.text}
         <ParamsContainer> {paramsText}</ParamsContainer>{" "}
       </NameContainer>
       <AuthorContainer>{author}</AuthorContainer>

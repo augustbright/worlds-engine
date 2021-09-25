@@ -20,3 +20,5 @@ export const systemTypeDescriptors: Record<SystemRef, SystemTypeDescriptor> = {
     params: ["type"],
   },
 };
+
+export const getSystemTypeDescriptors = () => systemTypeDescriptors;

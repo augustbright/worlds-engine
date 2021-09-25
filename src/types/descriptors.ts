@@ -1,5 +1,5 @@
 import { Id, NameId } from "./common";
-import { TypeRefId } from "./ref";
+import { SystemRef, TypeRefId } from "./ref";
 
 export enum Body {
   REF = "ref",
@@ -44,7 +44,7 @@ export type TypeDescriptor = {
 };
 
 export type SystemTypeDescriptor = {
-  _id: TypeRefId;
+  _id: SystemRef;
   name: NameId;
   params?: Array<string>;
 };

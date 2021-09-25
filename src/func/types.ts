@@ -6,6 +6,7 @@ import {
   TypeDescriptor,
 } from "types/descriptors";
 import { SystemRef, TypeRefId } from "types/ref";
+import { getSystemTypeDescriptors } from "./system";
 
 export const getBodyParams = (body: TypeBody): Array<string> => {
   const getMapParams = (map?: Record<string, TypeBody>): Array<string> => {
@@ -24,7 +25,7 @@ export const getBodyParams = (body: TypeBody): Array<string> => {
   if (!body) return [];
 
   if (body.type === Body.PARAM) {
-    return [body.param];
+    return body.param ? [body.param] : [];
   }
   if (body.type === Body.REF) {
     const { params } = body;
@@ -43,13 +44,6 @@ export const getBodyParams = (body: TypeBody): Array<string> => {
   return [];
 };
 
-export const getDescriptorParams = (
-  descriptor: TypeDescriptor
-): Array<string> => {
-  const { body } = descriptor;
-  return body ? getBodyParams(body).filter(Boolean) : [];
-};
-
 export const isSystemRef = (testRef: TypeRefId): testRef is SystemRef => {
   return Object.values(SystemRef).includes(testRef as SystemRef);
 };
@@ -62,6 +56,17 @@ export const isSystemDescriptor = (
 
 export const isNotFound = (descriptor: any): descriptor is NotFoundDescriptor =>
   !!descriptor.error;
+
+export const getDescriptorParams = (
+  descriptor: TypeDescriptor | SystemTypeDescriptor
+): Array<string> => {
+  if (isSystemDescriptor(descriptor)) {
+    const systemDescriptor = getSystemTypeDescriptors()[descriptor._id];
+    return systemDescriptor.params || [];
+  }
+  const { body } = descriptor;
+  return body ? getBodyParams(body).filter(Boolean) : [];
+};
 
 export const bodyWithoutRef = (body: TypeBody, ref: TypeRefId): TypeBody => {
   if (!body) return body;

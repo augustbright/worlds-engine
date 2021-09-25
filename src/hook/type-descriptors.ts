@@ -28,6 +28,7 @@ export const useTypeDescriptors = () => {
 export const useRefDescriptor = (
   ref: TypeRefId
 ): TypeDescriptor | SystemTypeDescriptor | NotFoundDescriptor | null => {
+  const dispatch = useDispatch();
   const systemDescriptors = useSelector(selectSystemDescriptors);
   const descriptors = useSelector(selectTypeDescriptors);
   const external = useSelector(selectExternalDescriptors);
@@ -44,6 +45,6 @@ export const useRefDescriptor = (
   }
 
   // External descriptor
-  typeDescriptorsSlice.actions.requireId(ref);
+  dispatch(typeDescriptorsSlice.actions.requireId(ref));
   return external[ref] || null;
 };

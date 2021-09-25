@@ -18,6 +18,9 @@ const ValueSet = styled(Container)`
 
   &:hover {
     color: ${fromThemeProp((t) => t.colors[Color.TEXT_PARAM_HOVER])};
+    background: ${fromThemeProp(
+      (t) => t.colors[Color.BUTTON_HOVER_BACKGROUND]
+    )};
   }
 `;
 

@@ -17,6 +17,9 @@ const ValueSet = styled(Container)<{
   color: ${(props) => fromThemeProp((t) => t.colors[props.nameColor])(props)};
   &:hover {
     color: ${fromThemeProp((t) => t.colors[Color.TEXT_NAME_HOVER])};
+    background: ${fromThemeProp(
+      (t) => t.colors[Color.BUTTON_HOVER_BACKGROUND]
+    )};
   }
 `;
 

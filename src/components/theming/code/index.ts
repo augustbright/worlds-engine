@@ -26,6 +26,7 @@ export const theme: Theme = {
     [Color.BUTTON_BACKGROUND]: "#080609",
     [Color.BUTTON_FOREGROUND]: "rgba(224,206,237,0.8)",
     [Color.BUTTON_HOVER_FOREGROUND]: "#f5eff9",
+    [Color.BUTTON_HOVER_BACKGROUND]: "#100e12",
     [Color.BUTTON_ACTIVE_FOREGROUND]: "#f5eff9",
     [Color.BUTTON_BORDER]: "#211d26",
     [Color.TEXT_RESERVED]: "#b657ff",

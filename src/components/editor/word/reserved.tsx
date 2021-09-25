@@ -3,7 +3,7 @@ import { fromThemeProp } from "components/theming/utils";
 import styled from "styled-components";
 
 export const Reserved = styled.div`
-  display: inline-flex;
+  display: inline-block;
   align-items: center;
   justify-content: center;
   min-width: 16px;

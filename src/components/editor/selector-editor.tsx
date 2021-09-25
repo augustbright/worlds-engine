@@ -10,6 +10,8 @@ type Props = {
   onChangeReturns: (newReturns: TypeBody) => void;
 };
 
+const emptyParams = {};
+
 export const SelectorEditor: React.FC<Props> = ({
   params,
   onChangeParams,
@@ -32,7 +34,7 @@ export const SelectorEditor: React.FC<Props> = ({
 
   return (
     <>
-      <MapEditor map={params} onChange={handleChangeParams} />
+      <MapEditor map={params || emptyParams} onChange={handleChangeParams} />
       {" => "}
       <TypeBodyEditor body={returns} onChange={handleChangeReturns} />
     </>

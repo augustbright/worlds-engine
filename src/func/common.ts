@@ -12,3 +12,5 @@ export const joinListsWithSeparator = <S, I>(
   });
   return result;
 };
+
+export const assertNever = (never: never) => never;
