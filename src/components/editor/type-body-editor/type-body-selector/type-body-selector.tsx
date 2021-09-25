@@ -1,5 +1,3 @@
-// TODO use React Query to cache queries
-
 import { Selector } from "components/editor/selector";
 import React, { useCallback, useMemo } from "react";
 import {
@@ -58,45 +56,44 @@ const bodyItems: Record<string, Item> = {
 };
 
 const useFetchTypes = () => {
-  const fetch = useCallback(
-    async (query: string): Promise<Array<Array<Item>>> => {
-      const mapItems = (descriptor: TypeDescriptor | SystemTypeDescriptor) => {
-        const paramList = isSystemDescriptor(descriptor)
-          ? descriptor.params || []
-          : getBodyParams(descriptor.body);
-        return {
-          id: descriptor._id,
-          text: descriptor.name,
-          body: {
-            type: Body.REF as const,
-            ref: descriptor._id,
-            params: Object.fromEntries(paramList.map((param) => [param, null])),
-          },
-        };
+  const fetch = async (query: string): Promise<Array<Array<Item>>> => {
+    const mapItems = (descriptor: TypeDescriptor | SystemTypeDescriptor) => {
+      const paramList = isSystemDescriptor(descriptor)
+        ? descriptor.params || []
+        : getBodyParams(descriptor.body);
+      return {
+        id: descriptor._id,
+        text: descriptor.name,
+        body: {
+          type: Body.REF as const,
+          ref: descriptor._id,
+          params: Object.fromEntries(paramList.map((param) => [param, null])),
+        },
       };
-      const filterItems = (item: Item) =>
-        item.text.toLowerCase().search(query.toLowerCase()) >= 0;
+    };
+    const filterItems = (item: Item) =>
+      item.text.toLowerCase().search(query.toLowerCase()) >= 0;
 
-      const typesToItems = (
-        descriptors: Array<TypeDescriptor | SystemTypeDescriptor>
-      ): Array<Item> => descriptors.map(mapItems).filter(filterItems);
+    const typesToItems = (
+      descriptors: Array<TypeDescriptor | SystemTypeDescriptor>
+    ): Array<Item> => descriptors.map(mapItems).filter(filterItems);
 
-      const systemTypes: Array<SystemTypeDescriptor> = Object.values(
-        getSystemTypeDescriptors()
-      );
-      const externalTypes = await getExternalTypes(query);
+    const systemTypes: Array<SystemTypeDescriptor> = Object.values(
+      getSystemTypeDescriptors()
+    );
 
-      return [
-        Object.values(bodyItems).filter(filterItems),
-        typesToItems(systemTypes),
-        typesToItems(externalTypes),
-      ];
-    },
-    []
-  );
+    const externalTypes = await getExternalTypes(query);
+
+    return [
+      Object.values(bodyItems).filter(filterItems),
+      typesToItems(systemTypes),
+      typesToItems(externalTypes),
+    ];
+  };
   const renderItem = useCallback((item: Item, hover: boolean) => {
     return <TypeItem item={item} hover={hover} />;
   }, []);
+
   return { fetch, renderItem };
 };
 
@@ -130,6 +127,7 @@ export const TypeBodySelector: React.FC<Props> = ({ body, onSelect }) => {
   return (
     <Selector
       onSelect={handleSelect}
+      fetchKey="type-body-selector-items"
       fetch={fetch}
       renderItem={renderItem}
       color={color}

@@ -11,6 +11,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useQuery } from "react-query";
 import { Clickable } from "../common/clickable";
 import { Dropdown } from "../common/dropdown";
 import { StyledInput } from "../common/input";
@@ -18,10 +19,10 @@ import { StyledInput } from "../common/input";
 class ItemSeparator {}
 type FetchedItem = { id: string; text: string };
 type Fetch<T extends FetchedItem> = (query: string) => Promise<Array<Array<T>>>;
-type SelectorItem<T extends FetchedItem> = T | ItemSeparator;
 
 type Props<T extends FetchedItem> = {
   fetch: Fetch<T>;
+  fetchKey: string;
   renderItem: (item: T, hover: boolean) => React.ReactNode;
   onSelect: (item: T) => void;
   color?: Color;
@@ -41,21 +42,20 @@ const useControlledText = () => {
 
 const useFetchItems = <T extends FetchedItem>(
   fetch: Fetch<T>,
-  query: string
+  query: string,
+  fetchKey: string
 ) => {
-  const [items, setItems] = useState<Array<SelectorItem<T>>>([]);
-
-  useEffect(() => {
-    fetch(query).then((fetchedItems) => {
-      setItems(joinListsWithSeparator(new ItemSeparator(), ...fetchedItems));
-    });
-  }, [query, fetch, setItems]);
-
+  const { data } = useQuery([fetchKey, query], () => fetch(query));
+  const items = useMemo(
+    () => (data ? joinListsWithSeparator(new ItemSeparator(), ...data) : []),
+    [data]
+  );
   return { items };
 };
 
 const useSelect = <T extends FetchedItem>({
   fetch,
+  fetchKey,
   renderItem,
   onSelect,
 }: Props<T>) => {
@@ -66,7 +66,7 @@ const useSelect = <T extends FetchedItem>({
 
   const [active, setActive] = useState(false);
   const { text, setText, handleChangeText } = useControlledText();
-  const { items } = useFetchItems<T>(fetch, text);
+  const { items } = useFetchItems<T>(fetch, text, fetchKey);
 
   const handleClickView = useCallback(() => {
     setActive(true);
