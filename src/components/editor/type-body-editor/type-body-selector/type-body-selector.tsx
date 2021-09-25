@@ -12,6 +12,8 @@ import { getSystemTypeDescriptors } from "func/system";
 import { getExternalTypes } from "api/editor";
 import { getBodyParams, isSystemDescriptor, isSystemRef } from "func/types";
 import { Color } from "components/theming";
+import { useSelector } from "react-redux";
+import { selectTypeDescriptors } from "state/selectors/type-descriptors";
 import { TypeItem, Item } from "./type-item";
 
 type Props = {
@@ -56,6 +58,7 @@ const bodyItems: Record<string, Item> = {
 };
 
 const useFetchTypes = () => {
+  const ownDescriptors = useSelector(selectTypeDescriptors);
   const fetch = async (query: string): Promise<Array<Array<Item>>> => {
     const mapItems = (descriptor: TypeDescriptor | SystemTypeDescriptor) => {
       const paramList = isSystemDescriptor(descriptor)
@@ -82,11 +85,13 @@ const useFetchTypes = () => {
       getSystemTypeDescriptors()
     );
 
+    const descriptors = Object.values(ownDescriptors);
     const externalTypes = await getExternalTypes(query);
 
     return [
       Object.values(bodyItems).filter(filterItems),
       typesToItems(systemTypes),
+      typesToItems(descriptors),
       typesToItems(externalTypes),
     ];
   };
@@ -94,7 +99,7 @@ const useFetchTypes = () => {
     return <TypeItem item={item} hover={hover} />;
   }, []);
 
-  return { fetch, renderItem };
+  return { fetch, renderItem, ownDescriptors };
 };
 
 export const TypeBodySelector: React.FC<Props> = ({ body, onSelect }) => {
