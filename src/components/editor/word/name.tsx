@@ -11,8 +11,10 @@ const Container = styled.div`
   height: 22px;
 `;
 
-const ValueSet = styled(Container)`
-  color: ${fromThemeProp((t) => t.colors[Color.TEXT_NAME])};
+const ValueSet = styled(Container)<{
+  nameColor: Color;
+}>`
+  color: ${(props) => fromThemeProp((t) => t.colors[props.nameColor])(props)};
   &:hover {
     color: ${fromThemeProp((t) => t.colors[Color.TEXT_NAME_HOVER])};
   }
@@ -26,9 +28,16 @@ const ValueUnset = styled(Container)`
   }
 `;
 
-export const Name: React.FC = ({ children }) => {
+type Props = {
+  color?: Color;
+};
+
+export const Name: React.FC<Props> = ({
+  children,
+  color = Color.TEXT_NAME,
+}) => {
   if (children) {
-    return <ValueSet>{children}</ValueSet>;
+    return <ValueSet nameColor={color}>{children}</ValueSet>;
   }
   return (
     <ValueUnset>

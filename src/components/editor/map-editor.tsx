@@ -3,7 +3,7 @@ import { AddItem } from "components/editor/add-item";
 import { MapItem } from "components/structure/item/map-item";
 import { List, ListItem } from "components/structure/list/list";
 import { Bracket, withBrackets } from "components/structure/list/withBrackets";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { TypeBody } from "types/descriptors";
 import { StringEditor } from "./string-editor";
 import { TypeBodyEditor } from "./type-body-editor/type-body-editor";
@@ -18,6 +18,14 @@ const useListItems = (
   map: Record<string, TypeBody>,
   onChange: (newMap: Record<string, TypeBody>) => void
 ): Array<ListItem> => {
+  const [collapsed, setCollapsed] = useState(false);
+  const handleToggle = useCallback(
+    (listCollapsed: boolean) => {
+      setCollapsed(listCollapsed);
+    },
+    [setCollapsed]
+  );
+
   return useMemo(() => {
     const handleChangeKey = (index: number) => (newKey: string) => {
       if (!newKey) {
@@ -94,9 +102,13 @@ const useListItems = (
           content: <AddItem onNewItem={handleNewItem}>Field</AddItem>,
         },
       ],
-      Bracket.CURLY
+      Bracket.CURLY,
+      {
+        collapsed,
+        onToggle: handleToggle,
+      }
     );
-  }, [map, onChange]);
+  }, [map, onChange, collapsed, handleToggle]);
 };
 
 export const MapEditor: React.FC<Props> = ({ map, onChange }) => {

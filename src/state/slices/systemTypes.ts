@@ -11,7 +11,7 @@ export const systemTypeDescriptors: Record<SystemRef, SystemTypeDescriptor> = {
     name: "Number",
   },
   [SystemRef.STRING]: {
-    _id: SystemRef.NUMBER,
+    _id: SystemRef.STRING,
     name: "String",
   },
   [SystemRef.LIST]: {

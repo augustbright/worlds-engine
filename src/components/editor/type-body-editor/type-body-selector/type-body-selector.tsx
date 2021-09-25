@@ -33,7 +33,7 @@ export const TypeBodySelector: React.FC<Props> = ({ body, onSelect }) => {
     },
     [setActive, onSelect]
   );
-  const { fetch, render } = useTypesSelect({
+  const { fetch, render, handleKeyDown } = useTypesSelect({
     onSelect: handleSelect,
   });
   const handleDeactivate = useCallback(() => {
@@ -56,6 +56,7 @@ export const TypeBodySelector: React.FC<Props> = ({ body, onSelect }) => {
       renderItem={render}
       defaultText=""
       onDeactivate={handleDeactivate}
+      onKeyDown={handleKeyDown}
     >
       <View onClick={handleClickSelector}>{text}</View>
     </Selector>

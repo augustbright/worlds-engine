@@ -1,7 +1,7 @@
 import { getExternalTypes } from "api/editor";
 import { joinListsWithSeparator } from "func/common";
 import { getDescriptorParams } from "func/types";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   selectSystemDescriptors,
@@ -25,7 +25,17 @@ type HocProps = {
   onSelect: (item: Item) => void;
 };
 
+const itemAny = {
+  id: "any",
+  name: "any",
+  author: "system",
+  params: [],
+  body: null,
+};
+
 export const useTypesSelect = ({ onSelect }: HocProps) => {
+  const [selected, setSelected] = useState<string | null>(null);
+  const [items, setItems] = useState<Array<Item>>([]);
   const systemTypes = useSelector(selectSystemDescriptors);
   const ownDescriptors = useSelector(selectTypeDescriptors);
   const ownDescriptorsList = useMemo(
@@ -38,13 +48,7 @@ export const useTypesSelect = ({ onSelect }: HocProps) => {
       const systemSearchable: Array<{ name: string; item: Item }> = [
         {
           name: "any",
-          item: {
-            id: "any",
-            name: "any",
-            author: "system",
-            params: [],
-            body: null,
-          },
+          item: itemAny,
         },
         {
           name: "param",
@@ -142,7 +146,7 @@ export const useTypesSelect = ({ onSelect }: HocProps) => {
       const ownItems = convertToItems(ownDescriptorsList).filter(
         (ownItem) => ownItem.name.toLowerCase().search(query.toLowerCase()) >= 0
       );
-      return joinListsWithSeparator(
+      const result = joinListsWithSeparator(
         {
           id: "separator",
           name: "separator",
@@ -155,8 +159,11 @@ export const useTypesSelect = ({ onSelect }: HocProps) => {
         ownItems,
         externalItems
       );
+      setItems(result);
+      setSelected(null);
+      return result;
     },
-    [ownDescriptorsList, systemTypes]
+    [ownDescriptorsList, systemTypes, setItems, setSelected]
   );
 
   const render = useCallback(
@@ -172,12 +179,63 @@ export const useTypesSelect = ({ onSelect }: HocProps) => {
             name={item.name}
             author={item.author}
             params={item.params}
+            hover={item.id === selected}
           />
         </ItemContainer>
       );
     },
-    [onSelect]
+    [onSelect, selected]
   );
 
-  return { fetch, render };
+  const getNextItem = useCallback(
+    (offset: 1 | -1): string | null => {
+      if (items.length === 0) return null;
+
+      const selectedIndex = items.findIndex((item) => item.id === selected);
+      if (selected === null || selectedIndex === -1) {
+        if (offset === 1) return items[0].id;
+        return items[items.length - 1].id;
+      }
+
+      if (offset === 1) {
+        if (selectedIndex === items.length - 1) return items[0].id;
+        const nextItem = items[selectedIndex + 1];
+        if (nextItem.id !== "separator") {
+          return nextItem.id;
+        }
+        return items[selectedIndex + 2].id;
+      }
+      if (selectedIndex === 0) return items[items.length - 1].id;
+      const prevItem = items[selectedIndex - 1];
+      if (prevItem.id !== "separator") {
+        return prevItem.id;
+      }
+      return items[selectedIndex - 2].id;
+    },
+    [selected, items]
+  );
+
+  const getItem = useCallback(
+    (id: string | null): Item => {
+      return items.find((item) => item.id === id) || itemAny;
+    },
+    [items]
+  );
+
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "ArrowUp") {
+        setSelected(getNextItem(-1));
+      }
+      if (event.key === "ArrowDown") {
+        setSelected(getNextItem(1));
+      }
+      if (event.key === "Enter") {
+        onSelect(getItem(selected));
+      }
+    },
+    [setSelected, getNextItem, onSelect, getItem, selected]
+  );
+
+  return { fetch, render, handleKeyDown };
 };

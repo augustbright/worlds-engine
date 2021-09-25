@@ -12,6 +12,7 @@ import { StyledInput } from "./input";
 type Props<T> = {
   active: boolean;
   onDeactivate: () => void;
+  onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 
   defaultText: string;
   fetch: (query: string) => Promise<Array<T>>;
@@ -25,6 +26,7 @@ export const Selector = <T,>({
   renderItem,
   fetch,
   onDeactivate,
+  onKeyDown,
 }: React.PropsWithChildren<Props<T>>) => {
   const [text, setText] = useState(defaultText);
   const handleChange = useCallback(
@@ -70,6 +72,7 @@ export const Selector = <T,>({
           ref={inputRef}
           value={text}
           onChange={handleChange}
+          onKeyDown={onKeyDown}
         />
       </Dropdown>
     </>

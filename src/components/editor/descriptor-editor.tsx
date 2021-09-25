@@ -2,11 +2,12 @@ import { Pin } from "components/structure/anchor/pin";
 import { List, ListItem } from "components/structure/list/list";
 import { Bracket, withBrackets } from "components/structure/list/withBrackets";
 import { useTypeDescriptors } from "hook/type-descriptors";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { typeDescriptorsSlice } from "state/slices/type-descriptors";
 import { Id } from "types/common";
 import { TypeBody, TypeDescriptor } from "types/descriptors";
+import { Color } from "components/theming";
 import { MapItem } from "../structure/item/map-item";
 import { StringEditor } from "./string-editor";
 import { TypeBodyEditor } from "./type-body-editor/type-body-editor";
@@ -18,6 +19,13 @@ const useListItems = (
   descriptors: Record<Id, TypeDescriptor>
 ): Array<ListItem> => {
   const dispatch = useDispatch();
+  const [collapsed, setCollapsed] = useState(false);
+  const handleToggle = useCallback(
+    (listCollapsed: boolean) => {
+      setCollapsed(listCollapsed);
+    },
+    [setCollapsed]
+  );
   return useMemo(() => {
     const handleChangeName =
       (descriptor: TypeDescriptor) => (newName: string) => {
@@ -62,7 +70,7 @@ const useListItems = (
                   value={descriptor.name}
                   onChange={handleChangeName(descriptor)}
                 >
-                  <Name>{descriptor.name}</Name>
+                  <Name color={Color.TEXT_TYPE_NAME}>{descriptor.name}</Name>
                 </StringEditor>
                 <ViewParams descriptor={descriptor} />
               </>
@@ -89,9 +97,13 @@ const useListItems = (
           content: <AddTypeDescriptor />,
         },
       ],
-      Bracket.CURLY
+      Bracket.CURLY,
+      {
+        collapsed,
+        onToggle: handleToggle,
+      }
     );
-  }, [descriptors, dispatch]);
+  }, [descriptors, dispatch, collapsed, handleToggle]);
 };
 
 export const DescriptorEditor: React.FC = () => {

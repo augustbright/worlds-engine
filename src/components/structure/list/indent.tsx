@@ -11,6 +11,7 @@ const Tab = styled.div`
   color: ${fromThemeProp((t) => t.colors[Color.INDENT_FOREGROUND])};
   width: 22px;
   height: 22px;
+  font-size: 8px;
 `;
 
 export const Indent: React.FC = () => {

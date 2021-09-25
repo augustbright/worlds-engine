@@ -1,6 +1,11 @@
+import { IconButton } from "components/common/icon-button";
 import { Color } from "components/theming";
 import { fromThemeProp } from "components/theming/utils";
-import React from "react";
+import {
+  faChevronRight,
+  faChevronDown,
+} from "@fortawesome/free-solid-svg-icons";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import { PatternContainer } from "../item/pattern-container";
 import { ListItem } from "./list";
@@ -40,15 +45,51 @@ const BracketContainer = styled(PatternContainer)`
   color: ${fromThemeProp((t) => t.colors[Color.BRACKET_FOREGROUND])};
 `;
 
+type ToggleProps = {
+  onToggle?: (collapse: boolean) => void;
+  collapsed?: boolean;
+};
+
+const ToggleContainer: React.FC<ToggleProps> = ({ onToggle, collapsed }) => {
+  const handleClick = useCallback(() => {
+    if (onToggle) {
+      onToggle(!collapsed);
+    }
+  }, [onToggle, collapsed]);
+
+  return (
+    <IconButton
+      size="xs"
+      icon={collapsed ? faChevronRight : faChevronDown}
+      onClick={handleClick}
+    />
+  );
+};
+
 export const withBrackets = (
   list: Array<ListItem>,
-  bracket: Bracket
+  bracket: Bracket,
+  { onToggle = undefined, collapsed = false }: ToggleProps | undefined = {}
 ): Array<ListItem> => [
   {
     id: "start",
-    content: <BracketContainer>{brackets[bracket].start}</BracketContainer>,
+    content: (
+      <>
+        {onToggle ? (
+          <ToggleContainer onToggle={onToggle} collapsed={collapsed} />
+        ) : null}
+        <BracketContainer>{brackets[bracket].start}</BracketContainer>
+      </>
+    ),
   },
-  ...list,
+  ...(collapsed
+    ? [
+        {
+          id: "collapsed",
+          content: <>...</>,
+        },
+      ]
+    : list),
   {
     id: "end",
     content: <BracketContainer>{brackets[bracket].end}</BracketContainer>,

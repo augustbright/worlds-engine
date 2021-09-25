@@ -1,3 +1,8 @@
+// TODO make ordering
+// TODO make folders/packages
+// TODO add comments
+// TODO undo/redo
+
 import React, { useCallback } from "react";
 import { TabProvider, useTabContext } from "../tab-context";
 import { ListItem } from "../item/list-item";

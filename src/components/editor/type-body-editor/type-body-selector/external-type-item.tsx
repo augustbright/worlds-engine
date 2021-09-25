@@ -8,13 +8,18 @@ type Props = {
   author: string;
   params: Array<string>;
   onClick: () => void;
+  hover?: boolean;
 };
 
-const ItemContainer = styled.div`
+const ItemContainer = styled.div<{ hover?: boolean }>`
   padding: ${fromThemeProp((t) => t.space[Space.SMALL])}
     ${fromThemeProp((t) => t.space[Space.LARGE])};
   color: ${fromThemeProp((t) => t.colors[Color.DROPDOWN_FOREGROUND])};
   cursor: pointer;
+  background: ${(props) =>
+    props.hover
+      ? fromThemeProp((t) => t.colors[Color.DROPDOWN_HOVER])(props)
+      : "transparent"};
 
   &:hover {
     background: ${fromThemeProp((t) => t.colors[Color.DROPDOWN_HOVER])};
@@ -43,6 +48,7 @@ export const ExternalTypeItem: React.FC<Props> = ({
   author,
   params,
   onClick,
+  hover = false,
 }) => {
   const paramsText = useMemo(() => {
     return params.length ? `<${params.join(", ")}>` : "";
@@ -51,7 +57,7 @@ export const ExternalTypeItem: React.FC<Props> = ({
     onClick();
   }, [onClick]);
   return (
-    <ItemContainer onClick={handleClick}>
+    <ItemContainer onClick={handleClick} hover={hover}>
       <NameContainer>
         {name}
         <ParamsContainer> {paramsText}</ParamsContainer>{" "}
