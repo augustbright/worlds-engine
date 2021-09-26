@@ -1,10 +1,10 @@
+import { Loader } from "components/common/loader";
 import { Pin } from "components/structure/anchor/pin";
 import { MapItem } from "components/structure/item/map-item";
 import { List, ListItem } from "components/structure/list/list";
 import { Bracket, withBrackets } from "components/structure/list/withBrackets";
 import {
   getDescriptorParams,
-  isNotFound,
   isSystemDescriptor,
 } from "func/types";
 import { useRefDescriptor } from "hook/type-descriptors";
@@ -50,20 +50,19 @@ const useListItems = (
 };
 
 export const ParamsEditor: React.FC<Props> = ({ params, onChange, refId }) => {
-  const descriptor = useRefDescriptor(refId);
+  const descriptorQuery = useRefDescriptor(refId);
   const requiredParams = useMemo(() => {
+    const descriptor = descriptorQuery.data;
     if (!descriptor) return [];
-    if (isNotFound(descriptor)) {
-      return [];
-    }
     if (isSystemDescriptor(descriptor)) {
       return descriptor.params || [];
     }
     return getDescriptorParams(descriptor);
-  }, [descriptor]);
+  }, [descriptorQuery]);
 
   const items = useListItems(params, onChange, requiredParams);
 
-  if (!descriptor || isNotFound(descriptor)) return null;
+  if (descriptorQuery.isLoading) return <Loader />;
+  if (!descriptorQuery.data) return null;
   return <List items={items} />;
 };

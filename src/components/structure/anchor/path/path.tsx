@@ -24,7 +24,13 @@ export const ListPath: React.FC<Props> = ({ path, onChangePath }) => {
       const handleClick = () => {
         onChangePath(itemPath);
       };
-      return <PathItem path={itemPath} onClick={handleClick} />;
+      return (
+        <PathItem
+          key={itemPath.join("/")}
+          path={itemPath}
+          onClick={handleClick}
+        />
+      );
     },
     [path, onChangePath]
   );

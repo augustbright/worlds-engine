@@ -10,5 +10,5 @@ const StyledLoader = styled(ReactLoading)`
 `;
 
 export const Loader: React.FC<Props> = (props) => (
-  <StyledLoader type="bars" width={22} height={22} {...props} />
+  <StyledLoader type="spokes" width={16} height={16} {...props} />
 );

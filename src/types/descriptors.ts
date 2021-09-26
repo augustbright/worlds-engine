@@ -1,4 +1,4 @@
-import { Id, NameId } from "./common";
+import { Id } from "./common";
 import { SystemRef, TypeRefId } from "./ref";
 
 export enum Body {
@@ -39,16 +39,12 @@ export type TypeBody =
 
 export type TypeDescriptor = {
   _id: Id;
-  name: NameId;
+  name: string;
   body: TypeBody;
 };
 
 export type SystemTypeDescriptor = {
   _id: SystemRef;
-  name: NameId;
+  name: string;
   params?: Array<string>;
-};
-
-export type NotFoundDescriptor = {
-  error: Error;
 };

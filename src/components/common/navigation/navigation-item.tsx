@@ -2,7 +2,7 @@ import { Color } from "components/theming";
 import { Space } from "components/theming/types";
 import { fromThemeProp } from "components/theming/utils";
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link, LinkProps, withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { WithRouter } from "types/common";
 
@@ -18,7 +18,14 @@ type Props = {
 
 const Li = styled.li``;
 
-const StyledLink = styled(Link)<{ isActive: boolean }>`
+type LinkExtraProps = {
+  isActive: boolean;
+};
+
+const StyledLink = styled(
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+  ({ isActive, ...props }: LinkExtraProps & LinkProps) => <Link {...props} />
+)<LinkExtraProps>`
   text-decoration: none;
   color: ${fromThemeProp((theme) => theme.colors[Color.NAVIGATION_COLOR])};
   display: flex;

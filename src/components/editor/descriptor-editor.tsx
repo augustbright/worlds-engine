@@ -1,13 +1,15 @@
 import { Pin } from "components/structure/anchor/pin";
-import { List, ListItem } from "components/structure/list/list";
+import { List } from "components/structure/list/list";
 import { Bracket, withBrackets } from "components/structure/list/withBrackets";
-import { useTypeDescriptors } from "hook/type-descriptors";
-import React, { useCallback, useMemo, useState } from "react";
-import { useDispatch } from "react-redux";
-import { typeDescriptorsSlice } from "state/slices/type-descriptors";
-import { Id } from "types/common";
+import {
+  useDeleteOwnDescriptor,
+  useOwnDescriptors,
+  useUpdateOwnDescriptor,
+} from "hook/type-descriptors";
+import React, { useMemo } from "react";
 import { TypeBody, TypeDescriptor } from "types/descriptors";
 import { Color } from "components/theming";
+import { Loader } from "components/common/loader";
 import { MapItem } from "../structure/item/map-item";
 import { StringEditor } from "./string-editor";
 import { TypeBodyEditor } from "./type-body-editor/type-body-editor";
@@ -15,49 +17,32 @@ import { ViewParams } from "./view-params";
 import { Name } from "./word/name";
 import { AddTypeDescriptor } from "./add-type-descriptor";
 
-const useListItems = (
-  descriptors: Record<Id, TypeDescriptor>
-): Array<ListItem> => {
-  const dispatch = useDispatch();
-  const [collapsed, setCollapsed] = useState(false);
-  const handleToggle = useCallback(
-    (listCollapsed: boolean) => {
-      setCollapsed(listCollapsed);
-    },
-    [setCollapsed]
-  );
-  return useMemo(() => {
+export const DescriptorEditor: React.FC = () => {
+  const ownDescriptorsQuery = useOwnDescriptors();
+  const updateOwnDescriptor = useUpdateOwnDescriptor();
+  const deleteOwnDescriptor = useDeleteOwnDescriptor();
+  const items = useMemo(() => {
     const handleChangeName =
       (descriptor: TypeDescriptor) => (newName: string) => {
         if (!newName) {
-          dispatch(
-            typeDescriptorsSlice.actions.deleteDescriptor({
-              id: descriptor._id,
-            })
-          );
+          deleteOwnDescriptor.mutate(descriptor._id);
           return;
         }
-        dispatch(
-          typeDescriptorsSlice.actions.updateDescriptor({
-            descriptor: {
-              ...descriptor,
-              name: newName,
-            },
-          })
-        );
+        updateOwnDescriptor.mutate({
+          ...descriptor,
+          name: newName,
+        });
       };
 
     const handleChangeBody =
       (descriptor: TypeDescriptor) => (newBody: TypeBody) => {
-        dispatch(
-          typeDescriptorsSlice.actions.updateDescriptor({
-            descriptor: {
-              ...descriptor,
-              body: newBody,
-            },
-          })
-        );
+        updateOwnDescriptor.mutate({
+          ...descriptor,
+          body: newBody,
+        });
       };
+
+    const descriptors = ownDescriptorsQuery.data || [];
 
     const mapItems = Object.values(descriptors).map((descriptor) => {
       return {
@@ -97,18 +82,10 @@ const useListItems = (
           content: <AddTypeDescriptor />,
         },
       ],
-      Bracket.CURLY,
-      {
-        collapsed,
-        onToggle: handleToggle,
-      }
+      Bracket.CURLY
     );
-  }, [descriptors, dispatch, collapsed, handleToggle]);
-};
+  }, [ownDescriptorsQuery, deleteOwnDescriptor, updateOwnDescriptor]);
 
-export const DescriptorEditor: React.FC = () => {
-  const { descriptors } = useTypeDescriptors();
-  const items = useListItems(descriptors);
-
+  if (ownDescriptorsQuery.isLoading) return <Loader />;
   return <List items={items} />;
 };

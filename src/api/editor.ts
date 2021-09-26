@@ -8,14 +8,9 @@ export const getTypeDescriptors = (): Promise<Array<TypeDescriptor>> =>
     return data.data;
   });
 
-export const createTypeDescriptor = (
-  descriptor: Omit<TypeDescriptor, "_id">
+export const updateTypeDescriptor = (
+  descriptor: TypeDescriptor | Omit<TypeDescriptor, "_id">
 ): Promise<Id> =>
-  axios
-    .post(`${getApi()}/types`, descriptor, withToken())
-    .then((data) => data.data);
-
-export const updateTypeDescriptor = (descriptor: TypeDescriptor): Promise<Id> =>
   axios
     .post(`${getApi()}/types`, descriptor, withToken())
     .then((data) => data.data);

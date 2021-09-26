@@ -157,8 +157,9 @@ const useSelect = <T extends FetchedItem>({
   const dropdownContent = useMemo(
     () => (
       <>
-        {items.map((item) => (
+        {items.map((item, i) => (
           <ItemContainer
+            key={item instanceof ItemSeparator ? `separator-${i}` : item.id}
             ref={
               !(item instanceof ItemSeparator) && item.id === selected
                 ? selectedRef

@@ -19,10 +19,10 @@ export const Indent: React.FC = () => {
   const spaces = [];
   for (let i = 0; i < level; i += 1) {
     spaces.push(
-      <>
+      <React.Fragment key={i}>
         <Tab>·</Tab>
         <Tab>·</Tab>
-      </>
+      </React.Fragment>
     );
   }
 

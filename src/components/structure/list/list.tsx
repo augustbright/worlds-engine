@@ -32,7 +32,7 @@ export const List: React.FC<Props> = ({ items }) => {
       };
 
       return (
-        <TabProvider value={tabContextValue}>
+        <TabProvider key={item.id} value={tabContextValue}>
           <ListItem
             indented={intended}
             inline={inline}

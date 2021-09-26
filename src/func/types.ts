@@ -1,6 +1,5 @@
 import {
   Body,
-  NotFoundDescriptor,
   SystemTypeDescriptor,
   TypeBody,
   TypeDescriptor,
@@ -54,9 +53,6 @@ export const isSystemDescriptor = (
   return isSystemRef(testDescriptor._id);
 };
 
-export const isNotFound = (descriptor: any): descriptor is NotFoundDescriptor =>
-  !!descriptor.error;
-
 export const getDescriptorParams = (
   descriptor: TypeDescriptor | SystemTypeDescriptor
 ): Array<string> => {
@@ -105,3 +101,40 @@ export const bodyWithoutRef = (body: TypeBody, ref: TypeRefId): TypeBody => {
   const never: never = body;
   return never;
 };
+
+export const getBodyRefs = (body: TypeBody): Array<TypeRefId> => {
+  if (!body) return [];
+  if (body.type === Body.PARAM) return [];
+
+  if (body.type === Body.REF) {
+    return [body.ref];
+  }
+
+  if (body.type === Body.MAP) {
+    return Array.from(
+      new Set(
+        Object.values(body.map)
+          .map((value) => getBodyRefs(value))
+          .flat()
+      )
+    );
+  }
+
+  if (body.type === Body.SELECTOR) {
+    return Array.from(
+      new Set([
+        ...Object.values(body.params)
+          .map((value) => getBodyRefs(value))
+          .flat(),
+        ...getBodyRefs(body.returns),
+      ])
+    );
+  }
+
+  const never: never = body;
+  return never;
+};
+
+export const getDescriptorRefs = (
+  descriptor: TypeDescriptor
+): Array<TypeRefId> => getBodyRefs(descriptor.body);
