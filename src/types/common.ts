@@ -6,7 +6,15 @@ export type RouterParams = void;
 
 export type WithRouter = RouteComponentProps<RouterParams>;
 
-export type User = {
+export type Profile = {
   id: string;
+  name?: string;
+};
+
+export type User = {
   jwt: string;
+} & Profile;
+
+export type ProfileFormValues = {
+  name: string;
 };

@@ -14,6 +14,11 @@ const navigationItems: Array<NavigationItem> = [
     path: "/",
   },
   {
+    id: "profile",
+    content: "Profile",
+    path: "/profile",
+  },
+  {
     id: "test",
     content: "Test",
     path: "/test",

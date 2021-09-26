@@ -44,7 +44,7 @@ export const Name: React.FC<Props> = ({
   }
   return (
     <ValueUnset>
-      {"<"}deleting{">"}
+      {"<"}unset{">"}
     </ValueUnset>
   );
 };

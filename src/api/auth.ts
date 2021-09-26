@@ -1,6 +1,6 @@
 import axios from "axios";
 import { UseQueryOptions } from "react-query";
-import { User } from "types/common";
+import { ProfileFormValues, User } from "types/common";
 import { GoogleOAuthCallbackDTO } from "./types";
 import { getApi, withToken } from "./utils";
 
@@ -11,6 +11,18 @@ export const queryUser = (): UseQueryOptions<User> => ({
       return data.data;
     }),
 });
+
+export const getOwnProfile = () =>
+  axios
+    .get<Partial<ProfileFormValues> | null>(`${getApi()}/profile`, withToken())
+    .then((data) => {
+      return data.data || null;
+    });
+
+export const updateProfile = (profile: Partial<ProfileFormValues>) =>
+  axios
+    .post(`${getApi()}/profile`, profile, withToken())
+    .then((data) => data.data);
 
 export const queryGoogleOAuthCallback = (
   query: string
