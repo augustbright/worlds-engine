@@ -16,7 +16,7 @@ export type RefTypeBody = {
 
 export type MapTypeBody = {
   type: Body.MAP;
-  map: Record<string, TypeBody>;
+  map?: Record<string, TypeBody>;
 };
 
 export type ParamTypeBody = {
@@ -26,7 +26,7 @@ export type ParamTypeBody = {
 
 export type SelectorTypeBody = {
   type: Body.SELECTOR;
-  params: Record<string, TypeBody>;
+  params?: Record<string, TypeBody>;
   returns: TypeBody;
 };
 
@@ -41,6 +41,7 @@ export type TypeDescriptor = {
   _id: Id;
   name: string;
   body: TypeBody;
+  order?: number;
 };
 
 export type SystemTypeDescriptor = {

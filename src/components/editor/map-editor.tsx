@@ -1,8 +1,7 @@
-import { Pin } from "components/structure/anchor/pin";
 import { AddItem } from "components/editor/add-item";
 import { MapItem } from "components/structure/item/map-item";
 import { List, ListItem } from "components/structure/list/list";
-import { Bracket, withBrackets } from "components/structure/list/withBrackets";
+import { Bracket, withBrackets } from "components/structure/list/with-brackets";
 import React, { useCallback, useMemo, useState } from "react";
 import { TypeBody } from "types/descriptors";
 import { StringEditor } from "./string-editor";
@@ -82,13 +81,10 @@ const useListItems = (
               </StringEditor>
             }
             valueContent={
-              <Pin path={`${index}:${key}`}>
-                {" "}
-                <TypeBodyEditor
-                  body={value}
-                  onChange={handleChangeValue(index)}
-                />
-              </Pin>
+              <TypeBodyEditor
+                body={value}
+                onChange={handleChangeValue(index)}
+              />
             }
           />
         ),

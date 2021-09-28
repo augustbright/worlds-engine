@@ -1,3 +1,4 @@
+import { Rearrangeble } from "types/common";
 import {
   Body,
   SystemTypeDescriptor,
@@ -77,7 +78,7 @@ export const bodyWithoutRef = (body: TypeBody, ref: TypeRefId): TypeBody => {
     return {
       type: Body.MAP,
       map: Object.fromEntries(
-        Object.entries(body.map).map(([key, value]) => [
+        Object.entries(body.map || {}).map(([key, value]) => [
           key,
           bodyWithoutRef(value, ref),
         ])
@@ -89,7 +90,7 @@ export const bodyWithoutRef = (body: TypeBody, ref: TypeRefId): TypeBody => {
     return {
       type: Body.SELECTOR,
       params: Object.fromEntries(
-        Object.entries(body.params).map(([key, value]) => [
+        Object.entries(body.params || {}).map(([key, value]) => [
           key,
           bodyWithoutRef(value, ref),
         ])
@@ -113,7 +114,7 @@ export const getBodyRefs = (body: TypeBody): Array<TypeRefId> => {
   if (body.type === Body.MAP) {
     return Array.from(
       new Set(
-        Object.values(body.map)
+        Object.values(body.map || {})
           .map((value) => getBodyRefs(value))
           .flat()
       )
@@ -123,7 +124,7 @@ export const getBodyRefs = (body: TypeBody): Array<TypeRefId> => {
   if (body.type === Body.SELECTOR) {
     return Array.from(
       new Set([
-        ...Object.values(body.params)
+        ...Object.values(body.params || {})
           .map((value) => getBodyRefs(value))
           .flat(),
         ...getBodyRefs(body.returns),
@@ -138,3 +139,26 @@ export const getBodyRefs = (body: TypeBody): Array<TypeRefId> => {
 export const getDescriptorRefs = (
   descriptor: TypeDescriptor
 ): Array<TypeRefId> => getBodyRefs(descriptor.body);
+
+export const rearrangeDescriptors = (
+  descriptors: Array<Rearrangeble>,
+  from: string,
+  to: string
+): Array<Rearrangeble> => {
+  const insertIndex = descriptors.findIndex(
+    (descriptor) => descriptor._id === to
+  );
+
+  const movedItem = descriptors.find((descriptor) => descriptor._id === from);
+  const newList = descriptors.filter((descriptor) => descriptor._id !== from);
+  if (!movedItem) return [];
+
+  return [
+    ...newList.slice(0, insertIndex),
+    movedItem,
+    ...newList.slice(insertIndex),
+  ].map((descriptor, index) => ({
+    _id: descriptor._id,
+    order: index,
+  }));
+};

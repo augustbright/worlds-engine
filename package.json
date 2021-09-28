@@ -58,6 +58,8 @@
     "dotenv": "^10.0.0",
     "lodash": "^4.17.21",
     "react": "^17.0.2",
+    "react-dnd": "^14.0.4",
+    "react-dnd-html5-backend": "^14.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.16.0",
     "react-loading": "^2.0.3",

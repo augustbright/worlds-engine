@@ -1,5 +1,5 @@
 import { List } from "components/structure/list/list";
-import { Bracket, withBrackets } from "components/structure/list/withBrackets";
+import { Bracket, withBrackets } from "components/structure/list/with-brackets";
 import { getDescriptorParams } from "func/types";
 import React, { useMemo } from "react";
 import { TypeDescriptor } from "types/descriptors";

@@ -3,6 +3,7 @@ import {
   deleteTypeDescriptor,
   getExternalType,
   getTypeDescriptors,
+  rearrangeDescriptors,
   updateTypeDescriptor,
 } from "api/editor";
 import { ErrorToast } from "components/editor/toasts/error";
@@ -16,7 +17,7 @@ import {
   UseQueryResult,
 } from "react-query";
 import { toast } from "react-toastify";
-import { Id } from "types/common";
+import { Id, Rearrangeble } from "types/common";
 import { SystemTypeDescriptor, TypeDescriptor } from "types/descriptors";
 import { TypeRefId } from "types/ref";
 import { Name } from "components/editor/word/name";
@@ -60,6 +61,21 @@ export const useDeleteOwnDescriptor = () => {
       queryClient.invalidateQueries(["ref-descriptor", id]);
     },
   });
+};
+
+export const useRearrangeOwnDescriptors = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (items: Array<Rearrangeble>) => rearrangeDescriptors(items),
+    {
+      onSuccess: (_data, items: Array<Rearrangeble>) => {
+        queryClient.invalidateQueries(["own-descriptors"]);
+        items.forEach((item) => {
+          queryClient.invalidateQueries(["ref-descriptor", item._id]);
+        });
+      },
+    }
+  );
 };
 
 export const useRefDescriptor = (ref: TypeRefId) => {

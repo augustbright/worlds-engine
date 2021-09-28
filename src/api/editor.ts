@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Id } from "types/common";
+import { Id, Rearrangeble } from "types/common";
 import { TypeDescriptor } from "types/descriptors";
 import { getApi, withToken } from "./utils";
 
@@ -18,6 +18,11 @@ export const updateTypeDescriptor = (
 export const deleteTypeDescriptor = (id: Id): Promise<void> =>
   axios
     .delete(`${getApi()}/types/${id}`, withToken())
+    .then((data) => data.data);
+
+export const rearrangeDescriptors = (items: Array<Rearrangeble>) =>
+  axios
+    .post(`${getApi()}/descriptors/rearrange`, items, withToken())
     .then((data) => data.data);
 
 export const getExternalType = (id: Id): Promise<TypeDescriptor | null> =>

@@ -18,3 +18,8 @@ export type User = {
 export type ProfileFormValues = {
   name: string;
 };
+
+export type Rearrangeble = {
+  _id: string;
+  order?: number;
+};

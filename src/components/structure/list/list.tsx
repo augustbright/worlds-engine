@@ -1,4 +1,3 @@
-// TODO make ordering
 // TODO make folders/packages
 // TODO add comments
 // TODO undo/redo

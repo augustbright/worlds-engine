@@ -1,12 +1,8 @@
 import { Loader } from "components/common/loader";
-import { Pin } from "components/structure/anchor/pin";
 import { MapItem } from "components/structure/item/map-item";
 import { List, ListItem } from "components/structure/list/list";
-import { Bracket, withBrackets } from "components/structure/list/withBrackets";
-import {
-  getDescriptorParams,
-  isSystemDescriptor,
-} from "func/types";
+import { Bracket, withBrackets } from "components/structure/list/with-brackets";
+import { getDescriptorParams, isSystemDescriptor } from "func/types";
 import { useRefDescriptor } from "hook/type-descriptors";
 import React, { useMemo } from "react";
 import { TypeBody } from "types/descriptors";
@@ -32,14 +28,12 @@ const useListItems = (
           <MapItem
             keyContent={<>{key}</>}
             valueContent={
-              <Pin path={key}>
-                <TypeBodyEditor
-                  body={params[key] || null}
-                  onChange={(newBody) => {
-                    onChange(key, newBody);
-                  }}
-                />
-              </Pin>
+              <TypeBodyEditor
+                body={params[key] || null}
+                onChange={(newBody) => {
+                  onChange(key, newBody);
+                }}
+              />
             }
           />
         ),

@@ -1,15 +1,17 @@
-import { Pin } from "components/structure/anchor/pin";
 import { List } from "components/structure/list/list";
-import { Bracket, withBrackets } from "components/structure/list/withBrackets";
+import { Bracket, withBrackets } from "components/structure/list/with-brackets";
 import {
   useDeleteOwnDescriptor,
   useOwnDescriptors,
+  useRearrangeOwnDescriptors,
   useUpdateOwnDescriptor,
 } from "hook/type-descriptors";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { TypeBody, TypeDescriptor } from "types/descriptors";
 import { Color } from "components/theming";
 import { Loader } from "components/common/loader";
+import { Rearranger } from "components/common/rearranger";
+import { rearrangeDescriptors } from "func/types";
 import { MapItem } from "../structure/item/map-item";
 import { StringEditor } from "./string-editor";
 import { TypeBodyEditor } from "./type-body-editor/type-body-editor";
@@ -17,62 +19,81 @@ import { ViewParams } from "./view-params";
 import { Name } from "./word/name";
 import { AddTypeDescriptor } from "./add-type-descriptor";
 
-export const DescriptorEditor: React.FC = () => {
-  const ownDescriptorsQuery = useOwnDescriptors();
+type TypeItemProps = {
+  descriptor: TypeDescriptor;
+};
+
+const TypeItem: React.FC<TypeItemProps> = React.memo(({ descriptor }) => {
   const updateOwnDescriptor = useUpdateOwnDescriptor();
   const deleteOwnDescriptor = useDeleteOwnDescriptor();
+
+  const handleChangeName = useCallback(
+    (newName: string) => {
+      if (!newName) {
+        deleteOwnDescriptor.mutate(descriptor._id);
+        return;
+      }
+      updateOwnDescriptor.mutate({
+        ...descriptor,
+        name: newName,
+      });
+    },
+    [descriptor, updateOwnDescriptor, deleteOwnDescriptor]
+  );
+
+  const handleChangeBody = useCallback(
+    (newBody: TypeBody) => {
+      updateOwnDescriptor.mutate({
+        ...descriptor,
+        body: newBody,
+      });
+    },
+    [updateOwnDescriptor, descriptor]
+  );
+
+  return (
+    <MapItem
+      keyContent={
+        <>
+          <StringEditor value={descriptor.name} onChange={handleChangeName}>
+            <Name color={Color.TEXT_TYPE_NAME}>{descriptor.name}</Name>
+          </StringEditor>
+          <ViewParams descriptor={descriptor} />
+        </>
+      }
+      valueContent={
+        <TypeBodyEditor body={descriptor.body} onChange={handleChangeBody} />
+      }
+    />
+  );
+});
+
+export const DescriptorEditor: React.FC = () => {
+  const ownDescriptorsQuery = useOwnDescriptors();
+  const rearrangeOwnDescriptors = useRearrangeOwnDescriptors();
+
   const items = useMemo(() => {
-    const handleChangeName =
-      (descriptor: TypeDescriptor) => (newName: string) => {
-        if (!newName) {
-          deleteOwnDescriptor.mutate(descriptor._id);
-          return;
-        }
-        updateOwnDescriptor.mutate({
-          ...descriptor,
-          name: newName,
-        });
-      };
-
-    const handleChangeBody =
-      (descriptor: TypeDescriptor) => (newBody: TypeBody) => {
-        updateOwnDescriptor.mutate({
-          ...descriptor,
-          body: newBody,
-        });
-      };
-
     const descriptors = ownDescriptorsQuery.data || [];
 
-    const mapItems = Object.values(descriptors).map((descriptor) => {
-      return {
-        id: descriptor._id,
-        content: (
-          <MapItem
-            keyContent={
-              <>
-                <StringEditor
-                  value={descriptor.name}
-                  onChange={handleChangeName(descriptor)}
-                >
-                  <Name color={Color.TEXT_TYPE_NAME}>{descriptor.name}</Name>
-                </StringEditor>
-                <ViewParams descriptor={descriptor} />
-              </>
-            }
-            valueContent={
-              <Pin path={descriptor.name}>
-                {" "}
-                <TypeBodyEditor
-                  body={descriptor.body}
-                  onChange={handleChangeBody(descriptor)}
-                />
-              </Pin>
-            }
+    const handleRearrange = (from: string, to: string) => {
+      rearrangeOwnDescriptors.mutate(
+        rearrangeDescriptors(descriptors, from, to)
+      );
+    };
+
+    const mapItems = Object.values(descriptors).map((descriptor) => ({
+      id: descriptor._id,
+      content: (
+        <>
+          <Rearranger
+            type="descriptor"
+            id={descriptor._id}
+            onRearrange={handleRearrange}
           />
-        ),
-      };
-    });
+          <TypeItem descriptor={descriptor} />
+        </>
+      ),
+    }));
 
     return withBrackets(
       [
@@ -84,7 +105,7 @@ export const DescriptorEditor: React.FC = () => {
       ],
       Bracket.CURLY
     );
-  }, [ownDescriptorsQuery, deleteOwnDescriptor, updateOwnDescriptor]);
+  }, [ownDescriptorsQuery, rearrangeOwnDescriptors]);
 
   if (ownDescriptorsQuery.isLoading) return <Loader />;
   return <List items={items} />;

@@ -111,7 +111,7 @@ export const TypeBodyEditor: React.FC<Props> = ({ body, onChange }) => {
   } else if (body.type === Body.SELECTOR) {
     editor = (
       <SelectorEditor
-        params={body.params}
+        params={body.params || {}}
         returns={body.returns}
         onChangeParams={handleChangeSelectorParams}
         onChangeReturns={handleChangeSelectorReturns}
@@ -121,7 +121,8 @@ export const TypeBodyEditor: React.FC<Props> = ({ body, onChange }) => {
 
   return (
     <>
-      <TypeBodySelector body={body} onSelect={handleSelect} /> {editor}
+      <TypeBodySelector body={body} onSelect={handleSelect} />
+      {editor}
     </>
   );
 };
