@@ -68,7 +68,7 @@ const TypeItem: React.FC<TypeItemProps> = React.memo(({ descriptor }) => {
   );
 });
 
-export const DescriptorEditor: React.FC = () => {
+const useItems = () => {
   const ownDescriptorsQuery = useOwnDescriptors();
   const rearrangeOwnDescriptors = useRearrangeOwnDescriptors();
 
@@ -107,6 +107,14 @@ export const DescriptorEditor: React.FC = () => {
     );
   }, [ownDescriptorsQuery, rearrangeOwnDescriptors]);
 
-  if (ownDescriptorsQuery.isLoading) return <Loader />;
+  return {
+    items,
+    isLoading: ownDescriptorsQuery.isLoading,
+  };
+};
+
+export const DescriptorEditor: React.FC = () => {
+  const { isLoading, items } = useItems();
+  if (isLoading) return <Loader />;
   return <List items={items} />;
 };

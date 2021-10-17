@@ -1,4 +1,4 @@
-import { AddItem } from "components/editor/add-item";
+import { AddItem } from "components/common/add-item";
 import { MapItem } from "components/structure/item/map-item";
 import { List, ListItem } from "components/structure/list/list";
 import { Bracket, withBrackets } from "components/structure/list/with-brackets";

@@ -4,7 +4,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { fromThemeProp } from "components/theming/utils";
 import { Color } from "components/theming";
-import { StringEditor } from "./string-editor";
+import { StringEditor } from "../editor/string-editor";
 
 type Props = {
   onNewItem: (name: string) => void;

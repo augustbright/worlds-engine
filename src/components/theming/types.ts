@@ -59,6 +59,10 @@ export enum Color {
   DROPDOWN_BORDER,
   SLIDER,
   SLIDER_HOVER,
+
+  CARD_BORDER,
+
+  CARD_BACKGROUND,
 }
 
 export enum Space {

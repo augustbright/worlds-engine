@@ -22,11 +22,13 @@ const Container = styled.div`
 type Props = {
   className?: string;
   onClick: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 };
 
 export const Clickable: React.FC<
   Props & React.ComponentProps<typeof Container>
-> = ({ onClick, ...props }) => {
+> = ({ onClick, onMouseEnter, onMouseLeave, ...props }) => {
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (event.key === "Enter") {
@@ -35,6 +37,14 @@ export const Clickable: React.FC<
     },
     [onClick]
   );
+
+  const handleMouseEnter = useCallback(() => {
+    onMouseEnter?.call(null);
+  }, [onMouseEnter]);
+
+  const handleMouseLeave = useCallback(() => {
+    onMouseLeave?.call(null);
+  }, [onMouseLeave]);
 
   const handleClick = useCallback(() => {
     onClick();
@@ -46,6 +56,8 @@ export const Clickable: React.FC<
       role="button"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       {...props}
     />
   );

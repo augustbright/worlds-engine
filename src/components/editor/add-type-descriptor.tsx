@@ -5,7 +5,7 @@ import {
   useUpdateOwnDescriptor,
 } from "hook/type-descriptors";
 import React, { useCallback, useState } from "react";
-import { AddItem } from "./add-item";
+import { AddItem } from "../common/add-item";
 import { Name } from "./word/name";
 
 export const AddTypeDescriptor: React.FC = () => {
