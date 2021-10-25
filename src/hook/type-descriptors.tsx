@@ -5,8 +5,8 @@ import {
   getTypeDescriptors,
   rearrangeDescriptors,
   updateTypeDescriptor,
-} from "api/editor";
-import { ErrorToast } from "components/editor/toasts/error";
+} from "modules/types/api/requests";
+import { ErrorToast } from "modules/editor/toasts/error";
 import { getSystemTypeDescriptors } from "func/system";
 import { isSystemRef } from "func/types";
 import {
@@ -20,7 +20,7 @@ import { toast } from "react-toastify";
 import { Id, Rearrangeble } from "types/common";
 import { SystemTypeDescriptor, TypeDescriptor } from "types/descriptors";
 import { TypeRefId } from "types/ref";
-import { Name } from "components/editor/word/name";
+import { Name } from "modules/editor/word/name";
 
 export const useOwnDescriptors = () =>
   useQuery(["own-descriptors"], () => getTypeDescriptors());

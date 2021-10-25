@@ -23,6 +23,7 @@ module.exports = {
       pages: path.resolve(__dirname, 'src', 'pages'),
       api: path.resolve(__dirname, 'src', 'api'),
       func: path.resolve(__dirname, 'src', 'func'),
+      modules: path.resolve(__dirname, 'src', 'modules'),
     },
   },
   module: {
@@ -47,15 +48,15 @@ module.exports = {
       template: path.join(__dirname, 'src', 'templates', 'index.html'),
     }),
     new GenerateSW(),
-    new DefinePlugin({
-      APPLICATION_HOST: JSON.stringify(process.env['APPLICATION_HOST'])
-    })
+    new DefinePlugin({}),
   ],
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
     historyApiFallback: true,
     proxy: {
-      '/api': 'http://localhost:3000/'
+      '/api': process.env['API_PROXY_HOST'],
+    },
+    client: {
+      logging: 'info'
     }
   },
   devtool: 'inline-source-map',

@@ -1,6 +1,6 @@
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
-import { IconButton } from "components/common/icon-button";
-import { PackageEditor } from "components/packages/package-editor";
+import { IconButton } from "modules/common/components/icon-button";
+import { PackageEditor } from "modules/packages/components/package-editor";
 import React, { useCallback } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";

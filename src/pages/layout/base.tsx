@@ -1,5 +1,5 @@
-import { Color } from "components/theming";
-import { fromThemeProp } from "components/theming/utils";
+import { Color } from "modules/theming";
+import { fromThemeProp } from "modules/theming/utils";
 import React from "react";
 import styled from "styled-components";
 

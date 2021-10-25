@@ -1,10 +1,10 @@
 import { getApi } from "api/utils";
-import { IconButton } from "components/common/icon-button";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { Space } from "components/theming/types";
-import { fromThemeProp } from "components/theming/utils";
+import { Space } from "modules/theming/types";
+import { fromThemeProp } from "modules/theming/utils";
 import React from "react";
 import styled from "styled-components";
+import { IconButton } from "modules/common/components/icon-button";
 import { LayoutBase } from "./layout/base";
 
 const Center = styled.div`

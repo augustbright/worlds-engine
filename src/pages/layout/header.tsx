@@ -1,11 +1,11 @@
 import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
 import { unsetToken } from "api/utils";
-import { IconButton } from "components/common/icon-button";
-import { Loader } from "components/common/loader";
-import { NavigationBar } from "components/common/navigation/navigation-bar";
-import { NavigationItem } from "components/common/navigation/navigation-item";
-import { Color } from "components/theming";
-import { fromThemeProp } from "components/theming/utils";
+import { Loader } from "modules/abstract/components/loader";
+import { IconButton } from "modules/common/components/icon-button";
+import { NavigationBar } from "modules/common/components/navigation/navigation-bar";
+import { NavigationItem } from "modules/common/components/navigation/navigation-item";
+import { Color } from "modules/theming";
+import { fromThemeProp } from "modules/theming/utils";
 import React, { useCallback } from "react";
 import { useIsFetching, useQueryClient } from "react-query";
 import styled from "styled-components";

@@ -1,6 +1,6 @@
+import { Loader } from "modules/abstract/components/loader";
 import React from "react";
 import styled from "styled-components";
-import { Loader } from "components/common/loader";
 import { LayoutBase } from "./layout/base";
 
 const Center = styled.div`

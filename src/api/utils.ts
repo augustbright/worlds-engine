@@ -18,7 +18,4 @@ export const withToken = (params: AxiosRequestConfig = {}) => ({
   },
 });
 
-// build variable
-const getHost = () => APPLICATION_HOST;
-
-export const getApi = () => `${getHost()}/api`;
+export const getApi = () => `/api`;

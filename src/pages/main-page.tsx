@@ -1,8 +1,7 @@
-import { DescriptorEditor } from "components/editor/descriptor-editor";
+import { DescriptorEditor } from "modules/editor/descriptor-editor";
 import { getDescriptorRefs } from "func/types";
 import { useOwnDescriptors, useRefDescriptors } from "hook/type-descriptors";
 import React, { useMemo } from "react";
-import { PageLayout } from "./layout/page";
 import { LoadingPage } from "./loading-page";
 
 export const MainPage: React.FC = () => {
@@ -17,5 +16,5 @@ export const MainPage: React.FC = () => {
     return <DescriptorEditor />;
   }, [descriptorsQuery, ownDescriptorsQuery]);
 
-  return <PageLayout>{pageContent}</PageLayout>;
+  return <>{pageContent}</>;
 };

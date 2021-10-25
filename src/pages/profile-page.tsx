@@ -1,4 +1,4 @@
-import { ProfileForm } from "components/profile/profile-form";
+import { ProfileForm } from "modules/profile/components/profile-form";
 import React from "react";
 import { PageLayout } from "./layout/page";
 

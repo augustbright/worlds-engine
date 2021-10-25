@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "components/app";
+import App from "modules/application/components/application";
 import { initSW } from "./service-workers";
 
 require("./style.css");

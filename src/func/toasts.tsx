@@ -1,4 +1,4 @@
-import { ErrorToast } from "components/editor/toasts/error";
+import { ErrorToast } from "modules/editor/toasts/error";
 import React from "react";
 import { toast } from "react-toastify";
 

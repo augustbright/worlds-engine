@@ -1,12 +1,16 @@
 import React from "react";
-import { ErrorToast } from "components/editor/toasts/error";
+import { ErrorToast } from "modules/editor/toasts/error";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { Id } from "types/common";
 import { TypeRefId } from "types/ref";
-import { Name } from "components/editor/word/name";
+import { Name } from "modules/editor/word/name";
 import { Package } from "types/packages";
-import { deletePackage, getPackages, updatePackage } from "api/packages";
+import {
+  deletePackage,
+  getPackages,
+  updatePackage,
+} from "modules/packages/api/requests";
 
 export const useOwnPackages = () =>
   useQuery(["own-packages"], () => getPackages());
