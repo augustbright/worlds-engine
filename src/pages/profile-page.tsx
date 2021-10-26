@@ -1,11 +1,11 @@
+import { ApplicationPage } from "modules/application/components/application-page";
 import { ProfileForm } from "modules/profile/components/profile-form";
 import React from "react";
-import { PageLayout } from "./layout/page";
 
 export const ProfilePage: React.FC = () => {
   return (
-    <PageLayout>
+    <ApplicationPage>
       <ProfileForm />
-    </PageLayout>
+    </ApplicationPage>
   );
 };

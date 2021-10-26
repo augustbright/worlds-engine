@@ -5,7 +5,6 @@ import { Color } from "modules/theming";
 import { fromThemeProp } from "modules/theming/utils";
 import styled from "styled-components";
 import { HeaderLayout } from "modules/abstract/components/header.layout";
-import { ApplicationRouting } from "./application.routing";
 import { ApplicationHeader } from "./application-header";
 
 const PageContainer = styled.div`
@@ -14,15 +13,11 @@ const PageContainer = styled.div`
   color: ${fromThemeProp((theme) => theme.colors[Color.TEXT_PRIMARY])};
 `;
 
-export const ApplicationPage: React.FC = () => (
+export const ApplicationPage: React.FC = ({ children }) => (
   <PageContainer>
     <HeaderLayout
       header={<ApplicationHeader />}
-      content={
-        <DndProvider backend={HTML5Backend}>
-          <ApplicationRouting />
-        </DndProvider>
-      }
+      content={<DndProvider backend={HTML5Backend}>{children}</DndProvider>}
     />
   </PageContainer>
 );

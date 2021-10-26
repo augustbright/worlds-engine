@@ -26,11 +26,6 @@ const navigationItems: Array<NavigationItem> = [
     content: "Profile",
     path: "/profile",
   },
-  {
-    id: "test",
-    content: "Test",
-    path: "/test",
-  },
 ];
 
 const Header = styled.header`

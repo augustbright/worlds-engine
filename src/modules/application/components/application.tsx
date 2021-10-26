@@ -7,7 +7,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { BrowserRouter } from "react-router-dom";
 import { OAuthHandler } from "./oauth-handler";
 import { GlobalStyle } from "./global-style";
-import { ApplicationPage } from "./application.page";
+import { ApplicationRouting } from "./application.routing";
 
 const queryClient = new QueryClient();
 
@@ -18,7 +18,7 @@ export default (): JSX.Element => {
         <GlobalStyle />
         <OAuthHandler>
           <BrowserRouter>
-            <ApplicationPage />
+            <ApplicationRouting />
           </BrowserRouter>
         </OAuthHandler>
         <ToastContainer

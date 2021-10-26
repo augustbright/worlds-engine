@@ -2,7 +2,6 @@ require('dotenv').config('./.env');
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { GenerateSW } = require('workbox-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 
 module.exports = {
@@ -47,7 +46,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'templates', 'index.html'),
     }),
-    new GenerateSW(),
     new DefinePlugin({}),
   ],
   devServer: {
