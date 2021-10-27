@@ -2,7 +2,7 @@ import { MapItem } from "modules/structure/item/map-item";
 import {
   useOwnDescriptors,
   useUpdateOwnDescriptor,
-} from "hook/type-descriptors";
+} from "modules/types/hook";
 import React, { useCallback, useState } from "react";
 import { Loader } from "modules/abstract/components/loader";
 import { AddItem } from "../common/components/add-item";

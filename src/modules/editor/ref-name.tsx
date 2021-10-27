@@ -1,4 +1,4 @@
-import { useRefDescriptor } from "hook/type-descriptors";
+import { useRefDescriptor } from "modules/types/hook";
 import { Loader } from "modules/abstract/components/loader";
 import React from "react";
 import { TypeRefId } from "types/ref";

@@ -5,7 +5,7 @@ import {
   useOwnDescriptors,
   useRearrangeOwnDescriptors,
   useUpdateOwnDescriptor,
-} from "hook/type-descriptors";
+} from "modules/types/hook";
 import React, { useCallback, useMemo } from "react";
 import { TypeBody, TypeDescriptor } from "types/descriptors";
 import { Color } from "modules/theming";

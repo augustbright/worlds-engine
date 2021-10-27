@@ -55,6 +55,9 @@ export const theme: Theme = {
     [Color.CARD_BORDER]: "rgb(28, 25, 32)",
     [Color.CARD_BACKGROUND]: "#080609",
     [Color.SIDEBAR_BACKGROUND]: "rgb(21, 18, 23)",
+    [Color.PLACEHOLDER_OUTLINE]: "rgba(224, 206, 237, 0.15)",
+    [Color.PLACEHOLDER_TEXT]: "rgba(224, 206, 237, 0.5)",
+    [Color.ASSET_HEADER_BACKGROUND]: "rgb(16, 14, 18)",
   },
   space: {
     [Space.TINY]: "2px",

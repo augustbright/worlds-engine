@@ -3,7 +3,7 @@ import { Color } from "modules/theming";
 import { Space } from "modules/theming/types";
 import { fromThemeProp } from "modules/theming/utils";
 import React from "react";
-import { LinkProps, useLocation } from "react-router-dom";
+import { LinkProps, matchPath, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 type LinkExtraProps = {
@@ -38,7 +38,10 @@ type Props = {
 
 export const AssetLink: React.FC<Props> = ({ children, to }) => {
   const location = useLocation();
-  const isMatch = location.pathname === to;
+  const match = matchPath(location.pathname, {
+    path: to,
+  });
+  const isMatch = !!match;
 
   return (
     <Container isMatch={isMatch} to={to}>

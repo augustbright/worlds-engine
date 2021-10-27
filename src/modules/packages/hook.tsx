@@ -3,7 +3,6 @@ import { ErrorToast } from "modules/editor/toasts/error";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { Id } from "types/common";
-import { TypeRefId } from "types/ref";
 import { Name } from "modules/editor/word/name";
 import { Package } from "types/packages";
 import {
@@ -50,7 +49,7 @@ export const useDeleteOwnPackage = () => {
   });
 };
 
-export const useRefPackage = (ref: TypeRefId) => {
+export const useRefPackage = (ref: Id) => {
   const ownPackagesQuery = useOwnPackages();
   return useQuery(
     ["ref-package", ref],
@@ -66,7 +65,7 @@ export const useRefPackage = (ref: TypeRefId) => {
       return null;
     },
     {
-      enabled: !!ownPackagesQuery.data,
+      enabled: !!ownPackagesQuery.data && !ownPackagesQuery.isFetching,
     }
   );
 };

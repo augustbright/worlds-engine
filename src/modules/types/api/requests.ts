@@ -3,10 +3,23 @@ import { Id, Rearrangeble } from "types/common";
 import { TypeDescriptor } from "types/descriptors";
 import { getApi, withToken } from "../../../api/utils";
 
-export const getTypeDescriptors = (): Promise<Array<TypeDescriptor>> =>
-  axios.get(`${getApi()}/types`, withToken()).then((data) => {
-    return data.data;
-  });
+export type GetTypeDescriptorsQuery = Partial<{
+  packageId: Id;
+}>;
+
+export const getTypeDescriptors = (
+  query: GetTypeDescriptorsQuery = {}
+): Promise<Array<TypeDescriptor>> =>
+  axios
+    .get(
+      `${getApi()}/types`,
+      withToken({
+        params: query,
+      })
+    )
+    .then((data) => {
+      return data.data;
+    });
 
 export const updateTypeDescriptor = (
   descriptor: TypeDescriptor | Omit<TypeDescriptor, "_id">

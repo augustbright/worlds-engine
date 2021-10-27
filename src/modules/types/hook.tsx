@@ -3,6 +3,7 @@ import {
   deleteTypeDescriptor,
   getExternalType,
   getTypeDescriptors,
+  GetTypeDescriptorsQuery,
   rearrangeDescriptors,
   updateTypeDescriptor,
 } from "modules/types/api/requests";
@@ -22,8 +23,8 @@ import { SystemTypeDescriptor, TypeDescriptor } from "types/descriptors";
 import { TypeRefId } from "types/ref";
 import { Name } from "modules/editor/word/name";
 
-export const useOwnDescriptors = () =>
-  useQuery(["own-descriptors"], () => getTypeDescriptors());
+export const useOwnDescriptors = (query: GetTypeDescriptorsQuery = {}) =>
+  useQuery(["own-descriptors", query], () => getTypeDescriptors(query));
 
 export const useUpdateOwnDescriptor = () => {
   const queryClient = useQueryClient();

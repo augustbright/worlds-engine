@@ -1,6 +1,6 @@
 import { DescriptorEditor } from "modules/editor/descriptor-editor";
 import { getDescriptorRefs } from "func/types";
-import { useOwnDescriptors, useRefDescriptors } from "hook/type-descriptors";
+import { useOwnDescriptors, useRefDescriptors } from "modules/types/hook";
 import React, { useMemo } from "react";
 import { ApplicationPage } from "modules/application/components/application-page";
 import { LoadingPage } from "./loading-page";

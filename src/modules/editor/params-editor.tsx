@@ -2,7 +2,7 @@ import { MapItem } from "modules/structure/item/map-item";
 import { List, ListItem } from "modules/structure/list/list";
 import { Bracket, withBrackets } from "modules/structure/list/with-brackets";
 import { getDescriptorParams, isSystemDescriptor } from "func/types";
-import { useRefDescriptor } from "hook/type-descriptors";
+import { useRefDescriptor } from "modules/types/hook";
 import React, { useMemo } from "react";
 import { TypeBody } from "types/descriptors";
 import { TypeRefId } from "types/ref";
