@@ -29,13 +29,9 @@ export const useOwnDescriptors = (query: GetTypeDescriptorsQuery = {}) =>
 export const useUpdateOwnDescriptor = () => {
   const queryClient = useQueryClient();
   return useMutation(
-    (descriptor: TypeDescriptor | Omit<TypeDescriptor, "_id">) =>
-      updateTypeDescriptor(descriptor),
+    (descriptor: Partial<TypeDescriptor>) => updateTypeDescriptor(descriptor),
     {
-      onSuccess: (
-        _data,
-        descriptor: TypeDescriptor | Omit<TypeDescriptor, "_id">
-      ) => {
+      onSuccess: (_data, descriptor: Partial<TypeDescriptor>) => {
         queryClient.invalidateQueries(["own-descriptors"]);
         if ("_id" in descriptor) {
           queryClient.invalidateQueries(["ref-descriptor", descriptor._id]);

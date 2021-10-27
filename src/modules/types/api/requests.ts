@@ -22,7 +22,7 @@ export const getTypeDescriptors = (
     });
 
 export const updateTypeDescriptor = (
-  descriptor: TypeDescriptor | Omit<TypeDescriptor, "_id">
+  descriptor: Partial<TypeDescriptor>
 ): Promise<Id> =>
   axios
     .post(`${getApi()}/types`, descriptor, withToken())

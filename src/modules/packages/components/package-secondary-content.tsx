@@ -1,11 +1,14 @@
-import { CenterLayout } from "modules/abstract/components/center.layout";
-import { Placeholder } from "modules/abstract/components/placeholder";
+import { TypeContent } from "modules/types/components/type-content";
 import React from "react";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { PackageSecondaryPlaceholder } from "./packages-secondary-placeholder";
 
 export const PackageSecondaryContent: React.FC = () => {
+  const { path } = useRouteMatch();
   return (
-    <CenterLayout>
-      <Placeholder>Select an asset or create a new one</Placeholder>
-    </CenterLayout>
+    <Switch>
+      <Route exact path={path} component={PackageSecondaryPlaceholder} />
+      <Route path={`${path}/type/:typeId`} component={TypeContent} />
+    </Switch>
   );
 };
