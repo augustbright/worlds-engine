@@ -11,6 +11,7 @@ export const ApplicationRouting: React.FC = () => {
   return (
     <Switch>
       <Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} />
+      <Redirect exact from="/" to="/assets" />
       <Route path="/login">
         <AuthPage />
       </Route>

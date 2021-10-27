@@ -17,11 +17,6 @@ const navigationItems: Array<NavigationItem> = [
     path: "/assets",
   },
   {
-    id: "editor",
-    content: "Editor",
-    path: "/editor",
-  },
-  {
     id: "profile",
     content: "Profile",
     path: "/profile",
