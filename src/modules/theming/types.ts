@@ -61,8 +61,9 @@ export enum Color {
   SLIDER_HOVER,
 
   CARD_BORDER,
-
   CARD_BACKGROUND,
+
+  SIDEBAR_BACKGROUND,
 }
 
 export enum Space {

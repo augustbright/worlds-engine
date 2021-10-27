@@ -4,6 +4,7 @@ import styled from "styled-components";
 const LayoutContainer = styled.div`
   display: flex;
   height: 100%;
+  width: 100%;
 `;
 
 const SideContainer = styled.div`

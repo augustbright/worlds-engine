@@ -54,6 +54,7 @@ export const theme: Theme = {
     [Color.SLIDER_HOVER]: "rgba(162, 157, 250, 0.33)",
     [Color.CARD_BORDER]: "rgb(28, 25, 32)",
     [Color.CARD_BACKGROUND]: "#080609",
+    [Color.SIDEBAR_BACKGROUND]: "rgb(21, 18, 23)",
   },
   space: {
     [Space.TINY]: "2px",

@@ -12,14 +12,14 @@ import styled from "styled-components";
 
 const navigationItems: Array<NavigationItem> = [
   {
-    id: "packages",
-    content: "Packages",
-    path: "/packages",
+    id: "assets",
+    content: "Assets",
+    path: "/assets",
   },
   {
     id: "editor",
     content: "Editor",
-    path: "/",
+    path: "/editor",
   },
   {
     id: "profile",

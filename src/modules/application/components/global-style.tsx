@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 *:focus {
-    outline: 1px dotted black;
+    outline: none;
 }
 
 *&::-webkit-scrollbar {

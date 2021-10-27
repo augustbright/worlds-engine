@@ -1,6 +1,6 @@
 import { Space } from "modules/theming/types";
 import { fromThemeProp } from "modules/theming/utils";
-import { useOwnPackages, useUpdateOwnPackage } from "hook/packages";
+import { useOwnPackages, useUpdateOwnPackage } from "modules/packages/hook";
 import React, { useCallback } from "react";
 import styled from "styled-components";
 import { AddItem } from "modules/common/components/add-item";
