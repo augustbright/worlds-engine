@@ -98,7 +98,7 @@ export const useRefDescriptor = (ref: TypeRefId) => {
       return getExternalType(ref);
     },
     {
-      enabled: !!ownDescriptorsQuery.data,
+      enabled: !!ownDescriptorsQuery.data && !ownDescriptorsQuery.isFetching,
     }
   );
 };
@@ -126,7 +126,7 @@ export const useRefDescriptors = (refs: Array<TypeRefId>) => {
 
         return getExternalType(ref);
       },
-      enabled: !!ownDescriptorsQuery.data,
+      enabled: !!ownDescriptorsQuery.data && !ownDescriptorsQuery.isFetching,
     }))
   ) as Array<UseQueryResult<TypeDescriptor | SystemTypeDescriptor | null>>;
 };
