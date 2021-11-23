@@ -40,6 +40,7 @@ export type TypeBody =
 export type TypeDescriptor = {
   _id: Id;
   name: string;
+  packageId?: Id;
   body: TypeBody;
   order?: number;
 };

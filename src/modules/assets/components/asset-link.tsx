@@ -16,8 +16,7 @@ const Container = styled(
     <StyledLink {...props} />
   )
 )<LinkExtraProps>`
-  display: inline-block;
-  width: 210px;
+  display: block;
   padding: ${fromThemeProp((t) => t.space[Space.MEDIUM])};
 
   cursor: pointer;

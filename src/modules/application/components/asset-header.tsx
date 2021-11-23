@@ -13,8 +13,11 @@ type Props = {
 
 const Container = styled.div`
   display: flex;
+  align-items: center;
+  height: 35px;
   padding: 0 ${fromThemeProp((t) => t.space[Space.MEDIUM])};
-  background: ${fromThemeProp((t) => t.colors[Color.ASSET_HEADER_BACKGROUND])};
+  border-bottom: solid 1px
+    ${fromThemeProp((t) => t.colors[Color.ASSET_HEADER_BACKGROUND])};
 `;
 
 const TitleContainer = styled.div`

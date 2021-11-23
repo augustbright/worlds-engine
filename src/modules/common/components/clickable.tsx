@@ -12,11 +12,6 @@ const Container = styled.div`
       (t) => t.colors[Color.BUTTON_HOVER_BACKGROUND]
     )};
   }
-  &:focus {
-    background: ${fromThemeProp(
-      (t) => t.colors[Color.BUTTON_HOVER_BACKGROUND]
-    )};
-  }
 `;
 
 type Props = {

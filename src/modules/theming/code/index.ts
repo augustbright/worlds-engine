@@ -58,6 +58,8 @@ export const theme: Theme = {
     [Color.PLACEHOLDER_OUTLINE]: "rgba(224, 206, 237, 0.15)",
     [Color.PLACEHOLDER_TEXT]: "rgba(224, 206, 237, 0.5)",
     [Color.ASSET_HEADER_BACKGROUND]: "rgb(16, 14, 18)",
+    [Color.COLLAPSE_CONTENT_BACKGROUND]: "rgb(21, 18, 23)",
+    [Color.COLLAPSE_HEADER_BACKGROUND]: "rgb(28, 25, 32)",
   },
   space: {
     [Space.TINY]: "2px",

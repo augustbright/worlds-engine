@@ -26,10 +26,8 @@ const ButtonContainer = styled.a`
     color: ${fromThemeProp((t) => t.colors[Color.BUTTON_ACTIVE_FOREGROUND])};
   }
   &:focus {
-    outline: none;
-    background: ${fromThemeProp(
-      (t) => t.colors[Color.BUTTON_HOVER_BACKGROUND]
-    )};
+    outline: solid 1px
+      ${fromThemeProp((t) => t.colors[Color.BUTTON_HOVER_BACKGROUND])};
   }
 `;
 
