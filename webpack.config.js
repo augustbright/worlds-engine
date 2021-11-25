@@ -37,14 +37,15 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        test: /\.(woff|woff2|eot|ttf|otf|ico)$/i,
         type: 'asset/resource',
-      },
+      }
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'templates', 'index.html'),
+      favicon: path.join(__dirname, 'src', 'assets', 'favicon.ico')
     }),
     new DefinePlugin({}),
   ],
